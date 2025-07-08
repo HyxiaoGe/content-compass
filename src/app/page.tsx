@@ -1,6 +1,6 @@
 // src/app/page.tsx
 import Link from 'next/link'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createServerComponentClient } from '@/lib/supabase/server';
 import { cookies } from 'next/headers'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -8,7 +8,7 @@ import { Header } from '@/components/layout/header'
 import type { Database } from '@/types/database'
 
 export default async function HomePage() {
-  const supabase = createServerComponentClient<Database>({ cookies })
+  const supabase = createServerComponentClient()
   const { data: { session } } = await supabase.auth.getSession()
 
   // 获取用户资料

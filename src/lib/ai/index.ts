@@ -228,6 +228,6 @@ export const createAIError = (message: string, code: string): Error => {
   return error;
 };
 
-export const isAIError = (error: any): error is AIError => {
+export const isAIError = (error: any): error is any => {
   return error && typeof error.code === 'string' && typeof error.retryable === 'boolean';
 };

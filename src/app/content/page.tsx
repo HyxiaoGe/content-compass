@@ -1,6 +1,6 @@
 // src/app/content/page.tsx
 import { redirect } from 'next/navigation'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createServerComponentClient } from '@/lib/supabase/server';
 import { cookies } from 'next/headers'
 import { ContentList } from '@/components/content/content-list'
 import type { Database } from '@/types/database'
@@ -27,7 +27,7 @@ async function getContent(userId: string) {
 }
 
 export default async function ContentPage() {
-  const supabase = createServerComponentClient<Database>({ cookies })
+  const supabase = createServerComponentClient()
   
   const { data: { session } } = await supabase.auth.getSession()
   

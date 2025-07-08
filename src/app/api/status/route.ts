@@ -1,6 +1,6 @@
 // src/app/api/status/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { createRouteHandlerClient } from '@supabase/ssr';
+import { createRouteHandlerClient } from '@/lib/supabase/server';
 import { cookies } from 'next/headers';
 import type { Database, APIResponse } from '@/types/database';
 
@@ -49,7 +49,7 @@ async function checkDatabaseStatus(): Promise<ServiceStatus> {
   const startTime = Date.now();
   
   try {
-    const supabase = createRouteHandlerClient<Database>({ cookies });
+    const supabase = createRouteHandlerClient();
     
     // 检查数据库连接
     const { data, error } = await supabase
@@ -208,7 +208,7 @@ async function checkAuthStatus(): Promise<ServiceStatus> {
       };
     }
     
-    const supabase = createRouteHandlerClient<Database>({ cookies });
+    const supabase = createRouteHandlerClient();
     
     // 尝试获取用户会话（不会失败，只是检查服务可用性）
     const { data, error } = await supabase.auth.getSession();

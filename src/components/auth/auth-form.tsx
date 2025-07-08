@@ -3,7 +3,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createClient } from '@/lib/supabase/client';
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
@@ -22,7 +22,7 @@ export function AuthForm({ mode }: AuthFormProps) {
   const [message, setMessage] = useState<string | null>(null)
 
   const router = useRouter()
-  const supabase = createClientComponentClient<Database>()
+  const supabase = createClient()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

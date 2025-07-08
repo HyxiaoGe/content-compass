@@ -1,6 +1,6 @@
 // src/app/api/parse/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { createRouteHandlerClient } from '@supabase/ssr';
+import { createRouteHandlerClient } from '@/lib/supabase/server';
 import { cookies } from 'next/headers';
 import { scraperService } from '@/lib/scraper';
 import { aiServiceManager } from '@/lib/ai';
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
 
   try {
     // 验证用户认证
-    const supabase = createRouteHandlerClient<Database>({ cookies });
+    const supabase = createRouteHandlerClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {
@@ -80,6 +80,7 @@ export async function POST(request: NextRequest) {
 
     // 创建初始内容记录
     const initialContentResult = await contentService.createContent(user.id, {
+      user_id: user.id,
       url,
       status: 'processing',
       metadata: { 
@@ -146,8 +147,7 @@ export async function POST(request: NextRequest) {
         maxTokens: options.maxTokens ?? 1000,
         customPrompt: options.customPrompt,
         includeKeyPoints: true,
-        includeAnalysis: options.includeAnalysis ?? false,
-        userId: user.id
+        includeAnalysis: options.includeAnalysis ?? false
       };
 
       const summaryResult = await aiServiceManager.generateSummary(cleanedContent, summaryOptions);
@@ -257,7 +257,7 @@ export async function POST(request: NextRequest) {
     if (contentId) {
       const processingTime = Date.now() - startTime;
       try {
-        const supabase = createRouteHandlerClient<Database>({ cookies });
+        const supabase = createRouteHandlerClient();
         const { data: { user } } = await supabase.auth.getUser();
         
         if (user) {
@@ -291,7 +291,7 @@ export async function POST(request: NextRequest) {
 // GET 请求用于获取解析任务状态
 export async function GET(request: NextRequest) {
   try {
-    const supabase = createRouteHandlerClient<Database>({ cookies });
+    const supabase = createRouteHandlerClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {

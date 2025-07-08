@@ -1,6 +1,6 @@
 // src/app/dashboard/page.tsx
 import { redirect } from 'next/navigation'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createServerComponentClient } from '@/lib/supabase/server';
 import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -33,7 +33,7 @@ async function getUserStats(userId: string) {
 }
 
 export default async function DashboardPage() {
-  const supabase = createServerComponentClient<Database>({ cookies })
+  const supabase = createServerComponentClient()
   
   const { data: { session } } = await supabase.auth.getSession()
   

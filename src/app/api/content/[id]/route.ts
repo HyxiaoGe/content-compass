@@ -1,7 +1,6 @@
 // src/app/api/content/[id]/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { createRouteHandlerClient } from '@supabase/ssr';
-import { cookies } from 'next/headers';
+import { createRouteHandlerClient } from '@/lib/supabase/server';
 import { contentService } from '@/lib/database/content';
 import { aiServiceManager } from '@/lib/ai';
 import type { Database, APIResponse, ParsedContent } from '@/types/database';
@@ -26,10 +25,11 @@ const regenerateSummarySchema = z.object({
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const supabase = createRouteHandlerClient<Database>({ cookies });
+    const { id } = await params;
+    const supabase = createRouteHandlerClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {
@@ -39,7 +39,7 @@ export async function GET(
       );
     }
 
-    const result = await contentService.getContentById(params.id, user.id);
+    const result = await contentService.getContentById(id, user.id);
 
     if (!result.success) {
       const status = result.error?.includes('not found') ? 404 : 500;
@@ -65,10 +65,11 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const supabase = createRouteHandlerClient<Database>({ cookies });
+    const { id } = await params;
+    const supabase = createRouteHandlerClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {
@@ -95,7 +96,7 @@ export async function PUT(
     const updates = validationResult.data;
 
     // 首先检查内容是否存在
-    const existingContent = await contentService.getContentById(params.id, user.id);
+    const existingContent = await contentService.getContentById(id, user.id);
     if (!existingContent.success) {
       return NextResponse.json(
         { success: false, error: '内容不存在' } as APIResponse,
@@ -103,7 +104,7 @@ export async function PUT(
       );
     }
 
-    const result = await contentService.updateContent(params.id, user.id, updates);
+    const result = await contentService.updateContent(id, user.id, updates);
 
     if (!result.success) {
       return NextResponse.json(
@@ -129,10 +130,11 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const supabase = createRouteHandlerClient<Database>({ cookies });
+    const { id } = await params;
+    const supabase = createRouteHandlerClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {
@@ -143,7 +145,7 @@ export async function DELETE(
     }
 
     // 首先检查内容是否存在
-    const existingContent = await contentService.getContentById(params.id, user.id);
+    const existingContent = await contentService.getContentById(id, user.id);
     if (!existingContent.success) {
       return NextResponse.json(
         { success: false, error: '内容不存在' } as APIResponse,
@@ -151,7 +153,7 @@ export async function DELETE(
       );
     }
 
-    const result = await contentService.deleteContent(params.id, user.id);
+    const result = await contentService.deleteContent(id, user.id);
 
     if (!result.success) {
       return NextResponse.json(
@@ -177,10 +179,11 @@ export async function DELETE(
 // PATCH 请求用于重新生成摘要
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const supabase = createRouteHandlerClient<Database>({ cookies });
+    const { id } = await params;
+    const supabase = createRouteHandlerClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {
@@ -213,7 +216,7 @@ export async function PATCH(
     }
 
     // 获取现有内容
-    const existingContent = await contentService.getContentById(params.id, user.id);
+    const existingContent = await contentService.getContentById(id, user.id);
     if (!existingContent.success || !existingContent.data) {
       return NextResponse.json(
         { success: false, error: '内容不存在' } as APIResponse,
@@ -236,8 +239,7 @@ export async function PATCH(
       maxTokens: validationResult.data.maxTokens || 1000,
       customPrompt: validationResult.data.customPrompt,
       includeKeyPoints: true,
-      includeAnalysis: false,
-      userId: user.id
+      includeAnalysis: false
     });
 
     if (!summaryResult.success) {
@@ -248,7 +250,7 @@ export async function PATCH(
     }
 
     // 更新内容记录
-    const updateResult = await contentService.updateContent(params.id, user.id, {
+    const updateResult = await contentService.updateContent(id, user.id, {
       summary: summaryResult.summary,
       key_points: summaryResult.keyPoints,
       tokens_used: summaryResult.metadata.tokensUsed.total,

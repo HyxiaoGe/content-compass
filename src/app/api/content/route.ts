@@ -1,6 +1,6 @@
 // src/app/api/content/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { createRouteHandlerClient } from '@supabase/ssr';
+import { createRouteHandlerClient } from '@/lib/supabase/server';
 import { cookies } from 'next/headers';
 import { contentService } from '@/lib/database/content';
 import type { Database, APIResponse, ParsedContent, PaginatedResponse } from '@/types/database';
@@ -22,7 +22,7 @@ const querySchema = z.object({
 export async function GET(request: NextRequest) {
   try {
     // 验证用户认证
-    const supabase = createRouteHandlerClient<Database>({ cookies });
+    const supabase = createRouteHandlerClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {
@@ -187,7 +187,7 @@ export async function GET(request: NextRequest) {
 // POST 请求用于创建新的内容记录（通常通过parse API创建，这里提供备用方法）
 export async function POST(request: NextRequest) {
   try {
-    const supabase = createRouteHandlerClient<Database>({ cookies });
+    const supabase = createRouteHandlerClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {
@@ -208,6 +208,7 @@ export async function POST(request: NextRequest) {
     }
 
     const result = await contentService.createContent(user.id, {
+      user_id: user.id,
       title,
       url,
       original_content: content,

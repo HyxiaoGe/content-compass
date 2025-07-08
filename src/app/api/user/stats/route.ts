@@ -1,6 +1,6 @@
 // src/app/api/user/stats/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { createRouteHandlerClient } from '@supabase/ssr';
+import { createRouteHandlerClient } from '@/lib/supabase/server';
 import { cookies } from 'next/headers';
 import { contentService } from '@/lib/database/content';
 import { usageLogService } from '@/lib/database/usage';
@@ -54,7 +54,7 @@ interface UserDashboardStats {
 
 export async function GET(request: NextRequest) {
   try {
-    const supabase = createRouteHandlerClient<Database>({ cookies });
+    const supabase = createRouteHandlerClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {
@@ -209,7 +209,7 @@ async function getRecentActivity(supabase: any, userId: string, days: number) {
   // 按日期聚合
   const activityMap = new Map<string, { content_count: number; tokens_used: number; cost: number }>();
   
-  data?.forEach(item => {
+  data?.forEach((item: any) => {
     const date = new Date(item.created_at).toISOString().split('T')[0];
     const existing = activityMap.get(date) || { content_count: 0, tokens_used: 0, cost: 0 };
     const cost = item.metadata?.ai?.cost || 0;
@@ -236,7 +236,7 @@ async function getStatusBreakdown(supabase: any, userId: string) {
   if (error) return { completed: 0, processing: 0, failed: 0, pending: 0 };
 
   const breakdown = { completed: 0, processing: 0, failed: 0, pending: 0 };
-  data?.forEach(item => {
+  data?.forEach((item: any) => {
     if (item.status in breakdown) {
       breakdown[item.status as keyof typeof breakdown]++;
     }
@@ -256,7 +256,7 @@ async function getLanguageBreakdown(supabase: any, userId: string) {
   if (error) return {};
 
   const breakdown: Record<string, number> = {};
-  data?.forEach(item => {
+  data?.forEach((item: any) => {
     if (item.language) {
       breakdown[item.language] = (breakdown[item.language] || 0) + 1;
     }
@@ -280,9 +280,9 @@ async function getPerformanceMetrics(supabase: any, userId: string) {
   };
 
   const total = data?.length || 0;
-  const completed = data?.filter(item => item.status === 'completed').length || 0;
-  const totalTokens = data?.reduce((sum, item) => sum + (item.tokens_used || 0), 0) || 0;
-  const totalProcessingTime = data?.reduce((sum, item) => sum + (item.processing_time_ms || 0), 0) || 0;
+  const completed = data?.filter((item: any) => item.status === 'completed').length || 0;
+  const totalTokens = data?.reduce((sum: any, item: any) => sum + (item.tokens_used || 0), 0) || 0;
+  const totalProcessingTime = data?.reduce((sum: any, item: any) => sum + (item.processing_time_ms || 0), 0) || 0;
 
   return {
     average_processing_time: total > 0 ? Math.round(totalProcessingTime / total) : 0,
@@ -314,8 +314,8 @@ async function getTokensAndCost(supabase: any, userId: string, since: string) {
 
   if (error) return { tokens: 0, cost: 0 };
 
-  const tokens = data?.reduce((sum, item) => sum + (item.tokens_used || 0), 0) || 0;
-  const cost = data?.reduce((sum, item) => sum + (item.metadata?.ai?.cost || 0), 0) || 0;
+  const tokens = data?.reduce((sum: any, item: any) => sum + (item.tokens_used || 0), 0) || 0;
+  const cost = data?.reduce((sum: any, item: any) => sum + (item.metadata?.ai?.cost || 0), 0) || 0;
 
   return { tokens, cost };
 }
@@ -331,7 +331,7 @@ async function getTopDomains(supabase: any, userId: string, limit: number = 10) 
   if (error) return [];
 
   const domainCount: Record<string, number> = {};
-  data?.forEach(item => {
+  data?.forEach((item: any) => {
     try {
       const domain = new URL(item.url).hostname;
       domainCount[domain] = (domainCount[domain] || 0) + 1;
@@ -362,7 +362,7 @@ async function getSummaryTypeBreakdown(supabase: any, userId: string) {
   if (error) return {};
 
   const breakdown: Record<string, number> = {};
-  data?.forEach(item => {
+  data?.forEach((item: any) => {
     const summaryType = item.metadata?.requestOptions?.summaryType || 'standard';
     breakdown[summaryType] = (breakdown[summaryType] || 0) + 1;
   });

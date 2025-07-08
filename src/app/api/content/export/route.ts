@@ -1,6 +1,6 @@
 // src/app/api/content/export/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { createRouteHandlerClient } from '@supabase/ssr';
+import { createRouteHandlerClient } from '@/lib/supabase/server';
 import { cookies } from 'next/headers';
 import { contentService } from '@/lib/database/content';
 import type { Database, APIResponse, ParsedContent } from '@/types/database';
@@ -26,7 +26,7 @@ const exportSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
-    const supabase = createRouteHandlerClient<Database>({ cookies });
+    const supabase = createRouteHandlerClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {
@@ -241,7 +241,7 @@ function generateCSV(items: any[]): string {
 
   // 获取所有字段
   const allFields = new Set<string>();
-  items.forEach(item => {
+  items.forEach((item: any) => {
     Object.keys(item).forEach(key => {
       if (key !== 'key_points' && key !== 'metadata') { // 排除复杂字段
         allFields.add(key);
@@ -255,7 +255,7 @@ function generateCSV(items: any[]): string {
   const header = fields.join(',');
   
   // CSV数据行
-  const rows = items.map(item => {
+  const rows = items.map((item: any) => {
     return fields.map(field => {
       const value = item[field];
       if (value === null || value === undefined) return '';

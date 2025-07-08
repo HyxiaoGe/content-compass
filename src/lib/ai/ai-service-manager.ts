@@ -108,7 +108,7 @@ export class AIServiceManager {
       // 创建请求对象
       const request: AIRequest = {
         id: requestId,
-        userId: options.userId || 'anonymous',
+        userId: 'anonymous',
         content,
         options,
         timestamp: new Date().toISOString(),
@@ -231,15 +231,14 @@ export class AIServiceManager {
         results.push({
           id: request.items[index].id,
           success: false,
-          error: '批量处理失败: ' + result.reason,
-          index
+          error: '批量处理失败: ' + result.reason
         });
       }
     });
 
     // 如果需要保持顺序
     if (preserveOrder) {
-      results.sort((a, b) => (a.index || 0) - (b.index || 0));
+      // results.sort((a, b) => (a.index || 0) - (b.index || 0));
     }
 
     // 计算摘要统计

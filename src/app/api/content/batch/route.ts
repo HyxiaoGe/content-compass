@@ -1,10 +1,11 @@
 // src/app/api/content/batch/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { createRouteHandlerClient } from '@supabase/ssr';
+import { createRouteHandlerClient } from '@/lib/supabase/server';
 import { cookies } from 'next/headers';
 import { scraperService } from '@/lib/scraper';
 import { aiServiceManager } from '@/lib/ai';
 import { contentService } from '@/lib/database/content';
+import { userService } from '@/lib/database/user';
 import type { Database, APIResponse } from '@/types/database';
 import { z } from 'zod';
 
@@ -43,7 +44,7 @@ export async function POST(request: NextRequest) {
   const startTime = Date.now();
 
   try {
-    const supabase = createRouteHandlerClient<Database>({ cookies });
+    const supabase = createRouteHandlerClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {
@@ -140,6 +141,7 @@ async function handleBatchParse(body: any, userId: string, supabase: any, startT
       try {
         // 创建初始内容记录
         const contentResult = await contentService.createContent(userId, {
+          user_id: userId,
           url,
           status: 'processing',
           metadata: { batchOperation: true, requestOptions: options }
@@ -184,8 +186,7 @@ async function handleBatchParse(body: any, userId: string, supabase: any, startT
             language: options.language ?? 'auto',
             maxTokens: options.maxTokens ?? 1000,
             customPrompt: options.customPrompt,
-            includeKeyPoints: true,
-            userId
+            includeKeyPoints: true
           }
         );
 

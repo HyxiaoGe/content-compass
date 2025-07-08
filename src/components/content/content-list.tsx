@@ -301,11 +301,11 @@ export function ContentList({ initialData }: ContentListProps) {
       )}
 
       {/* 分页 */}
-      {pagination.totalPages > 1 && (
+      {'totalPages' in pagination && pagination.totalPages > 1 && (
         <div className="flex items-center justify-between">
           <div className="text-sm text-muted-foreground">
-            显示第 {((pagination.page - 1) * pagination.limit) + 1} - {Math.min(pagination.page * pagination.limit, pagination.total)} 条，
-            共 {pagination.total} 条结果
+            显示第 {((pagination.page - 1) * pagination.limit) + 1} - {Math.min(pagination.page * pagination.limit, pagination.total || 0)} 条，
+            共 {pagination.total || 0} 条结果
           </div>
           
           <div className="flex items-center space-x-2">

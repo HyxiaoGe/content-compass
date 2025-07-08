@@ -1,6 +1,6 @@
 // src/app/content/[id]/page.tsx
 import { notFound, redirect } from 'next/navigation'
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { createServerComponentClient } from '@/lib/supabase/server';
 import { cookies } from 'next/headers'
 import { ContentDetail } from '@/components/content/content-detail'
 import type { Database } from '@/types/database'
@@ -33,9 +33,10 @@ async function getContentById(id: string) {
 export default async function ContentDetailPage({
   params,
 }: {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }) {
-  const supabase = createServerComponentClient<Database>({ cookies })
+  const { id } = await params;
+  const supabase = createServerComponentClient()
   
   const { data: { session } } = await supabase.auth.getSession()
   
@@ -43,7 +44,7 @@ export default async function ContentDetailPage({
     redirect('/auth/login')
   }
 
-  const content = await getContentById(params.id)
+  const content = await getContentById(id)
 
   if (!content) {
     notFound()
@@ -59,9 +60,10 @@ export default async function ContentDetailPage({
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string }
+  params: Promise<{ id: string }>
 }) {
-  const content = await getContentById(params.id)
+  const { id } = await params;
+  const content = await getContentById(id)
 
   if (!content) {
     return {

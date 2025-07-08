@@ -1,6 +1,6 @@
 // src/app/api/monitoring/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { createRouteHandlerClient } from '@supabase/ssr';
+import { createRouteHandlerClient } from '@/lib/supabase/server';
 import { cookies } from 'next/headers';
 import type { Database, APIResponse } from '@/types/database';
 
@@ -62,7 +62,7 @@ const monitoringStore = {
 };
 
 // 记录API请求
-export function recordApiRequest(endpoint: string, duration: number, status: number) {
+function recordApiRequest(endpoint: string, duration: number, status: number) {
   const requestId = `${endpoint}-${Date.now()}-${Math.random()}`;
   
   // 保存最近1小时的请求
@@ -98,7 +98,7 @@ export function recordApiRequest(endpoint: string, duration: number, status: num
 }
 
 // 记录服务使用
-export function recordServiceUsage(service: 'ai' | 'scraper', duration: number, success: boolean, metadata: any = {}) {
+function recordServiceUsage(service: 'ai' | 'scraper', duration: number, success: boolean, metadata: any = {}) {
   const serviceStats = monitoringStore.services[service];
   
   serviceStats.requests++;
@@ -109,16 +109,16 @@ export function recordServiceUsage(service: 'ai' | 'scraper', duration: number, 
   }
   
   if (service === 'ai') {
-    serviceStats.tokensUsed += metadata.tokensUsed || 0;
-    serviceStats.cost += metadata.cost || 0;
+    (serviceStats as any).tokensUsed += metadata.tokensUsed || 0;
+    (serviceStats as any).cost += metadata.cost || 0;
   } else if (service === 'scraper' && success) {
-    serviceStats.successful++;
+    (serviceStats as any).successful++;
   }
 }
 
 export async function GET(request: NextRequest) {
   try {
-    const supabase = createRouteHandlerClient<Database>({ cookies });
+    const supabase = createRouteHandlerClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     // 只有认证用户可以访问监控数据
@@ -134,10 +134,11 @@ export async function GET(request: NextRequest) {
     const timeRange = parseInt(searchParams.get('timeRange') || '3600'); // 默认1小时
 
     // 系统监控数据
+    const cpuUsage = process.cpuUsage();
     const systemData = {
       uptime: process.uptime(),
       memory: process.memoryUsage(),
-      cpu: process.cpuUsage(),
+      cpu: cpuUsage.user + cpuUsage.system,
       timestamp: new Date().toISOString()
     };
 
@@ -234,7 +235,7 @@ export async function GET(request: NextRequest) {
 // 清理监控数据
 export async function DELETE(request: NextRequest) {
   try {
-    const supabase = createRouteHandlerClient<Database>({ cookies });
+    const supabase = createRouteHandlerClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {
@@ -302,5 +303,3 @@ export async function DELETE(request: NextRequest) {
   }
 }
 
-// 导出监控函数供其他模块使用
-export { recordApiRequest, recordServiceUsage };

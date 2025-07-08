@@ -1,6 +1,6 @@
 // src/app/api/test/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { createRouteHandlerClient } from '@supabase/ssr';
+import { createRouteHandlerClient } from '@/lib/supabase/server';
 import { cookies } from 'next/headers';
 import type { Database, APIResponse } from '@/types/database';
 
@@ -10,21 +10,21 @@ const testEndpoints = {
   health: async () => {
     const checks = {
       server: { status: 'healthy', timestamp: new Date().toISOString() },
-      database: { status: 'unknown', error: null, latency: 0 },
-      ai: { status: 'unknown', error: null, latency: 0 },
-      scraper: { status: 'unknown', error: null, latency: 0 }
+      database: { status: 'unknown' as string, error: null as string | null, latency: 0 },
+      ai: { status: 'unknown' as string, error: null as string | null, latency: 0 },
+      scraper: { status: 'unknown' as string, error: null as string | null, latency: 0 }
     };
 
     // 测试数据库连接
     try {
       const startTime = Date.now();
-      const supabase = createRouteHandlerClient<Database>({ cookies });
+      const supabase = createRouteHandlerClient();
       const { data, error } = await supabase.from('user_profiles').select('count', { count: 'exact' }).limit(1);
       const latency = Date.now() - startTime;
       
       checks.database = {
         status: error ? 'error' : 'healthy',
-        error: error?.message || null,
+        error: error?.message || null as string | null,
         latency
       };
     } catch (error) {
@@ -46,14 +46,13 @@ const testEndpoints = {
         language: 'en',
         maxTokens: 50,
         includeKeyPoints: false,
-        includeAnalysis: false,
-        userId: 'test-user'
+        includeAnalysis: false
       });
       
       const latency = Date.now() - startTime;
       checks.ai = {
         status: testResult.success ? 'healthy' : 'error',
-        error: testResult.success ? null : testResult.error,
+        error: testResult.success ? null : (testResult.error || 'Unknown error'),
         latency
       };
     } catch (error) {
@@ -79,7 +78,7 @@ const testEndpoints = {
       const latency = Date.now() - startTime;
       checks.scraper = {
         status: testResult.success ? 'healthy' : 'error',
-        error: testResult.success ? null : testResult.error,
+        error: testResult.success ? null : (testResult.error || 'Unknown error'),
         latency
       };
     } catch (error) {
@@ -102,7 +101,7 @@ const testEndpoints = {
 
   // 测试用户认证
   auth: async (request: NextRequest) => {
-    const supabase = createRouteHandlerClient<Database>({ cookies });
+    const supabase = createRouteHandlerClient();
     const { data: { user }, error } = await supabase.auth.getUser();
     
     return {
@@ -118,7 +117,7 @@ const testEndpoints = {
 
   // 测试数据库连接
   database: async () => {
-    const supabase = createRouteHandlerClient<Database>({ cookies });
+    const supabase = createRouteHandlerClient();
     const tests = {};
     
     // 测试各个表的连接
@@ -132,7 +131,7 @@ const testEndpoints = {
         
         (tests as any)[table] = {
           status: error ? 'error' : 'healthy',
-          error: error?.message || null,
+          error: error?.message || null as string | null,
           latency,
           count: data?.length || 0
         };
@@ -324,7 +323,7 @@ export async function GET(request: NextRequest) {
 // POST 请求用于执行压力测试
 export async function POST(request: NextRequest) {
   try {
-    const supabase = createRouteHandlerClient<Database>({ cookies });
+    const supabase = createRouteHandlerClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {
