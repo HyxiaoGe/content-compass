@@ -5,10 +5,9 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { ContentGrid } from '@/components/front/content-grid'
-import { FilterSidebar } from '@/components/front/filter-sidebar'
-import { ContentCard, ContentFilters } from '@/types/database-refactor'
-import { Filter, Menu, X, TrendingUp, Clock, Star } from 'lucide-react'
+import { TimelineCard } from '@/components/front/timeline-card'
+import { ContentCard } from '@/types/database-refactor'
+import { TrendingUp } from 'lucide-react'
 
 // 模拟数据 - 实际应用中从API获取
 const mockContent: ContentCard[] = [
@@ -77,234 +76,86 @@ const mockContent: ContentCard[] = [
   }
 ]
 
-const mockCategories = ['Code Editor', 'AI Assistant', 'Code Assistant', 'Productivity']
-const mockSources = [
-  { slug: 'cursor', name: 'Cursor' },
-  { slug: 'claude', name: 'Claude' },
-  { slug: 'github-copilot', name: 'GitHub Copilot' },
-  { slug: 'openai', name: 'OpenAI' }
-]
-const mockTags = ['feature', 'ai', 'performance', 'model-release', 'api', 'chat', 'debugging', 'context']
-
 export default function HomePage() {
   const [content, setContent] = useState<ContentCard[]>(mockContent)
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string>()
-  const [filters, setFilters] = useState<ContentFilters>({
-    page: 1,
-    limit: 12,
-    sortBy: 'published_at',
-    sortOrder: 'desc'
-  })
-  const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  // 模拟数据筛选
+  // 模拟数据加载
   useEffect(() => {
     setLoading(true)
-    // 模拟API调用延迟
     setTimeout(() => {
-      let filteredContent = [...mockContent]
-      
-      // 应用筛选逻辑
-      if (filters.search) {
-        filteredContent = filteredContent.filter(item =>
-          item.title.toLowerCase().includes(filters.search!.toLowerCase()) ||
-          item.summary.toLowerCase().includes(filters.search!.toLowerCase())
-        )
-      }
-      
-      if (filters.category) {
-        filteredContent = filteredContent.filter(item =>
-          item.product.category === filters.category
-        )
-      }
-      
-      if (filters.importance) {
-        filteredContent = filteredContent.filter(item =>
-          item.importance === filters.importance
-        )
-      }
-      
-      if (filters.source) {
-        filteredContent = filteredContent.filter(item =>
-          item.product.slug === filters.source
-        )
-      }
-      
-      if (filters.tags?.length) {
-        filteredContent = filteredContent.filter(item =>
-          filters.tags!.some(tag => item.tags.includes(tag))
-        )
-      }
-      
-      setContent(filteredContent)
+      setContent(mockContent)
       setLoading(false)
     }, 500)
-  }, [filters])
+  }, [])
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* 顶部导航 */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      {/* 简化的顶部导航 */}
+      <header className="bg-white/80 backdrop-blur-sm shadow-sm border-b sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo和站点标题 */}
-            <div className="flex items-center space-x-4">
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
-                  <TrendingUp className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <h1 className="text-xl font-bold text-gray-900">ContentCompass</h1>
-                  <p className="text-xs text-gray-500">AI产品更新聚合站</p>
-                </div>
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                <TrendingUp className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold text-gray-900">ContentCompass</h1>
+                <p className="text-sm text-gray-500">AI产品更新聚合站</p>
               </div>
             </div>
 
-            {/* 右侧操作 */}
-            <div className="flex items-center space-x-4">
-              {/* 筛选按钮 (移动端) */}
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setSidebarOpen(true)}
-                className="lg:hidden"
-              >
-                <Filter className="w-4 h-4" />
-                筛选
-              </Button>
-              
-              {/* 登录链接 */}
-              <Button variant="ghost" size="sm">
-                登录
-              </Button>
-            </div>
+            {/* 登录按钮 */}
+            <Button 
+              variant="default" 
+              className="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg shadow-md"
+            >
+              登录
+            </Button>
           </div>
         </div>
       </header>
 
       {/* 主要内容区域 */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex gap-8">
-          {/* 侧边栏筛选 */}
-          <div className="hidden lg:block lg:w-80 flex-shrink-0">
-            <FilterSidebar
-              filters={filters}
-              onFiltersChange={setFilters}
-              categories={mockCategories}
-              sources={mockSources}
-              popularTags={mockTags}
-              isOpen={false}
-              onToggle={() => {}}
-            />
-          </div>
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* 页面头部信息 */}
+        <motion.div 
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            最新AI产品动态
+          </h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            实时跟踪AI产品更新，精选重要信息为您呈现
+          </p>
+        </motion.div>
 
-          {/* 移动端筛选侧边栏 */}
-          <FilterSidebar
-            filters={filters}
-            onFiltersChange={setFilters}
-            categories={mockCategories}
-            sources={mockSources}
-            popularTags={mockTags}
-            isOpen={sidebarOpen}
-            onToggle={() => setSidebarOpen(false)}
-          />
-
-          {/* 主内容区 */}
-          <div className="flex-1 min-w-0">
-            {/* 页面头部信息 */}
-            <motion.div 
-              className="mb-8"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="flex items-center justify-between mb-4">
-                <div>
-                  <h2 className="text-2xl font-bold text-gray-900">最新AI产品动态</h2>
-                  <p className="text-gray-600 mt-1">
-                    实时跟踪AI产品更新，精选重要信息为您呈现
-                  </p>
-                </div>
-                
-                <div className="flex items-center space-x-4 text-sm text-gray-500">
-                  <div className="flex items-center space-x-1">
-                    <Clock className="w-4 h-4" />
-                    <span>实时更新</span>
-                  </div>
-                  <div className="flex items-center space-x-1">
-                    <Star className="w-4 h-4" />
-                    <span>{content.length} 条内容</span>
-                  </div>
-                </div>
-              </div>
-              
-              {/* 筛选标签显示 */}
-              {(filters.search || filters.category || filters.importance || filters.source || filters.tags?.length) && (
-                <div className="flex flex-wrap gap-2 mt-4">
-                  {filters.search && (
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs bg-blue-100 text-blue-800">
-                      搜索: {filters.search}
-                    </span>
-                  )}
-                  {filters.category && (
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs bg-green-100 text-green-800">
-                      分类: {filters.category}
-                    </span>
-                  )}
-                  {filters.importance && (
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs bg-purple-100 text-purple-800">
-                      重要性: {filters.importance}
-                    </span>
-                  )}
-                  {filters.source && (
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs bg-orange-100 text-orange-800">
-                      来源: {mockSources.find(s => s.slug === filters.source)?.name}
-                    </span>
-                  )}
-                  {filters.tags?.map(tag => (
-                    <span key={tag} className="inline-flex items-center px-3 py-1 rounded-full text-xs bg-gray-100 text-gray-800">
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </motion.div>
-
-            {/* 内容网格 */}
-            <ContentGrid
-              content={content}
-              loading={loading}
-              error={error}
-            />
-
-            {/* 分页 (占位) */}
-            {content.length > 0 && !loading && (
-              <motion.div 
-                className="mt-12 flex justify-center"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-              >
-                <div className="flex space-x-2">
-                  <Button variant="outline" disabled>
-                    上一页
-                  </Button>
-                  <Button variant="outline" className="bg-blue-600 text-white">
-                    1
-                  </Button>
-                  <Button variant="outline">
-                    2
-                  </Button>
-                  <Button variant="outline">
-                    下一页
-                  </Button>
-                </div>
-              </motion.div>
-            )}
-          </div>
+        {/* 交替式卡片时间线 */}
+        <div className="relative">
+          {/* 中心线 */}
+          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-blue-200 via-purple-200 to-blue-200"></div>
+          
+          {loading ? (
+            <div className="flex justify-center items-center h-64">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            </div>
+          ) : (
+            <div className="space-y-0">
+              {content.map((item, index) => (
+                <TimelineCard 
+                  key={item.id} 
+                  content={item} 
+                  index={index}
+                />
+              ))}
+            </div>
+          )}
         </div>
-      </div>
+      </main>
 
       {/* 页脚 */}
       <footer className="bg-white border-t mt-16">
