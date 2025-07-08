@@ -1,12 +1,13 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useRef, useEffect, useState } from 'react'
+import { motion, useInView, useMotionValue, useTransform } from 'framer-motion'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { ContentCard } from '@/types/database-refactor'
 import { formatDistanceToNow } from 'date-fns'
 import { zhCN } from 'date-fns/locale'
-import { ExternalLink, Clock, TrendingUp } from 'lucide-react'
+import { ExternalLink, Clock, TrendingUp, Sparkles } from 'lucide-react'
 import Image from 'next/image'
 
 interface TimelineCardProps {
@@ -17,13 +18,43 @@ interface TimelineCardProps {
 export function TimelineCard({ content, index }: TimelineCardProps) {
   const isEven = index % 2 === 0
   const isLeft = !isEven // 奇数卡片在左侧，偶数卡片在右侧
+  const cardRef = useRef(null)
+  const isInView = useInView(cardRef, { once: true, margin: "-100px" })
+  const [isHovered, setIsHovered] = useState(false)
+  
+  // 鼠标位置跟踪
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+  
+  // 3D倾斜效果
+  const rotateX = useTransform(mouseY, [-0.5, 0.5], [5, -5])
+  const rotateY = useTransform(mouseX, [-0.5, 0.5], [isLeft ? -5 : 5, isLeft ? 5 : -5])
+  
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const x = (e.clientX - rect.left) / rect.width - 0.5
+    const y = (e.clientY - rect.top) / rect.height - 0.5
+    mouseX.set(x)
+    mouseY.set(y)
+  }
+  
+  const handleMouseLeave = () => {
+    mouseX.set(0)
+    mouseY.set(0)
+    setIsHovered(false)
+  }
   
   const getImportanceBadge = (importance: string) => {
     switch (importance) {
       case 'high':
-        return <Badge variant="destructive" className="text-xs">高重要</Badge>
+        return (
+          <Badge variant="destructive" className="text-xs bg-gradient-to-r from-red-500 to-pink-500 border-0">
+            <Sparkles className="w-3 h-3 mr-1" />
+            高重要
+          </Badge>
+        )
       case 'medium':
-        return <Badge variant="default" className="text-xs">中重要</Badge>
+        return <Badge variant="default" className="text-xs bg-gradient-to-r from-blue-500 to-indigo-500 border-0">中重要</Badge>
       case 'low':
         return <Badge variant="secondary" className="text-xs">低重要</Badge>
       default:
@@ -42,49 +73,81 @@ export function TimelineCard({ content, index }: TimelineCardProps) {
 
   return (
     <motion.div
+      ref={cardRef}
       initial={{ 
         opacity: 0, 
-        x: isLeft ? -150 : 150,
-        y: 20
+        x: isLeft ? -200 : 200,
+        y: 50,
+        scale: 0.8
       }}
-      animate={{ 
+      animate={isInView ? { 
         opacity: 1, 
         x: 0,
-        y: 0 
-      }}
+        y: 0,
+        scale: 1
+      } : {}}
       transition={{ 
-        duration: 0.8,
-        delay: index * 0.15,
+        duration: 1,
         type: "spring",
-        stiffness: 80,
+        stiffness: 60,
         damping: 20
       }}
-      className={`w-full flex ${isLeft ? 'justify-start' : 'justify-end'} mb-12`}
+      className={`timeline-card w-full flex ${isLeft ? 'justify-start' : 'justify-end'} mb-16`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
     >
-      <div className={`
-        relative
-        w-[85%] 
-        ${isLeft ? 'ml-0 mr-auto' : 'ml-auto mr-0'}
-        ${isLeft ? 'pr-[15%]' : 'pl-[15%]'}
-      `}>
-        <Card className={`
+      <motion.div 
+        className={`
           relative
-          bg-gradient-to-br from-white to-gray-50
-          shadow-2xl 
-          hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.3)]
-          transition-all 
-          duration-500
-          border-0 
-          overflow-hidden
-          group
-          ${isLeft ? 'transform -skew-x-3' : 'transform skew-x-3'}
-          hover:skew-x-0
-          before:absolute before:inset-0 
-          before:bg-gradient-to-br before:from-blue-600/5 before:to-purple-600/5
-          before:opacity-0 before:transition-opacity before:duration-500
-          hover:before:opacity-100
-        `}>
-        <CardContent className={`relative z-10 p-0 ${isLeft ? 'transform skew-x-3' : 'transform -skew-x-3'} group-hover:transform-none transition-transform duration-500`}>
+          w-[85%] 
+          ${isLeft ? 'ml-0 mr-auto' : 'ml-auto mr-0'}
+          ${isLeft ? 'pr-[15%]' : 'pl-[15%]'}
+        `}
+        style={{
+          rotateX,
+          rotateY,
+          transformPerspective: 1000,
+          transformStyle: "preserve-3d"
+        }}
+      >
+        <motion.div
+          className="relative"
+          animate={{
+            scale: isHovered ? 1.02 : 1,
+          }}
+          transition={{ duration: 0.3 }}
+        >
+          <Card className={`
+            relative
+            bg-gradient-to-br from-white/90 to-gray-50/90 backdrop-blur-sm
+            shadow-2xl 
+            transition-all 
+            duration-500
+            border border-white/20
+            overflow-hidden
+            group
+            ${isLeft ? 'transform -skew-x-2' : 'transform skew-x-2'}
+            hover:skew-x-0
+            before:absolute before:inset-0 
+            before:bg-gradient-to-br before:from-blue-600/10 before:to-purple-600/10
+            before:opacity-0 before:transition-opacity before:duration-500
+            hover:before:opacity-100
+          `}
+          style={{
+            boxShadow: isHovered 
+              ? '0 20px 70px -15px rgba(59, 130, 246, 0.5), 0 10px 30px -15px rgba(139, 92, 246, 0.3)' 
+              : '0 10px 40px -15px rgba(0, 0, 0, 0.3)'
+          }}
+        >
+          {/* 发光边框效果 */}
+          <div className={`
+            absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500
+            bg-gradient-to-r ${isLeft ? 'from-blue-500 to-purple-500' : 'from-purple-500 to-pink-500'}
+            blur-xl -z-10 scale-95
+          `} />
+          
+        <CardContent className={`relative z-10 p-0 ${isLeft ? 'transform skew-x-2' : 'transform -skew-x-2'} group-hover:transform-none transition-transform duration-500`}>
           {/* 产品头部 */}
           <div className="p-6 pb-4">
             <div className="flex items-center justify-between mb-4">
@@ -171,7 +234,8 @@ export function TimelineCard({ content, index }: TimelineCardProps) {
           </div>
         </CardContent>
       </Card>
-      </div>
+      </motion.div>
+      </motion.div>
     </motion.div>
   )
 }
