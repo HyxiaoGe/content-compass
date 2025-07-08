@@ -1,15 +1,16 @@
-// 重构后的前台主页 - AI信息聚合展示站
+// AI科技感前台主页 - 终极未来体验
 
 'use client'
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { TimelineCard } from '@/components/front/timeline-card'
-import { AnimatedBackground } from '@/components/front/animated-background'
+import { FluidBackground } from '@/components/effects/fluid-background'
+import { GlassmorphismCard } from '@/components/effects/glassmorphism-card'
+import { HolographicHeader, HolographicStatusBar } from '@/components/effects/holographic-ui'
 import { CursorEffect } from '@/components/front/cursor-effect'
 import { ContentCard } from '@/types/database-refactor'
-import { TrendingUp, Sparkles } from 'lucide-react'
+import { TrendingUp, Sparkles, Settings, User } from 'lucide-react'
 
 // 模拟数据 - 实际应用中从API获取
 const mockContent: ContentCard[] = [
@@ -134,116 +135,93 @@ export default function HomePage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white relative overflow-hidden">
-      {/* 动态背景 */}
-      <AnimatedBackground />
+    <div className="min-h-screen bg-black text-white relative overflow-hidden">
+      {/* 3D流体粒子背景 */}
+      <FluidBackground />
       
-      {/* 鼠标效果 */}
+      {/* 高级鼠标效果 */}
       <CursorEffect />
       
-      {/* 简化的顶部导航 */}
-      <header className="relative bg-gray-900/50 backdrop-blur-md border-b border-white/10 sticky top-0 z-40">
-        <div className="w-full px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            {/* Logo和站点标题 */}
-            <motion.div 
-              className="flex items-center space-x-3"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="relative">
-                <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/50">
-                  <TrendingUp className="w-7 h-7 text-white" />
-                </div>
-                <div className="absolute -top-1 -right-1">
-                  <Sparkles className="w-4 h-4 text-yellow-400 animate-pulse" />
-                </div>
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                  ContentCompass
-                </h1>
-                <p className="text-sm text-gray-400">AI产品更新聚合站</p>
-              </div>
-            </motion.div>
+      {/* 全息状态栏 */}
+      <HolographicStatusBar />
+      
+      {/* 极简导航栏 */}
+      <nav className="relative z-40 p-6">
+        <div className="flex items-center justify-between">
+          <motion.div 
+            className="flex items-center space-x-4"
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="w-3 h-3 bg-cyan-400 rounded-full animate-pulse" />
+            <span className="text-sm font-medium text-gray-300 tracking-wider">CONTENT COMPASS</span>
+          </motion.div>
 
-            {/* 登录按钮 */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
+          <motion.div 
+            className="flex items-center space-x-4"
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              className="text-gray-300 hover:text-white hover:bg-white/10 border border-white/20 backdrop-blur-sm"
             >
-              <Button 
-                variant="default" 
-                className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 px-6 py-2 rounded-lg shadow-lg shadow-blue-500/25 border-0"
-              >
-                <Sparkles className="w-4 h-4 mr-2" />
-                登录
-              </Button>
-            </motion.div>
-          </div>
+              <Settings className="w-4 h-4 mr-2" />
+              设置
+            </Button>
+            <Button 
+              className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 border-0 shadow-lg shadow-cyan-500/25"
+            >
+              <User className="w-4 h-4 mr-2" />
+              登录
+            </Button>
+          </motion.div>
         </div>
-      </header>
+      </nav>
+
+      {/* 全息头部 */}
+      <HolographicHeader />
 
       {/* 主要内容区域 */}
-      <main className="relative w-full px-4 sm:px-6 lg:px-8 py-12 z-10">
-        {/* 页面头部信息 */}
+      <main className="relative z-10 px-6 py-12">
+        {/* 内容标题 */}
         <motion.div 
-          className="text-center mb-20"
-          initial={{ opacity: 0, y: 30 }}
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 1, delay: 1.5 }}
         >
-          <motion.h2 
-            className="text-5xl md:text-6xl font-bold mb-6"
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-              最新AI产品动态
+          <h2 className="text-4xl font-bold mb-4">
+            <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+              实时数据流
             </span>
-          </motion.h2>
-          <motion.p 
-            className="text-xl text-gray-300 max-w-2xl mx-auto"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            实时跟踪AI产品更新，精选重要信息为您呈现
-          </motion.p>
-          
-          {/* 装饰性元素 */}
-          <motion.div
-            className="mt-8 flex justify-center space-x-2"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-            <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse" style={{ animationDelay: '0.2s' }}></div>
-            <div className="w-2 h-2 bg-pink-400 rounded-full animate-pulse" style={{ animationDelay: '0.4s' }}></div>
-          </motion.div>
+          </h2>
+          <p className="text-gray-400 max-w-2xl mx-auto">
+            AI驱动的信息聚合，为您提供最新的产品动态和技术洞察
+          </p>
         </motion.div>
 
-        {/* 交替式卡片布局 */}
-        <div className="relative">
+        {/* 毛玻璃卡片布局 */}
+        <div className="relative max-w-7xl mx-auto">
           {loading ? (
             <div className="flex justify-center items-center h-64">
               <motion.div
                 className="relative"
                 animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
               >
-                <div className="w-16 h-16 border-4 border-blue-500/20 border-t-blue-500 rounded-full"></div>
-                <div className="absolute inset-2 w-8 h-8 border-4 border-purple-500/20 border-t-purple-500 rounded-full animate-spin" style={{ animationDirection: 'reverse' }}></div>
+                <div className="w-20 h-20 border-4 border-cyan-500/20 border-t-cyan-500 rounded-full"></div>
+                <div className="absolute inset-2 w-12 h-12 border-4 border-purple-500/20 border-t-purple-500 rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1s' }}></div>
+                <div className="absolute inset-4 w-8 h-8 border-4 border-pink-500/20 border-t-pink-500 rounded-full animate-spin" style={{ animationDuration: '0.5s' }}></div>
               </motion.div>
             </div>
           ) : (
-            <div className="space-y-8">
+            <div className="space-y-12">
               {content.map((item, index) => (
-                <TimelineCard 
+                <GlassmorphismCard 
                   key={item.id} 
                   content={item} 
                   index={index}
@@ -254,48 +232,63 @@ export default function HomePage() {
         </div>
       </main>
 
-      {/* 页脚 */}
-      <footer className="relative bg-gray-900/80 backdrop-blur-sm border-t border-white/10 mt-20">
-        <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="md:col-span-2">
-              <div className="flex items-center space-x-3 mb-6">
-                <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <TrendingUp className="w-6 h-6 text-white" />
+      {/* 全息页脚 */}
+      <footer className="relative mt-32">
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-gray-900/50 to-transparent" />
+        
+        <div className="relative z-10 px-6 py-16">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+              
+              <div className="text-center md:text-left">
+                <div className="flex items-center justify-center md:justify-start space-x-3 mb-6">
+                  <div className="w-8 h-8 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center">
+                    <TrendingUp className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-white">ContentCompass</h3>
+                    <p className="text-xs text-gray-400">AI信息聚合引擎</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-bold text-white text-lg">ContentCompass</h3>
-                  <p className="text-sm text-gray-400">AI产品更新聚合站</p>
-                </div>
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  基于先进AI技术的实时信息聚合平台，为您提供最前沿的科技动态。
+                </p>
               </div>
-              <p className="text-gray-300 text-sm leading-relaxed max-w-md">
-                自动监控和AI处理AI产品的更新信息，为关注AI产品动态的开发者、研究者、从业者提供精炼的信息摘要。
-              </p>
+              
+              <div className="text-center">
+                <h4 className="font-semibold text-white mb-6 flex items-center justify-center">
+                  <div className="w-2 h-2 bg-cyan-400 rounded-full mr-2" />
+                  核心功能
+                </h4>
+                <ul className="space-y-3 text-sm text-gray-400">
+                  <li className="hover:text-cyan-400 transition-colors cursor-pointer">智能内容聚合</li>
+                  <li className="hover:text-cyan-400 transition-colors cursor-pointer">实时数据分析</li>
+                  <li className="hover:text-cyan-400 transition-colors cursor-pointer">AI驱动洞察</li>
+                </ul>
+              </div>
+              
+              <div className="text-center">
+                <h4 className="font-semibold text-white mb-6 flex items-center justify-center">
+                  <div className="w-2 h-2 bg-purple-400 rounded-full mr-2" />
+                  连接我们
+                </h4>
+                <ul className="space-y-3 text-sm text-gray-400">
+                  <li className="hover:text-purple-400 transition-colors cursor-pointer">技术文档</li>
+                  <li className="hover:text-purple-400 transition-colors cursor-pointer">API接口</li>
+                  <li className="hover:text-purple-400 transition-colors cursor-pointer">开发者社区</li>
+                </ul>
+              </div>
             </div>
             
-            <div>
-              <h4 className="font-semibold text-white mb-4">产品</h4>
-              <ul className="space-y-3 text-sm text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">关于我们</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">API文档</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">RSS订阅</a></li>
-              </ul>
+            <div className="border-t border-white/10 pt-8 text-center">
+              <div className="flex items-center justify-center space-x-4 mb-4">
+                <div className="w-1 h-1 bg-cyan-400 rounded-full animate-pulse" />
+                <p className="text-sm text-gray-500">
+                  &copy; 2024 ContentCompass. Powered by AI Technology.
+                </p>
+                <div className="w-1 h-1 bg-purple-400 rounded-full animate-pulse" />
+              </div>
             </div>
-            
-            <div>
-              <h4 className="font-semibold text-white mb-4">联系</h4>
-              <ul className="space-y-3 text-sm text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">联系我们</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">反馈建议</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">技术支持</a></li>
-              </ul>
-            </div>
-          </div>
-          
-          <div className="border-t border-white/10 mt-12 pt-8 text-center">
-            <p className="text-sm text-gray-400">
-              &copy; 2024 ContentCompass. 专注AI产品信息聚合。
-            </p>
           </div>
         </div>
       </footer>
