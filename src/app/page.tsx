@@ -99,7 +99,7 @@ const mockContent: ContentCard[] = [
     id: '5',
     product: {
       name: 'Perplexity',
-      logo: 'https://www.perplexity.ai/favicon.ico',
+      logo: 'https://framerusercontent.com/images/pta2kExQjjj4WH50JAVR6D1QNFQ.png',
       category: 'AI Search',
       slug: 'perplexity'
     },
