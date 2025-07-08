@@ -1,7 +1,6 @@
 // src/app/api/status/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { createRouteHandlerClient } from '@/lib/supabase/server';
-import { cookies } from 'next/headers';
 import type { Database, APIResponse } from '@/types/database';
 
 // 系统状态检查

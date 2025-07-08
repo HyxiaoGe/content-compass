@@ -1,7 +1,6 @@
 // src/app/api/user/stats/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { createRouteHandlerClient } from '@/lib/supabase/server';
-import { cookies } from 'next/headers';
 import { contentService } from '@/lib/database/content';
 import { usageLogService } from '@/lib/database/usage';
 import { userService } from '@/lib/database/user';

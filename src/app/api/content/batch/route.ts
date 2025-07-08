@@ -1,7 +1,6 @@
 // src/app/api/content/batch/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { createRouteHandlerClient } from '@/lib/supabase/server';
-import { cookies } from 'next/headers';
 import { scraperService } from '@/lib/scraper';
 import { aiServiceManager } from '@/lib/ai';
 import { contentService } from '@/lib/database/content';

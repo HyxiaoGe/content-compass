@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createRouteHandlerClient } from '@/lib/supabase/server';
 import { contentService } from '@/lib/database/content';
 import { aiServiceManager } from '@/lib/ai';
-import type { Database, APIResponse, ParsedContent } from '@/types/database';
+import type { APIResponse, ParsedContent } from '@/types/database';
 import { z } from 'zod';
 
 // 更新内容的验证schema

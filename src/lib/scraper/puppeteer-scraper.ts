@@ -1,6 +1,7 @@
 // src/lib/scraper/puppeteer-scraper.ts
 import puppeteer, { Browser, Page } from 'puppeteer';
-import type { ScrapingOptions, ScrapingResult, SitePattern, SITE_PATTERNS } from '@/types/scraper';
+import type { ScrapingOptions, ScrapingResult, SitePattern } from '@/types/scraper';
+import { SITE_PATTERNS } from '@/types/scraper';
 
 export class PuppeteerScraper {
   private browser: Browser | null = null;
@@ -23,7 +24,7 @@ export class PuppeteerScraper {
   private async _initialize(): Promise<void> {
     try {
       this.browser = await puppeteer.launch({
-        headless: 'new',
+        headless: true,
         args: [
           '--no-sandbox',
           '--disable-setuid-sandbox',
@@ -169,12 +170,12 @@ export class PuppeteerScraper {
       const domain = new URL(url).hostname;
       
       // 查找匹配的站点模式
-      for (const [key, pattern] of Object.entries(SITE_PATTERNS)) {
+      for (const [_key, pattern] of Object.entries(SITE_PATTERNS)) {
         if (domain.includes(pattern.domain)) {
           return pattern;
         }
       }
-    } catch (error) {
+    } catch (_error) {
       // URL解析失败，返回null
     }
     
@@ -199,7 +200,7 @@ export class PuppeteerScraper {
     if (options.waitForSelector) {
       try {
         await page.waitForSelector(options.waitForSelector, { timeout: 5000 });
-      } catch (error) {
+      } catch (_error) {
         // 选择器超时不算致命错误，继续执行
         console.warn(`Selector "${options.waitForSelector}" not found within timeout`);
       }
@@ -208,14 +209,14 @@ export class PuppeteerScraper {
     // 等待网络空闲
     if (options.waitForNetworkIdle) {
       try {
-        await page.waitForLoadState('networkidle');
-      } catch (error) {
+        await page.waitForNavigation({ waitUntil: 'networkidle0' });
+      } catch (_error) {
         // 网络空闲超时也不算致命错误
       }
     }
 
     // 额外等待确保页面完全加载
-    await page.waitForTimeout(1000);
+    await new Promise(resolve => setTimeout(resolve, 1000));
   }
 
   private async extractPageData(page: Page, options: ScrapingOptions): Promise<any> {
@@ -350,7 +351,7 @@ export class PuppeteerScraper {
       // 提取链接
       const links = opts.extractLinks ?
         Array.from(document.querySelectorAll('a[href]'))
-          .map(link => link.href)
+          .map(link => (link as HTMLAnchorElement).href)
           .filter(href => href && href.startsWith('http'))
           .slice(0, 50) // 限制数量
         : [];
@@ -436,7 +437,7 @@ export class PuppeteerScraper {
           ...options.screenshotOptions
         });
         
-        return screenshot as Buffer;
+        return screenshot as unknown as Buffer;
       } finally {
         await page.close();
       }

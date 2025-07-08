@@ -1,7 +1,6 @@
 // src/app/api/test/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { createRouteHandlerClient } from '@/lib/supabase/server';
-import { cookies } from 'next/headers';
 import type { Database, APIResponse } from '@/types/database';
 
 // 测试端点配置

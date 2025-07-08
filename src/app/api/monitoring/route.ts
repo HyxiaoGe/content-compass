@@ -1,8 +1,7 @@
 // src/app/api/monitoring/route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import { createRouteHandlerClient } from '@/lib/supabase/server';
-import { cookies } from 'next/headers';
-import type { Database, APIResponse } from '@/types/database';
+import type { APIResponse } from '@/types/database';
 
 // 监控数据收集
 interface MonitoringData {
@@ -62,7 +61,7 @@ const monitoringStore = {
 };
 
 // 记录API请求
-function recordApiRequest(endpoint: string, duration: number, status: number) {
+function _recordApiRequest(endpoint: string, duration: number, status: number) {
   const requestId = `${endpoint}-${Date.now()}-${Math.random()}`;
   
   // 保存最近1小时的请求
@@ -98,7 +97,7 @@ function recordApiRequest(endpoint: string, duration: number, status: number) {
 }
 
 // 记录服务使用
-function recordServiceUsage(service: 'ai' | 'scraper', duration: number, success: boolean, metadata: any = {}) {
+function _recordServiceUsage(service: 'ai' | 'scraper', duration: number, success: boolean, metadata: any = {}) {
   const serviceStats = monitoringStore.services[service];
   
   serviceStats.requests++;

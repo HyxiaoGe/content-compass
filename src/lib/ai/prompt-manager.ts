@@ -3,9 +3,7 @@ import type {
   PromptTemplate, 
   PromptLibrary, 
   PromptCategory, 
-  SummaryType,
-  PromptVariable,
-  PromptExample 
+  SummaryType
 } from '@/types/ai';
 
 export class PromptManager {
@@ -498,11 +496,11 @@ export class PromptManager {
         const validation = variable.validation;
 
         if (typeof value === 'string' || typeof value === 'number') {
-          if (validation.min !== undefined && value < validation.min) {
+          if (validation.min !== undefined && Number(value) < validation.min) {
             errors.push(`变量 "${variable.name}" 不能小于 ${validation.min}`);
           }
 
-          if (validation.max !== undefined && value > validation.max) {
+          if (validation.max !== undefined && Number(value) > validation.max) {
             errors.push(`变量 "${variable.name}" 不能大于 ${validation.max}`);
           }
         }
