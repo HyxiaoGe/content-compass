@@ -21,7 +21,7 @@ const querySchema = z.object({
 export async function GET(request: NextRequest) {
   try {
     // 验证用户认证
-    const supabase = createRouteHandlerClient();
+    const supabase = await createRouteHandlerClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {
@@ -186,7 +186,7 @@ export async function GET(request: NextRequest) {
 // POST 请求用于创建新的内容记录（通常通过parse API创建，这里提供备用方法）
 export async function POST(request: NextRequest) {
   try {
-    const supabase = createRouteHandlerClient();
+    const supabase = await createRouteHandlerClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {

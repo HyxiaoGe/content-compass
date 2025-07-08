@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
 
   try {
     // 验证用户认证
-    const supabase = createRouteHandlerClient();
+    const supabase = await createRouteHandlerClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {
@@ -256,7 +256,7 @@ export async function POST(request: NextRequest) {
     if (contentId) {
       const processingTime = Date.now() - startTime;
       try {
-        const supabase = createRouteHandlerClient();
+        const supabase = await createRouteHandlerClient();
         const { data: { user } } = await supabase.auth.getUser();
         
         if (user) {
@@ -290,7 +290,7 @@ export async function POST(request: NextRequest) {
 // GET 请求用于获取解析任务状态
 export async function GET(request: NextRequest) {
   try {
-    const supabase = createRouteHandlerClient();
+    const supabase = await createRouteHandlerClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {

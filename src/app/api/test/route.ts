@@ -17,7 +17,7 @@ const testEndpoints = {
     // 测试数据库连接
     try {
       const startTime = Date.now();
-      const supabase = createRouteHandlerClient();
+      const supabase = await createRouteHandlerClient();
       const { data, error } = await supabase.from('user_profiles').select('count', { count: 'exact' }).limit(1);
       const latency = Date.now() - startTime;
       
@@ -100,7 +100,7 @@ const testEndpoints = {
 
   // 测试用户认证
   auth: async (request: NextRequest) => {
-    const supabase = createRouteHandlerClient();
+    const supabase = await createRouteHandlerClient();
     const { data: { user }, error } = await supabase.auth.getUser();
     
     return {
@@ -116,7 +116,7 @@ const testEndpoints = {
 
   // 测试数据库连接
   database: async () => {
-    const supabase = createRouteHandlerClient();
+    const supabase = await createRouteHandlerClient();
     const tests = {};
     
     // 测试各个表的连接
@@ -322,7 +322,7 @@ export async function GET(request: NextRequest) {
 // POST 请求用于执行压力测试
 export async function POST(request: NextRequest) {
   try {
-    const supabase = createRouteHandlerClient();
+    const supabase = await createRouteHandlerClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {

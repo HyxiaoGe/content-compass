@@ -8,7 +8,7 @@ import { Header } from '@/components/layout/header'
 import type { Database } from '@/types/database'
 
 export default async function HomePage() {
-  const supabase = createServerComponentClient()
+  const supabase = await createServerComponentClient()
   const { data: { session } } = await supabase.auth.getSession()
 
   // 获取用户资料

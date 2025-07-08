@@ -27,7 +27,7 @@ async function getContent(userId: string) {
 }
 
 export default async function ContentPage() {
-  const supabase = createServerComponentClient()
+  const supabase = await createServerComponentClient()
   
   const { data: { session } } = await supabase.auth.getSession()
   

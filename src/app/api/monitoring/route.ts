@@ -117,7 +117,7 @@ function _recordServiceUsage(service: 'ai' | 'scraper', duration: number, succes
 
 export async function GET(request: NextRequest) {
   try {
-    const supabase = createRouteHandlerClient();
+    const supabase = await createRouteHandlerClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     // 只有认证用户可以访问监控数据
@@ -234,7 +234,7 @@ export async function GET(request: NextRequest) {
 // 清理监控数据
 export async function DELETE(request: NextRequest) {
   try {
-    const supabase = createRouteHandlerClient();
+    const supabase = await createRouteHandlerClient();
     const { data: { user }, error: authError } = await supabase.auth.getUser();
 
     if (authError || !user) {

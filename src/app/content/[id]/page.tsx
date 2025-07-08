@@ -36,7 +36,7 @@ export default async function ContentDetailPage({
   params: Promise<{ id: string }>
 }) {
   const { id } = await params;
-  const supabase = createServerComponentClient()
+  const supabase = await createServerComponentClient()
   
   const { data: { session } } = await supabase.auth.getSession()
   

@@ -179,7 +179,7 @@ export class ScraperTester {
         const result = await scraperService.scrapeURL(url);
         results.push({
           url,
-          handled: !result.success && result.error?.includes('无效')
+          handled: !result.success && (result.error?.includes('无效') || false)
         });
       }
 
@@ -264,7 +264,7 @@ export class ScraperTester {
         typeof health.browser === 'boolean' &&
         typeof health.activeScrapes === 'number' &&
         typeof health.cacheSize === 'number' &&
-        health.stats
+        !!health.stats
       );
 
       return {

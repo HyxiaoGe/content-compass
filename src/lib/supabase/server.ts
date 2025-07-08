@@ -4,8 +4,8 @@ import { cookies } from 'next/headers';
 import type { Database } from '@/types/database';
 
 // 服务端组件使用
-export const createServerComponentClient = () => {
-  const cookieStore = cookies();
+export const createServerComponentClient = async () => {
+  const cookieStore = await cookies();
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
   
@@ -55,8 +55,8 @@ export const createServiceRoleClient = () => {
 };
 
 // 路由处理器使用
-export const createRouteHandlerClient = () => {
-  const cookieStore = cookies();
+export const createRouteHandlerClient = async () => {
+  const cookieStore = await cookies();
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
   

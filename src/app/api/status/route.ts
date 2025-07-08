@@ -48,7 +48,7 @@ async function checkDatabaseStatus(): Promise<ServiceStatus> {
   const startTime = Date.now();
   
   try {
-    const supabase = createRouteHandlerClient();
+    const supabase = await createRouteHandlerClient();
     
     // 检查数据库连接
     const { data, error } = await supabase
@@ -207,7 +207,7 @@ async function checkAuthStatus(): Promise<ServiceStatus> {
       };
     }
     
-    const supabase = createRouteHandlerClient();
+    const supabase = await createRouteHandlerClient();
     
     // 尝试获取用户会话（不会失败，只是检查服务可用性）
     const { data, error } = await supabase.auth.getSession();
