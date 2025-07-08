@@ -44,35 +44,47 @@ export function TimelineCard({ content, index }: TimelineCardProps) {
     <motion.div
       initial={{ 
         opacity: 0, 
-        x: isLeft ? -100 : 100 
+        x: isLeft ? -150 : 150,
+        y: 20
       }}
       animate={{ 
         opacity: 1, 
-        x: 0 
+        x: 0,
+        y: 0 
       }}
       transition={{ 
         duration: 0.8,
-        delay: index * 0.2,
+        delay: index * 0.15,
         type: "spring",
-        stiffness: 100,
+        stiffness: 80,
         damping: 20
       }}
-      className={`w-full flex ${isLeft ? 'justify-start' : 'justify-end'} mb-16`}
+      className={`w-full flex ${isLeft ? 'justify-start' : 'justify-end'} mb-12`}
     >
-      <Card className={`
-        ${isLeft ? 'w-[60%]' : 'w-[60%]'} 
-        bg-white 
-        shadow-lg 
-        hover:shadow-xl 
-        transition-all 
-        duration-300 
-        hover:scale-105 
-        border-0 
-        rounded-2xl
-        overflow-hidden
-        group
+      <div className={`
+        relative
+        w-[85%] 
+        ${isLeft ? 'ml-0 mr-auto' : 'ml-auto mr-0'}
+        ${isLeft ? 'pr-[15%]' : 'pl-[15%]'}
       `}>
-        <CardContent className="p-0">
+        <Card className={`
+          relative
+          bg-gradient-to-br from-white to-gray-50
+          shadow-2xl 
+          hover:shadow-[0_20px_50px_rgba(8,_112,_184,_0.3)]
+          transition-all 
+          duration-500
+          border-0 
+          overflow-hidden
+          group
+          ${isLeft ? 'transform -skew-x-3' : 'transform skew-x-3'}
+          hover:skew-x-0
+          before:absolute before:inset-0 
+          before:bg-gradient-to-br before:from-blue-600/5 before:to-purple-600/5
+          before:opacity-0 before:transition-opacity before:duration-500
+          hover:before:opacity-100
+        `}>
+        <CardContent className={`relative z-10 p-0 ${isLeft ? 'transform skew-x-3' : 'transform -skew-x-3'} group-hover:transform-none transition-transform duration-500`}>
           {/* 产品头部 */}
           <div className="p-6 pb-4">
             <div className="flex items-center justify-between mb-4">
@@ -150,7 +162,7 @@ export function TimelineCard({ content, index }: TimelineCardProps) {
                 href={content.originalUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition-colors"
+                className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-sm font-medium rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105 shadow-md hover:shadow-lg"
               >
                 查看原文
                 <ExternalLink className="w-4 h-4 ml-2" />
@@ -159,6 +171,7 @@ export function TimelineCard({ content, index }: TimelineCardProps) {
           </div>
         </CardContent>
       </Card>
+      </div>
     </motion.div>
   )
 }

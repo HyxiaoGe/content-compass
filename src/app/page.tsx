@@ -73,6 +73,48 @@ const mockContent: ContentCard[] = [
     publishedAt: '2024-01-13T09:15:00Z',
     originalUrl: 'https://github.blog/tag/github-copilot/',
     tags: ['chat', 'debugging', 'context']
+  },
+  {
+    id: '4',
+    product: {
+      name: 'OpenAI',
+      logo: 'https://openai.com/favicon.ico',
+      category: 'AI Platform',
+      slug: 'openai'
+    },
+    title: 'GPT-4 Turbo 128K上下文窗口升级',
+    summary: 'OpenAI推出了GPT-4 Turbo的重大更新，将上下文窗口扩展到128K tokens，相当于300页文本。新版本不仅处理能力更强，还优化了响应速度和成本效益，让开发者能够构建更复杂的AI应用。',
+    keyPoints: [
+      '上下文窗口扩展至128K tokens',
+      '处理速度提升2.5倍',
+      '成本降低30%',
+      '支持更复杂的多轮对话'
+    ],
+    importance: 'high',
+    publishedAt: '2024-01-12T14:00:00Z',
+    originalUrl: 'https://openai.com/blog/gpt-4-turbo',
+    tags: ['model-update', 'context-window', 'performance']
+  },
+  {
+    id: '5',
+    product: {
+      name: 'Perplexity',
+      logo: 'https://www.perplexity.ai/favicon.ico',
+      category: 'AI Search',
+      slug: 'perplexity'
+    },
+    title: 'Perplexity Pro搜索能力全面升级',
+    summary: 'Perplexity推出了Pro版本的重大更新，集成了最新的AI模型，提供更准确的实时信息搜索和分析能力。新版本支持多模态输入，可以同时处理文本、图片和文档，为用户提供更全面的搜索体验。',
+    keyPoints: [
+      '集成GPT-4和Claude最新模型',
+      '支持图片和文档搜索',
+      '实时网络信息更新',
+      '增强的引用验证系统'
+    ],
+    importance: 'medium',
+    publishedAt: '2024-01-11T11:30:00Z',
+    originalUrl: 'https://blog.perplexity.ai/pro-update',
+    tags: ['search', 'multimodal', 'real-time']
   }
 ]
 
@@ -118,7 +160,7 @@ export default function HomePage() {
       </header>
 
       {/* 主要内容区域 */}
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main className="w-full px-4 sm:px-6 lg:px-8 py-12">
         {/* 页面头部信息 */}
         <motion.div 
           className="text-center mb-16"
@@ -134,17 +176,14 @@ export default function HomePage() {
           </p>
         </motion.div>
 
-        {/* 交替式卡片时间线 */}
+        {/* 交替式卡片布局 */}
         <div className="relative">
-          {/* 中心线 */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-blue-200 via-purple-200 to-blue-200"></div>
-          
           {loading ? (
             <div className="flex justify-center items-center h-64">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
             </div>
           ) : (
-            <div className="space-y-0">
+            <div className="space-y-8">
               {content.map((item, index) => (
                 <TimelineCard 
                   key={item.id} 
