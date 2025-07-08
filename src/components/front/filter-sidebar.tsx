@@ -189,14 +189,14 @@ export function FilterSidebar({
                 {/* 产品分类 */}
                 <FilterSection title="产品分类" section="category">
                   <Select
-                    value={filters.category || ''}
-                    onValueChange={(value) => updateFilter('category', value || undefined)}
+                    value={filters.category || 'all'}
+                    onValueChange={(value) => updateFilter('category', value === 'all' ? undefined : value)}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="选择分类" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">全部分类</SelectItem>
+                      <SelectItem value="all">全部分类</SelectItem>
                       {categories.map((category) => (
                         <SelectItem key={category} value={category}>
                           {category}
@@ -245,14 +245,14 @@ export function FilterSidebar({
                 {/* 产品来源 */}
                 <FilterSection title="产品来源" section="source">
                   <Select
-                    value={filters.source || ''}
-                    onValueChange={(value) => updateFilter('source', value || undefined)}
+                    value={filters.source || 'all'}
+                    onValueChange={(value) => updateFilter('source', value === 'all' ? undefined : value)}
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="选择产品" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">全部产品</SelectItem>
+                      <SelectItem value="all">全部产品</SelectItem>
                       {sources.map((source) => (
                         <SelectItem key={source.slug} value={source.slug}>
                           {source.name}

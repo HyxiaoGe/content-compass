@@ -142,14 +142,14 @@ export function ContentList({ initialData }: ContentListProps) {
 
         <div className="flex flex-wrap gap-3">
           <Select
-            value={filters.status}
-            onValueChange={(value) => handleFilterChange('status', value)}
+            value={filters.status || 'all'}
+            onValueChange={(value) => handleFilterChange('status', value === 'all' ? '' : value)}
           >
             <SelectTrigger>
               <SelectValue placeholder="所有状态" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">所有状态</SelectItem>
+              <SelectItem value="all">所有状态</SelectItem>
               <SelectItem value="completed">已完成</SelectItem>
               <SelectItem value="processing">处理中</SelectItem>
               <SelectItem value="failed">失败</SelectItem>
@@ -158,14 +158,14 @@ export function ContentList({ initialData }: ContentListProps) {
           </Select>
 
           <Select
-            value={filters.language}
-            onValueChange={(value) => handleFilterChange('language', value)}
+            value={filters.language || 'all'}
+            onValueChange={(value) => handleFilterChange('language', value === 'all' ? '' : value)}
           >
             <SelectTrigger>
               <SelectValue placeholder="所有语言" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">所有语言</SelectItem>
+              <SelectItem value="all">所有语言</SelectItem>
               <SelectItem value="zh">中文</SelectItem>
               <SelectItem value="en">English</SelectItem>
               <SelectItem value="ja">日本語</SelectItem>

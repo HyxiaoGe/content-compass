@@ -37,7 +37,7 @@ const mockContent: ContentCard[] = [
     id: '2',
     product: {
       name: 'Claude',
-      logo: 'https://docs.anthropic.com/favicon.ico',
+      logo: 'https://www.anthropic.com/favicon.ico',
       category: 'AI Assistant',
       slug: 'claude'
     },
