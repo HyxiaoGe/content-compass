@@ -3,6 +3,7 @@
 
 import { useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
 interface UsageData {
   date: string
@@ -56,15 +57,19 @@ export function UsageChart() {
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>使用趋势</CardTitle>
-        <select
+        <Select
           value={timeRange}
-          onChange={(e) => setTimeRange(e.target.value)}
-          className="text-sm border rounded px-2 py-1"
+          onValueChange={(value) => setTimeRange(value)}
         >
-          <option value="7">最近7天</option>
-          <option value="14">最近14天</option>
-          <option value="30">最近30天</option>
-        </select>
+          <SelectTrigger className="w-32">
+            <SelectValue placeholder="时间范围" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="7">最近7天</SelectItem>
+            <SelectItem value="14">最近14天</SelectItem>
+            <SelectItem value="30">最近30天</SelectItem>
+          </SelectContent>
+        </Select>
       </CardHeader>
       <CardContent>
         {usageData.length > 0 ? (

@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Select } from '@/components/ui/select'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { formatDate, getUrlDomain, truncateText } from '@/lib/utils'
 import type { ParsedContent, PaginatedResponse } from '@/types/database'
 
@@ -143,38 +143,53 @@ export function ContentList({ initialData }: ContentListProps) {
         <div className="flex flex-wrap gap-3">
           <Select
             value={filters.status}
-            onChange={(e) => handleFilterChange('status', e.target.value)}
+            onValueChange={(value) => handleFilterChange('status', value)}
           >
-            <option value="">所有状态</option>
-            <option value="completed">已完成</option>
-            <option value="processing">处理中</option>
-            <option value="failed">失败</option>
-            <option value="pending">待处理</option>
+            <SelectTrigger>
+              <SelectValue placeholder="所有状态" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="">所有状态</SelectItem>
+              <SelectItem value="completed">已完成</SelectItem>
+              <SelectItem value="processing">处理中</SelectItem>
+              <SelectItem value="failed">失败</SelectItem>
+              <SelectItem value="pending">待处理</SelectItem>
+            </SelectContent>
           </Select>
 
           <Select
             value={filters.language}
-            onChange={(e) => handleFilterChange('language', e.target.value)}
+            onValueChange={(value) => handleFilterChange('language', value)}
           >
-            <option value="">所有语言</option>
-            <option value="zh">中文</option>
-            <option value="en">English</option>
-            <option value="ja">日本語</option>
-            <option value="ko">한국어</option>
+            <SelectTrigger>
+              <SelectValue placeholder="所有语言" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="">所有语言</SelectItem>
+              <SelectItem value="zh">中文</SelectItem>
+              <SelectItem value="en">English</SelectItem>
+              <SelectItem value="ja">日本語</SelectItem>
+              <SelectItem value="ko">한국어</SelectItem>
+            </SelectContent>
           </Select>
 
           <Select
             value={`${filters.sort}-${filters.order}`}
-            onChange={(e) => {
-              const [sort, order] = e.target.value.split('-')
+            onValueChange={(value) => {
+              const [sort, order] = value.split('-')
               setFilters(prev => ({ ...prev, sort, order }))
               fetchContent(1, { ...filters, sort, order })
             }}
           >
-            <option value="created_at-desc">最新创建</option>
-            <option value="created_at-asc">最早创建</option>
-            <option value="updated_at-desc">最近更新</option>
-            <option value="title-asc">标题 A-Z</option>
+            <SelectTrigger>
+              <SelectValue placeholder="排序方式" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="created_at-desc">最新创建</SelectItem>
+              <SelectItem value="created_at-asc">最早创建</SelectItem>
+              <SelectItem value="updated_at-desc">最近更新</SelectItem>
+              <SelectItem value="title-asc">标题 A-Z</SelectItem>
+            </SelectContent>
           </Select>
         </div>
       </div>

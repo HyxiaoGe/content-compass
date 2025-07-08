@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Textarea } from '@/components/ui/textarea'
-import { Select } from '@/components/ui/select'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { formatDate, getUrlDomain, formatBytes, formatDuration, formatCurrency } from '@/lib/utils'
 import type { ParsedContent } from '@/types/database'
 
@@ -296,16 +296,21 @@ export function ContentDetail({ content }: ContentDetailProps) {
                   <label className="text-sm font-medium">摘要类型</label>
                   <Select
                     value={regenerateOptions.summaryType}
-                    onChange={(e) => setRegenerateOptions(prev => ({ ...prev, summaryType: e.target.value }))}
+                    onValueChange={(value) => setRegenerateOptions(prev => ({ ...prev, summaryType: value }))}
                   >
-                    <option value="brief">简要摘要</option>
-                    <option value="standard">标准摘要</option>
-                    <option value="detailed">详细摘要</option>
-                    <option value="bullet-points">要点列表</option>
-                    <option value="key-insights">关键洞察</option>
-                    <option value="executive">执行摘要</option>
-                    <option value="technical">技术摘要</option>
-                    <option value="academic">学术摘要</option>
+                    <SelectTrigger>
+                      <SelectValue placeholder="选择摘要类型" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="brief">简要摘要</SelectItem>
+                      <SelectItem value="standard">标准摘要</SelectItem>
+                      <SelectItem value="detailed">详细摘要</SelectItem>
+                      <SelectItem value="bullet-points">要点列表</SelectItem>
+                      <SelectItem value="key-insights">关键洞察</SelectItem>
+                      <SelectItem value="executive">执行摘要</SelectItem>
+                      <SelectItem value="technical">技术摘要</SelectItem>
+                      <SelectItem value="academic">学术摘要</SelectItem>
+                    </SelectContent>
                   </Select>
                 </div>
 
@@ -313,12 +318,17 @@ export function ContentDetail({ content }: ContentDetailProps) {
                   <label className="text-sm font-medium">最大Token数</label>
                   <Select
                     value={regenerateOptions.maxTokens.toString()}
-                    onChange={(e) => setRegenerateOptions(prev => ({ ...prev, maxTokens: parseInt(e.target.value) }))}
+                    onValueChange={(value) => setRegenerateOptions(prev => ({ ...prev, maxTokens: parseInt(value) }))}
                   >
-                    <option value="500">500 tokens</option>
-                    <option value="1000">1000 tokens</option>
-                    <option value="2000">2000 tokens</option>
-                    <option value="3000">3000 tokens</option>
+                    <SelectTrigger>
+                      <SelectValue placeholder="选择Token数" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="500">500 tokens</SelectItem>
+                      <SelectItem value="1000">1000 tokens</SelectItem>
+                      <SelectItem value="2000">2000 tokens</SelectItem>
+                      <SelectItem value="3000">3000 tokens</SelectItem>
+                    </SelectContent>
                   </Select>
                 </div>
               </div>

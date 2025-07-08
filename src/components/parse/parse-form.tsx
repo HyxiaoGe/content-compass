@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { Select } from '@/components/ui/select'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
 interface ParseFormProps {
@@ -151,16 +151,20 @@ export function ParseForm({ onParseStart, onParseComplete }: ParseFormProps) {
                   摘要类型
                 </label>
                 <Select
-                  id="summaryType"
                   value={options.summaryType}
-                  onChange={(e) => setOptions(prev => ({ ...prev, summaryType: e.target.value }))}
+                  onValueChange={(value) => setOptions(prev => ({ ...prev, summaryType: value }))}
                   disabled={loading}
                 >
-                  {summaryTypes.map((type) => (
-                    <option key={type.value} value={type.value}>
-                      {type.label}
-                    </option>
-                  ))}
+                  <SelectTrigger>
+                    <SelectValue placeholder="选择摘要类型" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {summaryTypes.map((type) => (
+                      <SelectItem key={type.value} value={type.value}>
+                        {type.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
                 </Select>
               </div>
 
@@ -169,16 +173,20 @@ export function ParseForm({ onParseStart, onParseComplete }: ParseFormProps) {
                   输出语言
                 </label>
                 <Select
-                  id="language"
                   value={options.language}
-                  onChange={(e) => setOptions(prev => ({ ...prev, language: e.target.value }))}
+                  onValueChange={(value) => setOptions(prev => ({ ...prev, language: value }))}
                   disabled={loading}
                 >
-                  {languages.map((lang) => (
-                    <option key={lang.value} value={lang.value}>
-                      {lang.label}
-                    </option>
-                  ))}
+                  <SelectTrigger>
+                    <SelectValue placeholder="选择语言" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {languages.map((lang) => (
+                      <SelectItem key={lang.value} value={lang.value}>
+                        {lang.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
                 </Select>
               </div>
             </div>
@@ -222,16 +230,20 @@ export function ParseForm({ onParseStart, onParseComplete }: ParseFormProps) {
                   最大Token数量
                 </label>
                 <Select
-                  id="maxTokens"
                   value={options.maxTokens.toString()}
-                  onChange={(e) => setOptions(prev => ({ ...prev, maxTokens: parseInt(e.target.value) }))}
+                  onValueChange={(value) => setOptions(prev => ({ ...prev, maxTokens: parseInt(value) }))}
                   disabled={loading}
                 >
-                  <option value="500">500 tokens</option>
-                  <option value="1000">1000 tokens</option>
-                  <option value="2000">2000 tokens</option>
-                  <option value="3000">3000 tokens</option>
-                  <option value="4000">4000 tokens</option>
+                  <SelectTrigger>
+                    <SelectValue placeholder="选择Token数量" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="500">500 tokens</SelectItem>
+                    <SelectItem value="1000">1000 tokens</SelectItem>
+                    <SelectItem value="2000">2000 tokens</SelectItem>
+                    <SelectItem value="3000">3000 tokens</SelectItem>
+                    <SelectItem value="4000">4000 tokens</SelectItem>
+                  </SelectContent>
                 </Select>
               </div>
 
