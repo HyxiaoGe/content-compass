@@ -47,19 +47,22 @@ const mockContent: ContentCard[] = [
       category: 'AI Assistant',
       slug: 'claude'
     },
-    title: 'Claude 4正式发布 - Opus 4与Sonnet 4',
-    summary: 'Anthropic于7月7日发布Claude 4系列，包括Claude Opus 4和Claude Sonnet 4。Opus 4成为世界最佳编程模型，在SWE-bench获得72.5%的成绩。新增扩展思考、工具使用、改进内存等功能。',
+    title: 'Claude 4突破性发布 - 重新定义AI编程助手',
+    summary: 'Anthropic发布Claude 4系列，包括旗舰级Claude Opus 4和高效版Claude Sonnet 4。Opus 4在SWE-bench达到72.5%，Sonnet 4更是突破至72.7%，成为业界最强编程模型。引入扩展思考与工具并行执行，显著减少65%的任务"捷径"使用，真正实现虚拟协作者级别的AI能力。',
     keyPoints: [
-      'Claude Opus 4领先SWE-bench (72.5%)',
-      '可连续工作数小时处理长期任务',
-      '扩展思考期间支持工具使用',
-      '显著改进的内存能力',
-      'Claude Code正式发布'
+      'SWE-bench性能突破：Opus 4 (72.5%)，Sonnet 4 (72.7%)',
+      'Terminal-bench领先：Opus 4 (43.2%)，创造业界新纪录',
+      '扩展思考与工具并行执行：同时运行多个工具提升效率',
+      '改进内存能力：长期任务上下文保持和专注度提升',
+      '任务完成质量提升：减少65%的"捷径"使用，更精确执行',
+      'Claude Code集成：VS Code、JetBrains原生支持',
+      '多平台可用：Anthropic API、AWS Bedrock、Google Cloud',
+      '灵活定价：Opus 4 ($15/$75)，Sonnet 4 ($3/$15) 每百万token'
     ],
     importance: 'high',
     publishedAt: '2025-07-07T16:30:00Z',
     originalUrl: 'https://www.anthropic.com/news/claude-4',
-    tags: ['claude4', 'opus4', 'sonnet4', 'coding', 'reasoning']
+    tags: ['claude4', 'swe-bench', 'coding', 'reasoning', 'claude-code']
   },
   {
     id: '3',
@@ -69,19 +72,22 @@ const mockContent: ContentCard[] = [
       category: 'Code Assistant',
       slug: 'github-copilot'
     },
-    title: 'GitHub Copilot编程代理与Pro+计划',
-    summary: 'GitHub Copilot推出编程代理功能，可以代理处理开放issue，自动规划、编写、测试和迭代代码。新增Copilot Pro+计划，提供最新模型访问权限，包括GPT-4.5和Claude 4支持。',
+    title: 'GitHub Copilot Agent全新管理界面与Pro用户扩展',
+    summary: 'GitHub Copilot在7月3日推出全新的Agent管理页面，简化任务启动和进度跟踪。Copilot编程代理扩展至Pro用户，支持学生、教师和开源维护者。新增多任务并行处理能力，MCP服务器集成，提供GPT-4.5等最新模型访问权限。',
     keyPoints: [
-      'Copilot编程代理自动处理issue',
-      'MCP协议集成外部资源',
-      'Copilot Spaces组织上下文',
-      'Pro+计划提供最新模型访问',
-      'VS Code开源GitHub Copilot集成'
+      'Agent管理页面：统一的任务启动和进度跟踪界面',
+      'Pro用户代理访问：学生、教师、开源维护者均可使用',
+      '多任务并行处理：Copilot可同时处理多个编程任务',
+      'MCP服务器集成：连接外部资源和仓库数据',
+      '完整开发流程：自动规划、编写、测试、迭代代码',
+      'Pro+高级功能：GPT-4.5访问权限，1500月度高级请求',
+      '消费计费更新：每月配额重置，精确计费管理',
+      '全面测试能力：提交完整测试的Pull Request'
     ],
     importance: 'high',
-    publishedAt: '2025-07-05T11:20:00Z',
+    publishedAt: '2025-07-03T16:00:00Z',
     originalUrl: 'https://github.com/features/copilot/whats-new',
-    tags: ['agent', 'pro-plus', 'mcp', 'workspace', 'vscode']
+    tags: ['agent-page', 'pro-access', 'multi-task', 'mcp', 'billing']
   },
   {
     id: '4',

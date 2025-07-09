@@ -170,19 +170,22 @@ const mockDetailData: Record<string, ContentCard[]> = {
         category: 'AI Assistant',
         slug: 'claude'
       },
-      title: 'Claude 4正式发布 - Opus 4与Sonnet 4',
-      summary: 'Anthropic于7月7日发布Claude 4系列，包括Claude Opus 4和Claude Sonnet 4。Opus 4成为世界最佳编程模型，在SWE-bench获得72.5%的成绩。新增扩展思考、工具使用、改进内存等功能。',
+      title: 'Claude 4突破性发布 - 重新定义AI编程助手',
+      summary: 'Anthropic发布Claude 4系列，包括旗舰级Claude Opus 4和高效版Claude Sonnet 4。Opus 4在SWE-bench达到72.5%，Sonnet 4更是突破至72.7%，成为业界最强编程模型。引入扩展思考与工具并行执行，显著减少65%的任务"捷径"使用，真正实现虚拟协作者级别的AI能力。',
       keyPoints: [
-        'Claude Opus 4领先SWE-bench (72.5%)',
-        '可连续工作数小时处理长期任务',
-        '扩展思考期间支持工具使用',
-        '显著改进的内存能力',
-        'Claude Code正式发布'
+        'SWE-bench性能突破：Opus 4 (72.5%)，Sonnet 4 (72.7%)',
+        'Terminal-bench领先：Opus 4 (43.2%)，创造业界新纪录',
+        '扩展思考与工具并行执行：同时运行多个工具提升效率',
+        '改进内存能力：长期任务上下文保持和专注度提升',
+        '任务完成质量提升：减少65%的"捷径"使用，更精确执行',
+        'Claude Code集成：VS Code、JetBrains原生支持',
+        '多平台可用：Anthropic API、AWS Bedrock、Google Cloud',
+        '灵活定价：Opus 4 ($15/$75)，Sonnet 4 ($3/$15) 每百万token'
       ],
       importance: 'high',
       publishedAt: '2025-07-07T16:30:00Z',
       originalUrl: 'https://www.anthropic.com/news/claude-4',
-      tags: ['claude4', 'opus4', 'sonnet4', 'coding', 'reasoning']
+      tags: ['claude4', 'swe-bench', 'coding', 'reasoning', 'claude-code']
     },
     {
       id: '2-prev',
@@ -192,19 +195,68 @@ const mockDetailData: Record<string, ContentCard[]> = {
         category: 'AI Assistant',
         slug: 'claude'
       },
-      title: 'Claude Research与Google Workspace集成',
-      summary: 'Anthropic推出Research功能，允许Claude跨内部工作上下文和网络进行搜索。同时发布Google Workspace集成，连接Gmail、日历和Google文档，为Claude提供更深入的工作上下文洞察。',
+      title: 'Claude Code正式发布 - 命令行AI编程助手',
+      summary: 'Claude Code从研究预览版正式发布为通用可用版本，这是一个革命性的"代理式命令行工具"。支持TypeScript和Python SDK，集成SSE和HTTP传输的MCP服务器，提供OAuth 2.0身份验证。新增钩子支持，允许开发者通过GitHub Issues参与社区建设。',
       keyPoints: [
-        'Research功能进行多轮搜索',
-        'Gmail和日历集成',
-        'Google文档深度集成',
-        '内部工作上下文搜索',
-        '构建式搜索能力'
+        'Claude Code正式GA发布：从研究预览到生产就绪',
+        'TypeScript和Python SDK：完整的开发者工具包',
+        'MCP服务器集成：支持SSE和HTTP传输协议',
+        'OAuth 2.0身份验证：使用/mcp命令进行安全认证',
+        'MCP资源引用：支持@server:protocol://path格式',
+        '钩子系统支持：允许自定义工作流和集成',
+        'GitHub Actions集成：原生CI/CD支持',
+        'IDE原生支持：VS Code和JetBrains完整集成'
       ],
       importance: 'high',
-      publishedAt: '2025-07-07T16:30:00Z',
-      originalUrl: 'https://www.anthropic.com/news/research',
-      tags: ['research', 'google-workspace', 'integration', 'search']
+      publishedAt: '2025-06-30T14:00:00Z',
+      originalUrl: 'https://docs.anthropic.com/en/release-notes/claude-code',
+      tags: ['claude-code', 'sdk', 'mcp', 'oauth', 'github-actions']
+    },
+    {
+      id: '2-prev2',
+      product: {
+        name: 'Claude',
+        logo: 'https://www.anthropic.com/favicon.ico',
+        category: 'AI Assistant',
+        slug: 'claude'
+      },
+      title: 'Claude Code成为通用可用版本',
+      summary: 'Claude Code在5月22日正式从研究预览版升级为通用可用版本，标志着AI命令行工具的成熟。6月4日开始支持Pro和Max订阅计划，为专业开发者提供更强大的AI编程助手功能。',
+      keyPoints: [
+        'Claude Code正式GA：生产环境就绪',
+        'Pro和Max计划支持：专业开发者功能',
+        '稳定性和性能提升：企业级可靠性',
+        '扩展的API功能：更多编程语言支持',
+        '改进的错误处理：更好的开发体验',
+        '社区支持增强：详细文档和示例'
+      ],
+      importance: 'high',
+      publishedAt: '2025-05-22T16:00:00Z',
+      originalUrl: 'https://docs.anthropic.com/en/release-notes/claude-code',
+      tags: ['ga-release', 'pro-max', 'stability', 'enterprise']
+    },
+    {
+      id: '2-prev3',
+      product: {
+        name: 'Claude',
+        logo: 'https://www.anthropic.com/favicon.ico',
+        category: 'AI Assistant',
+        slug: 'claude'
+      },
+      title: 'Claude Code研究预览版发布',
+      summary: 'Anthropic在2月24日首次发布Claude Code研究预览版，这是一个全新的"代理式命令行工具"。这标志着Claude生态系统从对话式AI扩展到开发者工具领域的重要里程碑。',
+      keyPoints: [
+        'Claude Code首次发布：代理式命令行工具',
+        '研究预览版状态：早期访问和反馈',
+        '开发者工具生态：扩展Claude应用场景',
+        '命令行AI交互：新的人机交互模式',
+        '代理式架构：自主执行复杂任务',
+        '社区驱动开发：开放式反馈机制'
+      ],
+      importance: 'medium',
+      publishedAt: '2025-02-24T10:00:00Z',
+      originalUrl: 'https://docs.anthropic.com/en/release-notes/claude-code',
+      tags: ['research-preview', 'command-line', 'agentic', 'developer-tools']
     }
   ],
   'github-copilot': [
@@ -216,18 +268,22 @@ const mockDetailData: Record<string, ContentCard[]> = {
         category: 'Code Assistant',
         slug: 'github-copilot'
       },
-      title: 'GitHub Copilot Chat 增强功能上线',
-      summary: 'GitHub Copilot Chat 推出了全新的对话界面和增强的代码理解能力。新版本能够更好地理解项目上下文，提供更精准的代码建议和调试帮助，同时支持自然语言编程指令。',
+      title: 'GitHub Copilot Agent全新管理界面与Pro用户扩展',
+      summary: 'GitHub Copilot在7月3日推出全新的Agent管理页面，简化任务启动和进度跟踪。Copilot编程代理扩展至Pro用户，支持学生、教师和开源维护者。新增多任务并行处理能力，MCP服务器集成，提供GPT-4.5等最新模型访问权限。',
       keyPoints: [
-        '改进的上下文理解能力',
-        '支持自然语言编程',
-        '增强的调试辅助功能',
-        '集成项目级代码分析'
+        'Agent管理页面：统一的任务启动和进度跟踪界面',
+        'Pro用户代理访问：学生、教师、开源维护者均可使用',
+        '多任务并行处理：Copilot可同时处理多个编程任务',
+        'MCP服务器集成：连接外部资源和仓库数据',
+        '完整开发流程：自动规划、编写、测试、迭代代码',
+        'Pro+高级功能：GPT-4.5访问权限，1500月度高级请求',
+        '消费计费更新：每月配额重置，精确计费管理',
+        '全面测试能力：提交完整测试的Pull Request'
       ],
-      importance: 'medium',
-      publishedAt: '2024-01-13T09:15:00Z',
-      originalUrl: 'https://github.blog/tag/github-copilot/',
-      tags: ['chat', 'debugging', 'context']
+      importance: 'high',
+      publishedAt: '2025-07-03T16:00:00Z',
+      originalUrl: 'https://github.com/features/copilot/whats-new',
+      tags: ['agent-page', 'pro-access', 'multi-task', 'mcp', 'billing']
     }
   ],
   'openai': [
