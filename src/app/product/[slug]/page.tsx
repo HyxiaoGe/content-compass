@@ -309,9 +309,617 @@ const mockDetailData: Record<string, ContentCard[]> = {
       tags: ['model-update', 'context-window', 'performance']
     }
   ],
-  'perplexity': [
+  'stability-ai': [
     {
       id: '5',
+      product: {
+        name: 'Stability AI',
+        logo: 'https://stability.ai/favicon.ico',
+        category: 'AI Image Generation',
+        slug: 'stability-ai'
+      },
+      title: 'Stable Diffusion 3.5全系列发布 - 图像生成新突破',
+      summary: 'Stability AI发布Stable Diffusion 3.5完整产品线，包括Large、Large Turbo和Medium三个版本。同时推出革命性的Stable Fast 3D技术，实现从单张图片快速生成3D资产。新增Stable Virtual Camera多视角视频生成功能，为创作者提供前所未有的3D相机控制能力。',
+      keyPoints: [
+        'Stable Diffusion 3.5全系列：Large、Large Turbo、Medium版本',
+        'Stable Fast 3D：单张图片快速生成3D资产技术',
+        'Stable Virtual Camera：多视角视频生成与3D相机控制',
+        '研究预览状态：持续优化中的前沿技术',
+        'NVIDIA合作：针对SD3.5模型进行专项优化',
+        'AMD GPU支持：为Radeon显卡优化性能',
+        'AWS深度合作：扩展云端部署能力',
+        '企业级解决方案：与WPP战略投资合作'
+      ],
+      importance: 'high',
+      publishedAt: '2025-06-15T14:30:00Z',
+      originalUrl: 'https://stability.ai/news',
+      tags: ['stable-diffusion', '3d-generation', 'video-generation', 'nvidia', 'enterprise']
+    },
+    {
+      id: '5-prev',
+      product: {
+        name: 'Stability AI',
+        logo: 'https://stability.ai/favicon.ico',
+        category: 'AI Image Generation',
+        slug: 'stability-ai'
+      },
+      title: 'Stable Diffusion 3.5 Large Turbo - 高速图像生成',
+      summary: 'Stability AI推出Stable Diffusion 3.5 Large Turbo版本，专为高速图像生成而优化。相比标准版本，生成速度提升3倍，同时保持高质量输出。支持实时预览和快速迭代，大幅提升创作效率。',
+      keyPoints: [
+        '生成速度提升3倍：针对实时创作优化',
+        '保持高质量输出：平衡速度与质量',
+        '实时预览功能：边调整边查看效果',
+        '快速迭代支持：加速创作流程',
+        '内存优化：降低GPU显存占用',
+        '批量生成优化：支持高效批处理',
+        'API集成优化：更快的云端调用响应',
+        '移动端适配：支持移动设备部署'
+      ],
+      importance: 'high',
+      publishedAt: '2025-05-20T10:00:00Z',
+      originalUrl: 'https://stability.ai/news',
+      tags: ['turbo', 'speed-optimization', 'real-time', 'mobile', 'api']
+    },
+    {
+      id: '5-prev2',
+      product: {
+        name: 'Stability AI',
+        logo: 'https://stability.ai/favicon.ico',
+        category: 'AI Image Generation',
+        slug: 'stability-ai'
+      },
+      title: 'Stable Video Diffusion 1.1 - 视频生成重大更新',
+      summary: 'Stable Video Diffusion 1.1带来了视频生成领域的重大突破，支持更长时间的视频生成和更高的分辨率。新增运动控制功能，允许精确控制视频中的物体运动轨迹，为视频创作者提供更强的创作自由度。',
+      keyPoints: [
+        '视频长度扩展：支持最长60秒视频生成',
+        '分辨率提升：最高支持1920x1080高清输出',
+        '运动控制：精确控制物体运动轨迹',
+        '帧率优化：支持30fps流畅播放',
+        '批量处理：同时生成多个视频',
+        '风格迁移：支持视频风格转换',
+        'API增强：更完善的开发者接口',
+        '社区模型：开源社区贡献模型支持'
+      ],
+      importance: 'high',
+      publishedAt: '2025-04-18T16:20:00Z',
+      originalUrl: 'https://stability.ai/news',
+      tags: ['video-generation', 'motion-control', 'high-resolution', 'community']
+    },
+    {
+      id: '5-prev3',
+      product: {
+        name: 'Stability AI',
+        logo: 'https://stability.ai/favicon.ico',
+        category: 'AI Image Generation',
+        slug: 'stability-ai'
+      },
+      title: 'Stable Audio 2.0 - AI音频生成革命',
+      summary: 'Stability AI进军音频生成领域，推出Stable Audio 2.0。支持从文本提示生成高质量音乐、音效和语音，为音频创作者提供全新的AI工具。集成先进的音频理解技术，能够生成符合情感和氛围的音频内容。',
+      keyPoints: [
+        '文本转音乐：从描述生成原创音乐',
+        '音效生成：创造各种环境音效',
+        '语音合成：多语言语音生成',
+        '情感理解：根据情感生成合适音频',
+        '音频编辑：支持音频片段混合编辑',
+        '商业授权：提供商业使用授权',
+        '开发者API：音频生成编程接口',
+        '社区分享：音频作品社区平台'
+      ],
+      importance: 'high',
+      publishedAt: '2025-03-22T11:45:00Z',
+      originalUrl: 'https://stability.ai/news',
+      tags: ['audio-generation', 'music', 'voice-synthesis', 'emotion-ai']
+    },
+    {
+      id: '5-prev4',
+      product: {
+        name: 'Stability AI',
+        logo: 'https://stability.ai/favicon.ico',
+        category: 'AI Image Generation',
+        slug: 'stability-ai'
+      },
+      title: 'Stable Code 3B - 代码生成模型发布',
+      summary: 'Stability AI推出Stable Code 3B，一个专门为代码生成优化的3B参数模型。支持多种编程语言，提供代码补全、错误修复和代码重构功能。模型经过大规模代码库训练，能够理解上下文并生成高质量代码。',
+      keyPoints: [
+        '3B参数模型：轻量级但功能强大',
+        '多语言支持：涵盖主流编程语言',
+        '代码补全：智能代码自动完成',
+        '错误修复：自动检测和修复代码错误',
+        '代码重构：优化代码结构建议',
+        '上下文理解：深度理解代码上下文',
+        '开源发布：完全开源可商用',
+        '社区贡献：支持社区微调和优化'
+      ],
+      importance: 'medium',
+      publishedAt: '2025-02-28T09:30:00Z',
+      originalUrl: 'https://stability.ai/news',
+      tags: ['code-generation', 'programming', 'open-source', 'developer-tools']
+    },
+    {
+      id: '5-prev5',
+      product: {
+        name: 'Stability AI',
+        logo: 'https://stability.ai/favicon.ico',
+        category: 'AI Image Generation',
+        slug: 'stability-ai'
+      },
+      title: 'SDXL 1.0正式发布 - 图像生成里程碑',
+      summary: 'Stability AI发布SDXL 1.0正式版本，这是Stable Diffusion系列的重要里程碑。SDXL 1.0在图像质量、细节处理和提示词理解方面都有显著提升，标志着开源图像生成技术的新高度。',
+      keyPoints: [
+        'SDXL 1.0正式版：稳定性和质量双重提升',
+        '图像质量提升：更细腻的细节处理',
+        '提示词理解：更准确的文本理解',
+        '风格多样性：支持更多艺术风格',
+        '社区生态：丰富的第三方工具支持',
+        'LoRA支持：灵活的模型微调机制',
+        '商业友好：开放的商业使用许可',
+        '性能优化：更快的生成速度'
+      ],
+      importance: 'high',
+      publishedAt: '2025-01-15T13:00:00Z',
+      originalUrl: 'https://stability.ai/news',
+      tags: ['sdxl', 'milestone', 'open-source', 'commercial']
+    }
+  ],
+  'qwen': [
+    {
+      id: '6',
+      product: {
+        name: 'Alibaba Qwen',
+        logo: 'https://qianwen.aliyun.com/favicon.ico',
+        category: 'AI Language Model',
+        slug: 'qwen'
+      },
+      title: 'Qwen3旗舰模型发布 - 多模态AI能力全面升级',
+      summary: 'Alibaba发布Qwen3系列旗舰模型，包括235B参数的Qwen3-235B-A22B和轻量级的Qwen3-30B-A3B。全面升级编程、数学和通用能力，4B小模型即可匹敌Qwen2性能。同时发布QVQ-Max视觉推理模型、Qwen-TTS语音合成和Qwen VLo多模态理解生成模型。',
+      keyPoints: [
+        'Qwen3-235B-A22B旗舰模型：顶级编程、数学、通用能力',
+        'Qwen3-30B-A3B小型MoE：超越前代模型性能',
+        'QVQ-Max视觉推理：图像和视频内容深度分析',
+        'Qwen-TTS语音合成：支持3种中文方言和7种双语声音',
+        'Qwen VLo多模态：统一理解和生成高质量内容',
+        'Qwen3 Embedding：文本嵌入和重排序SOTA性能',
+        '4B轻量级模型：媲美Qwen2的强大性能',
+        '全面开源：支持商业化应用和社区贡献'
+      ],
+      importance: 'high',
+      publishedAt: '2025-06-27T10:00:00Z',
+      originalUrl: 'https://qwenlm.github.io/blog/',
+      tags: ['qwen3', 'multimodal', 'tts', 'vision', 'embedding', 'open-source']
+    },
+    {
+      id: '6-prev',
+      product: {
+        name: 'Alibaba Qwen',
+        logo: 'https://qianwen.aliyun.com/favicon.ico',
+        category: 'AI Language Model',
+        slug: 'qwen'
+      },
+      title: 'Qwen-TTS语音合成系统正式发布',
+      summary: 'Alibaba发布Qwen-TTS文本转语音系统，经过数百万小时语音数据训练。支持3种中文方言（北京话、上海话、四川话）和7种中英双语声音，能够自动调整韵律、节奏和情感语调，为用户提供自然流畅的语音体验。',
+      keyPoints: [
+        '数百万小时训练数据：保证高质量语音合成',
+        '3种中文方言支持：北京话、上海话、四川话',
+        '7种双语声音：中英文无缝切换',
+        '自动韵律调整：智能控制语音节奏',
+        '情感语调识别：根据内容调整情感表达',
+        '实时语音合成：快速响应文本输入',
+        '开源发布：支持开发者自定义训练',
+        '企业级应用：支持大规模商业部署'
+      ],
+      importance: 'high',
+      publishedAt: '2025-06-27T08:30:00Z',
+      originalUrl: 'https://qwenlm.github.io/blog/',
+      tags: ['tts', 'voice-synthesis', 'multilingual', 'dialect', 'open-source']
+    },
+    {
+      id: '6-prev2',
+      product: {
+        name: 'Alibaba Qwen',
+        logo: 'https://qianwen.aliyun.com/favicon.ico',
+        category: 'AI Language Model',
+        slug: 'qwen'
+      },
+      title: 'Qwen VLo多模态理解生成模型',
+      summary: 'Qwen VLo是Alibaba推出的统一多模态理解和生成模型，在前代QwenVL基础上实现重大突破。能够深度理解图像、视频内容并生成高质量的多模态内容，为视觉AI应用提供强大的基础能力。',
+      keyPoints: [
+        '统一多模态架构：理解和生成一体化',
+        '视觉内容深度理解：图像、视频全面分析',
+        '高质量内容生成：创造逼真的多模态内容',
+        'QwenVL技术升级：在前代基础上重大改进',
+        '场景适应能力：适应多种应用场景',
+        '实时处理能力：快速响应多模态输入',
+        '开发者友好：提供简洁的API接口',
+        '商业化就绪：支持大规模生产部署'
+      ],
+      importance: 'high',
+      publishedAt: '2025-06-26T14:15:00Z',
+      originalUrl: 'https://qwenlm.github.io/blog/',
+      tags: ['multimodal', 'vision', 'generation', 'qwenvl', 'unified']
+    },
+    {
+      id: '6-prev3',
+      product: {
+        name: 'Alibaba Qwen',
+        logo: 'https://qianwen.aliyun.com/favicon.ico',
+        category: 'AI Language Model',
+        slug: 'qwen'
+      },
+      title: 'Qwen3 Embedding文本嵌入模型',
+      summary: 'Qwen3 Embedding是基于Qwen3基础模型构建的文本嵌入和重排序模型，在多个基准测试中达到SOTA性能。为搜索、推荐、问答等应用提供强大的语义理解能力，支持中英文双语处理。',
+      keyPoints: [
+        'Qwen3基础模型：继承强大的语言理解能力',
+        'SOTA基准性能：在多个评测中创造新纪录',
+        '文本嵌入优化：高质量向量表示',
+        '重排序功能：提升搜索结果相关性',
+        '双语支持：中英文无缝处理',
+        '快速推理：优化的计算效率',
+        '应用广泛：搜索、推荐、问答多场景适用',
+        '开源社区：支持研究和商业应用'
+      ],
+      importance: 'high',
+      publishedAt: '2025-06-05T11:20:00Z',
+      originalUrl: 'https://qwenlm.github.io/blog/',
+      tags: ['embedding', 'retrieval', 'search', 'reranking', 'bilingual']
+    },
+    {
+      id: '6-prev4',
+      product: {
+        name: 'Alibaba Qwen',
+        logo: 'https://qianwen.aliyun.com/favicon.ico',
+        category: 'AI Language Model',
+        slug: 'qwen'
+      },
+      title: 'Qwen3-235B-A22B旗舰模型深度解析',
+      summary: 'Qwen3-235B-A22B是Alibaba推出的235B参数旗舰模型，在编程、数学和通用能力方面实现重大突破。采用先进的MoE架构，在保持强大性能的同时优化计算效率，为企业级AI应用提供顶级智能。',
+      keyPoints: [
+        '235B参数规模：业界顶级模型参数量',
+        'MoE架构优化：高效的专家混合模型',
+        '编程能力突破：代码生成和理解大幅提升',
+        '数学推理增强：复杂数学问题求解能力',
+        '通用能力提升：跨领域知识整合',
+        '计算效率优化：降低推理成本',
+        '企业级部署：支持大规模商业应用',
+        '开源贡献：推动AI技术生态发展'
+      ],
+      importance: 'high',
+      publishedAt: '2025-04-29T16:45:00Z',
+      originalUrl: 'https://qwenlm.github.io/blog/',
+      tags: ['qwen3', 'flagship', 'moe', 'coding', 'math', 'enterprise']
+    },
+    {
+      id: '6-prev5',
+      product: {
+        name: 'Alibaba Qwen',
+        logo: 'https://qianwen.aliyun.com/favicon.ico',
+        category: 'AI Language Model',
+        slug: 'qwen'
+      },
+      title: 'QVQ-Max视觉推理模型发布',
+      summary: 'QVQ-Max是Alibaba推出的视觉推理模型，能够分析和推理图像、视频内容。在各个领域展现出强大的视觉理解能力，为计算机视觉应用提供新的解决方案。',
+      keyPoints: [
+        '视觉推理能力：深度分析图像和视频',
+        '多领域应用：跨行业视觉理解',
+        '推理逻辑增强：复杂视觉问题求解',
+        '实时处理：快速视觉内容分析',
+        '场景适应：适应多样化应用场景',
+        '准确性提升：提高视觉识别准确率',
+        '开发者工具：提供完整的开发套件',
+        '商业化支持：企业级视觉AI解决方案'
+      ],
+      importance: 'high',
+      publishedAt: '2025-03-28T13:30:00Z',
+      originalUrl: 'https://qwenlm.github.io/blog/',
+      tags: ['vision', 'reasoning', 'multimodal', 'video', 'analysis']
+    }
+  ],
+  'gemini': [
+    {
+      id: '7',
+      product: {
+        name: 'Google Gemini',
+        logo: 'https://www.gstatic.com/devrel-devsite/prod/v9c8f5f3b0d4e5a8f7e6b5c2d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f/ai/images/gemini/favicon.ico',
+        category: 'AI Assistant',
+        slug: 'gemini'
+      },
+      title: 'Gemini 2.5全系列发布 - 通用AI助手新突破',
+      summary: 'Google发布Gemini 2.5系列模型，包括稳定版Pro和通用版Flash，同时推出最高性价比的Flash-Lite版本。新增音频对话和生成功能，大幅扩展多模态理解能力。配合Gemma 3n移动端AI和Veo 3/Imagen 4生成模型，构建全面的通用AI助手生态系统。',
+      keyPoints: [
+        'Gemini 2.5 Pro稳定版：企业级性能和可靠性',
+        'Gemini 2.5 Flash通用版：平衡性能与效率的最佳选择',
+        'Gemini 2.5 Flash-Lite：最高性价比和最快响应速度',
+        '音频对话生成：全新的语音交互体验',
+        '多模态理解增强：图像、视频、文本统一处理',
+        'Gemma 3n移动AI：专为设备端快速多模态AI优化',
+        'Veo 3视频生成：下一代视频内容创作工具',
+        'Imagen 4图像生成：高质量图像生成与编辑'
+      ],
+      importance: 'high',
+      publishedAt: '2025-06-17T14:00:00Z',
+      originalUrl: 'https://deepmind.google/discover/blog/',
+      tags: ['gemini-2.5', 'multimodal', 'audio', 'mobile', 'veo', 'imagen', 'universal-ai']
+    },
+    {
+      id: '7-prev',
+      product: {
+        name: 'Google Gemini',
+        logo: 'https://www.gstatic.com/devrel-devsite/prod/v9c8f5f3b0d4e5a8f7e6b5c2d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f/ai/images/gemini/favicon.ico',
+        category: 'AI Assistant',
+        slug: 'gemini'
+      },
+      title: 'Gemini 2.5 Flash-Lite高性价比版本',
+      summary: 'Google推出Gemini 2.5 Flash-Lite，作为系列中最高性价比和最快响应速度的版本。专为大规模部署和实时应用场景优化，在保持高质量输出的同时显著降低成本和延迟。',
+      keyPoints: [
+        '最高性价比：大幅降低AI应用成本',
+        '最快响应速度：毫秒级响应优化',
+        '轻量级架构：减少资源消耗',
+        '批量处理优化：支持大规模并发',
+        '实时应用适配：聊天机器人、客服等场景',
+        '成本效益平衡：性能与价格最优配比',
+        'API优化：简化开发者集成',
+        '企业级扩展：支持大规模商业部署'
+      ],
+      importance: 'high',
+      publishedAt: '2025-06-17T12:30:00Z',
+      originalUrl: 'https://deepmind.google/discover/blog/',
+      tags: ['flash-lite', 'cost-efficient', 'real-time', 'enterprise', 'optimization']
+    },
+    {
+      id: '7-prev2',
+      product: {
+        name: 'Google Gemini',
+        logo: 'https://www.gstatic.com/devrel-devsite/prod/v9c8f5f3b0d4e5a8f7e6b5c2d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f/ai/images/gemini/favicon.ico',
+        category: 'AI Assistant',
+        slug: 'gemini'
+      },
+      title: 'Gemma 3n移动端AI模型发布',
+      summary: 'Google发布Gemma 3n"移动优先AI"模型，专为设备端快速多模态AI应用设计。优化了移动设备上的推理速度和能耗，为移动应用开发者提供强大的本地AI能力。',
+      keyPoints: [
+        '移动优先设计：专为移动设备优化',
+        '快速多模态：图像、文本、语音统一处理',
+        '设备端推理：无需网络连接的本地AI',
+        '能耗优化：延长移动设备续航',
+        '轻量级部署：适合移动应用集成',
+        '隐私保护：本地处理保护用户数据',
+        '开发者友好：简化移动AI开发',
+        'Android生态：与Android系统深度集成'
+      ],
+      importance: 'high',
+      publishedAt: '2025-05-25T10:15:00Z',
+      originalUrl: 'https://deepmind.google/discover/blog/',
+      tags: ['gemma-3n', 'mobile-ai', 'on-device', 'multimodal', 'privacy', 'android']
+    },
+    {
+      id: '7-prev3',
+      product: {
+        name: 'Google Gemini',
+        logo: 'https://www.gstatic.com/devrel-devsite/prod/v9c8f5f3b0d4e5a8f7e6b5c2d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f/ai/images/gemini/favicon.ico',
+        category: 'AI Assistant',
+        slug: 'gemini'
+      },
+      title: 'Veo 3视频生成模型重大升级',
+      summary: 'Google发布Veo 3下一代视频生成模型，在视频质量、时长和控制精度方面实现重大突破。支持更长时间的视频生成和精确的视频编辑控制，为视频内容创作者提供前所未有的创作工具。',
+      keyPoints: [
+        '视频质量提升：更高分辨率和更自然的动作',
+        '时长扩展：支持更长时间的视频生成',
+        '精确控制：细粒度的视频编辑和修改',
+        '风格多样：支持多种视频风格和效果',
+        '实时预览：生成过程的实时反馈',
+        '商业应用：内容创作和广告制作',
+        'API集成：开发者可轻松集成',
+        '创作工具：配套的视频编辑功能'
+      ],
+      importance: 'high',
+      publishedAt: '2025-04-20T16:45:00Z',
+      originalUrl: 'https://deepmind.google/discover/blog/',
+      tags: ['veo-3', 'video-generation', 'content-creation', 'editing', 'commercial']
+    },
+    {
+      id: '7-prev4',
+      product: {
+        name: 'Google Gemini',
+        logo: 'https://www.gstatic.com/devrel-devsite/prod/v9c8f5f3b0d4e5a8f7e6b5c2d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f/ai/images/gemini/favicon.ico',
+        category: 'AI Assistant',
+        slug: 'gemini'
+      },
+      title: 'Imagen 4图像生成与编辑系统',
+      summary: 'Google推出Imagen 4高质量图像生成与编辑系统，在图像质量、编辑精度和创作灵活性方面达到新高度。集成先进的图像理解和编辑技术，为设计师和创作者提供专业级的AI辅助工具。',
+      keyPoints: [
+        '高质量生成：超高分辨率图像创作',
+        '精确编辑：局部修改和风格调整',
+        '创作灵活性：多样化的艺术风格支持',
+        '专业工具集：面向设计师的完整套件',
+        '批量处理：高效的图像批量生成',
+        '版权友好：避免版权争议的内容生成',
+        'Web集成：浏览器端的图像编辑体验',
+        '商业授权：支持商业使用的图像内容'
+      ],
+      importance: 'high',
+      publishedAt: '2025-03-15T11:20:00Z',
+      originalUrl: 'https://deepmind.google/discover/blog/',
+      tags: ['imagen-4', 'image-generation', 'editing', 'design', 'commercial', 'copyright']
+    },
+    {
+      id: '7-prev5',
+      product: {
+        name: 'Google Gemini',
+        logo: 'https://www.gstatic.com/devrel-devsite/prod/v9c8f5f3b0d4e5a8f7e6b5c2d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f/ai/images/gemini/favicon.ico',
+        category: 'AI Assistant',
+        slug: 'gemini'
+      },
+      title: 'Gemini通用AI助手愿景发布',
+      summary: 'Google宣布Gemini通用AI助手的长期愿景，旨在开发能够"制定计划和想象新体验"的AI系统。通过整合多模态能力和推理技术，构建真正的通用人工智能助手。',
+      keyPoints: [
+        '通用AI愿景：构建全能的AI助手',
+        '计划制定能力：复杂任务的自动规划',
+        '想象创新体验：创造性思维和解决方案',
+        '多模态整合：视觉、听觉、文本统一处理',
+        '推理能力增强：逻辑推理和问题解决',
+        '个性化服务：适应用户个人需求',
+        '持续学习：不断改进和优化',
+        '生态系统构建：与Google服务深度集成'
+      ],
+      importance: 'high',
+      publishedAt: '2025-02-28T14:30:00Z',
+      originalUrl: 'https://deepmind.google/discover/blog/',
+      tags: ['universal-ai', 'planning', 'imagination', 'reasoning', 'personalization', 'ecosystem']
+    }
+  ],
+  'deepseek': [
+    {
+      id: '8',
+      product: {
+        name: 'DeepSeek',
+        logo: 'https://www.deepseek.com/favicon.ico',
+        category: 'AI Reasoning Model',
+        slug: 'deepseek'
+      },
+      title: 'DeepSeek-R1推理模型突破 - 开源AI推理新标杆',
+      summary: 'DeepSeek发布R1系列推理模型，性能媲美OpenAI o1的同时训练成本仅为其十分之一。671B参数MoE架构，128K上下文窗口，在数学、编程、推理任务上实现SOTA性能。完全开源且支持商业使用，引发全球AI市场震动。',
+      keyPoints: [
+        'DeepSeek-R1推理模型：性能媲美OpenAI o1，成本仅560万美元',
+        'DeepSeek-R1-0528升级版：支持系统提示、JSON输出和函数调用',
+        'R1-Zero强化学习：无需监督微调的纯RL训练方法',
+        '蒸馏版本发布：R1-Distill-Qwen-32B超越o1-mini性能',
+        'AIME 2025测试：准确率从70%提升至87.5%',
+        'MIT开源许可：支持商业使用和社区贡献',
+        'App Store冲榜：超越ChatGPT成为下载量第一',
+        '移动GPU支持：单GPU即可运行的轻量级版本'
+      ],
+      importance: 'high',
+      publishedAt: '2025-05-29T16:00:00Z',
+      originalUrl: 'https://www.deepseek.com/',
+      tags: ['deepseek-r1', 'reasoning', 'open-source', 'cost-efficient', 'reinforcement-learning', 'distilled']
+    },
+    {
+      id: '8-prev',
+      product: {
+        name: 'DeepSeek',
+        logo: 'https://www.deepseek.com/favicon.ico',
+        category: 'AI Reasoning Model',
+        slug: 'deepseek'
+      },
+      title: 'DeepSeek-R1-0528重大更新 - 智能体功能全面升级',
+      summary: 'DeepSeek发布R1-0528更新版本，新增系统提示、JSON输出和函数调用支持，专为智能体AI应用场景优化。在AIME 2025测试中准确率从70%提升至87.5%，推理深度显著增强，成为智能体开发的理想选择。',
+      keyPoints: [
+        '系统提示支持：允许自定义AI助手行为',
+        'JSON输出格式：结构化数据输出支持',
+        '函数调用功能：支持外部工具和API集成',
+        '智能体优化：专为AI Agent应用场景设计',
+        '准确率提升：AIME 2025测试准确率达87.5%',
+        '推理深度增强：平均推理token从12K增至23K',
+        '幻觉率降低：更准确的信息生成和推理',
+        '企业级应用：支持大规模商业智能体部署'
+      ],
+      importance: 'high',
+      publishedAt: '2025-05-28T14:30:00Z',
+      originalUrl: 'https://www.deepseek.com/',
+      tags: ['r1-0528', 'agent', 'json', 'function-calling', 'accuracy', 'enterprise']
+    },
+    {
+      id: '8-prev2',
+      product: {
+        name: 'DeepSeek',
+        logo: 'https://www.deepseek.com/favicon.ico',
+        category: 'AI Reasoning Model',
+        slug: 'deepseek'
+      },
+      title: 'DeepSeek-R1蒸馏模型系列发布',
+      summary: 'DeepSeek发布六个基于Llama和Qwen的蒸馏模型，其中R1-Distill-Qwen-32B在多个基准测试中超越OpenAI o1-mini，为密集模型创造新的SOTA纪录。轻量级版本R1-Distill-Qwen3-8B可在单GPU上运行。',
+      keyPoints: [
+        'R1-Distill-Qwen-32B：超越o1-mini的密集模型SOTA',
+        'R1-Distill-Qwen3-8B：MIT许可的轻量级版本',
+        '单GPU运行：支持消费级硬件部署',
+        '六个蒸馏版本：基于Llama和Qwen的多样选择',
+        'Gemini 2.5 Flash超越：8B模型性能优于Google模型',
+        'MIT开源许可：无限制商业使用',
+        '知识蒸馏技术：保留大模型能力的同时降低资源需求',
+        '社区友好：为研究者和开发者提供易用工具'
+      ],
+      importance: 'high',
+      publishedAt: '2025-05-20T11:15:00Z',
+      originalUrl: 'https://www.deepseek.com/',
+      tags: ['distilled', 'qwen', 'llama', 'single-gpu', 'mit-license', 'sota']
+    },
+    {
+      id: '8-prev3',
+      product: {
+        name: 'DeepSeek',
+        logo: 'https://www.deepseek.com/favicon.ico',
+        category: 'AI Reasoning Model',
+        slug: 'deepseek'
+      },
+      title: 'DeepSeek-R1-Zero强化学习突破',
+      summary: 'DeepSeek发布R1-Zero模型，采用创新的大规模强化学习方法，无需监督微调直接训练。模型自然涌现出自我验证、反思和长链推理能力，为AI推理领域带来重大突破。',
+      keyPoints: [
+        '纯强化学习：无需监督微调的创新训练方法',
+        '自我验证能力：模型可自主检查推理过程',
+        '反思机制：从错误中学习和改进',
+        '长链推理：支持复杂多步推理任务',
+        '自然涌现：通过RL训练自发产生高级推理行为',
+        '研究里程碑：为AI推理研究提供新范式',
+        '开源贡献：支持学术研究和技术发展',
+        '算法创新：展示强化学习在推理任务中的潜力'
+      ],
+      importance: 'high',
+      publishedAt: '2025-04-15T16:45:00Z',
+      originalUrl: 'https://www.deepseek.com/',
+      tags: ['r1-zero', 'reinforcement-learning', 'self-verification', 'reflection', 'reasoning']
+    },
+    {
+      id: '8-prev4',
+      product: {
+        name: 'DeepSeek',
+        logo: 'https://www.deepseek.com/favicon.ico',
+        category: 'AI Reasoning Model',
+        slug: 'deepseek'
+      },
+      title: 'DeepSeek V3基础模型发布',
+      summary: 'DeepSeek发布V3基础模型，采用MoE架构拥有671B参数，64K上下文窗口，在代码生成、数学推理、中文处理等任务上表现卓越。作为R1系列的基础，V3为后续推理模型提供了强大的语言理解能力。',
+      keyPoints: [
+        '671B参数MoE：混合专家模型架构',
+        '64K上下文窗口：支持长文本处理',
+        '代码生成优化：专业的编程能力',
+        '数学推理增强：复杂数学问题求解',
+        '中文处理专长：优秀的中文理解生成',
+        '性价比优势：1元/百万输入token，2元/百万输出token',
+        '多平台支持：Web、移动应用、API全覆盖',
+        '开源基础：为社区提供强大的基础模型'
+      ],
+      importance: 'high',
+      publishedAt: '2025-03-10T13:20:00Z',
+      originalUrl: 'https://www.deepseek.com/',
+      tags: ['v3', 'moe', 'code-generation', 'math', 'chinese', 'cost-efficient']
+    },
+    {
+      id: '8-prev5',
+      product: {
+        name: 'DeepSeek',
+        logo: 'https://www.deepseek.com/favicon.ico',
+        category: 'AI Reasoning Model',
+        slug: 'deepseek'
+      },
+      title: 'DeepSeek移动应用全球登顶',
+      summary: 'DeepSeek AI助手移动应用在发布后数日内登顶Apple App Store，超越OpenAI ChatGPT成为全球下载量第一的AI应用。应用提供R1模型的聊天机器人界面，引发全球AI市场关注和美股相关公司震动。',
+      keyPoints: [
+        'App Store登顶：超越ChatGPT成为下载量第一',
+        '全球用户激增：数日内获得数百万用户',
+        'R1模型集成：提供强大的推理能力体验',
+        '市场震动：引发美股AI公司股价波动',
+        'Nvidia冲击：对AI硬件需求预期产生影响',
+        '用户体验优化：简洁直观的聊天界面',
+        '免费使用：基础功能完全免费',
+        '全球可用：支持多语言和多地区'
+      ],
+      importance: 'high',
+      publishedAt: '2025-02-01T09:00:00Z',
+      originalUrl: 'https://www.deepseek.com/',
+      tags: ['mobile-app', 'app-store', 'global', 'chatgpt', 'market-impact', 'nvidia']
+    }
+  ],
+  'perplexity': [
+    {
+      id: '9',
       product: {
         name: 'Perplexity',
         logo: 'https://framerusercontent.com/images/pta2kExQjjj4WH50JAVR6D1QNFQ.png',
