@@ -73,8 +73,7 @@ CREATE TABLE product_updates (
   processing_cost_cents INTEGER DEFAULT 0, -- 处理成本(分)
   confidence_score DECIMAL(3,2), -- AI处理置信度 0.00-1.00
   
-  -- 审核信息
-  reviewed_by UUID, -- 审核者ID (可选)
+  -- 审核信息 (可选，用于手动标记)
   review_notes TEXT, -- 审核备注
   
   -- 时间戳
@@ -120,27 +119,13 @@ CREATE TABLE crawl_tasks (
 -- 4. 系统管理表
 -- =================
 
--- 用户表 (简化的管理员系统)
-CREATE TABLE users (
-  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-  email TEXT UNIQUE NOT NULL,
-  role TEXT DEFAULT 'viewer' CHECK (role IN ('admin', 'editor', 'viewer')),
-  full_name TEXT,
-  avatar_url TEXT,
-  is_active BOOLEAN DEFAULT true,
-  last_login_at TIMESTAMP WITH TIME ZONE,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-
--- 系统日志表
+-- 系统日志表 (简化版，不关联用户)
 CREATE TABLE system_logs (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   level TEXT DEFAULT 'info' CHECK (level IN ('debug', 'info', 'warn', 'error')),
-  category TEXT, -- 'crawler', 'ai_processing', 'api', 'auth'
+  category TEXT, -- 'crawler', 'ai_processing', 'api'
   message TEXT NOT NULL,
   details JSONB, -- 详细信息
-  user_id UUID REFERENCES users(id), -- 相关用户(可选)
   product_id UUID REFERENCES ai_products(id), -- 相关产品(可选)
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
@@ -151,7 +136,6 @@ CREATE TABLE system_settings (
   value JSONB NOT NULL,
   description TEXT,
   category TEXT DEFAULT 'general', -- 'general', 'crawler', 'ai', 'display'
-  is_public BOOLEAN DEFAULT false, -- 是否可公开访问
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
@@ -207,8 +191,8 @@ WHERE pu.status = 'published'
   AND ap.is_active = true
 ORDER BY pu.published_at DESC;
 
--- 管理后台统计视图
-CREATE VIEW admin_dashboard AS
+-- 系统统计视图 (用于监控)
+CREATE VIEW system_stats AS
 SELECT 
   (SELECT COUNT(*) FROM ai_products WHERE is_active = true) as active_products,
   (SELECT COUNT(*) FROM product_updates WHERE status = 'published') as published_updates,
@@ -237,24 +221,20 @@ FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_crawl_tasks_updated_at BEFORE UPDATE ON crawl_tasks
 FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
-CREATE TRIGGER update_users_updated_at BEFORE UPDATE ON users
-FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-
 -- =================
 -- 7. 初始数据
 -- =================
 
 -- 系统配置初始值
-INSERT INTO system_settings (key, value, description, category, is_public) VALUES
-('site_title', '"ContentCompass"', '网站标题', 'general', true),
-('site_description', '"AI产品更新信息聚合站"', '网站描述', 'general', true),
-('max_daily_crawls', '50', '每日最大爬取任务数', 'crawler', false),
-('ai_model_primary', '"gpt-4o-mini"', '主要AI处理模型', 'ai', false),
-('ai_model_backup', '"gpt-3.5-turbo"', '备用AI处理模型', 'ai', false),
-('crawl_interval_hours', '24', '爬取间隔时间(小时)', 'crawler', false),
-('admin_emails', '["admin@contentcompass.dev"]', '管理员邮箱白名单', 'general', false),
-('items_per_page', '20', '每页显示项目数', 'display', true),
-('featured_products_count', '8', '精选产品数量', 'display', true);
+INSERT INTO system_settings (key, value, description, category) VALUES
+('site_title', '"ContentCompass"', '网站标题', 'general'),
+('site_description', '"AI产品更新信息聚合站"', '网站描述', 'general'),
+('max_daily_crawls', '50', '每日最大爬取任务数', 'crawler'),
+('ai_model_primary', '"gpt-4o-mini"', '主要AI处理模型', 'ai'),
+('ai_model_backup', '"gpt-3.5-turbo"', '备用AI处理模型', 'ai'),
+('crawl_interval_hours', '24', '爬取间隔时间(小时)', 'crawler'),
+('items_per_page', '20', '每页显示项目数', 'display'),
+('featured_products_count', '8', '精选产品数量', 'display');
 
 -- 10个AI产品初始数据
 INSERT INTO ai_products (name, slug, category, description, logo_url, homepage_url, changelog_url, display_order, is_featured) VALUES
@@ -269,9 +249,6 @@ INSERT INTO ai_products (name, slug, category, description, logo_url, homepage_u
 ('Claude Code', 'claude-code', 'AI Code Assistant', 'Anthropic的AI编程助手', 'https://www.anthropic.com/favicon.ico', 'https://docs.anthropic.com/en/docs/claude-code', 'https://docs.anthropic.com/en/docs/claude-code/ide-integrations', 9, true),
 ('Midjourney', 'midjourney', 'AI Image Generation', 'AI图像生成平台', 'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/midjourney-icon.png', 'https://midjourney.com', 'https://docs.midjourney.com/hc/en-us/articles/32199405667853-Version', 10, true);
 
--- 创建管理员用户
-INSERT INTO users (email, role, full_name, is_active) VALUES
-('admin@contentcompass.dev', 'admin', '系统管理员', true);
 
 -- =================
 -- 8. 注释和文档
@@ -280,7 +257,6 @@ INSERT INTO users (email, role, full_name, is_active) VALUES
 COMMENT ON TABLE ai_products IS 'AI产品基本信息和爬取配置';
 COMMENT ON TABLE product_updates IS '产品更新内容，支持多版本历史记录';
 COMMENT ON TABLE crawl_tasks IS '爬取任务队列，支持定时和手动任务';
-COMMENT ON TABLE users IS '用户管理，支持多角色权限';
 COMMENT ON TABLE system_logs IS '系统操作日志记录';
 COMMENT ON TABLE system_settings IS '系统配置参数';
 

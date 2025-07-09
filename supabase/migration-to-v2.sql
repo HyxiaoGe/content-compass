@@ -59,10 +59,7 @@ DROP FUNCTION IF EXISTS update_updated_at_column();
 -- 5. 数据迁移 (如果需要)
 -- =================
 
--- 如果有需要保留的用户数据，可以这样迁移：
--- INSERT INTO users (email, role, full_name, created_at)
--- SELECT email, 'viewer', full_name, created_at 
--- FROM backup_user_profiles;
+-- 注意：新版本不再包含用户系统，专注于AI产品信息聚合
 
 -- =================
 -- 6. 验证迁移结果
@@ -78,7 +75,6 @@ WHERE table_schema = 'public'
     'ai_products', 
     'product_updates', 
     'crawl_tasks', 
-    'users', 
     'system_logs', 
     'system_settings'
   )
@@ -93,12 +89,7 @@ UNION ALL
 SELECT 
   'system_settings' as table_name, 
   COUNT(*) as record_count 
-FROM system_settings
-UNION ALL
-SELECT 
-  'users' as table_name, 
-  COUNT(*) as record_count 
-FROM users;
+FROM system_settings;
 
 -- 检查索引是否创建成功
 SELECT 

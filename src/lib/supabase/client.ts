@@ -1,6 +1,6 @@
 // src/lib/supabase/client.ts
 import { createBrowserClient } from '@supabase/ssr';
-import type { Database } from '@/types/database';
+import type { Database } from '@/types/database-v2';
 
 // 客户端组件使用
 export const createClient = () => {

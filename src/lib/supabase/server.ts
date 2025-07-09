@@ -1,7 +1,7 @@
 // src/lib/supabase/server.ts
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
-import type { Database } from '@/types/database';
+import type { Database } from '@/types/database-v2';
 
 // 服务端组件使用
 export const createServerComponentClient = async () => {

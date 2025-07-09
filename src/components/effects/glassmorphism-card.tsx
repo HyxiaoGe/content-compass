@@ -6,13 +6,30 @@ import { motion, useInView, useMotionValue, useTransform } from 'framer-motion'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { ContentCard } from '@/types/database-refactor'
+// 或者创建一个通用的Card接口
+interface CardContent {
+  id: string
+  product: {
+    name: string
+    logo: string
+    category: string
+    slug: string
+  }
+  title: string
+  summary: string
+  keyPoints: string[]
+  importance: 'high' | 'medium' | 'low'
+  publishedAt: string
+  originalUrl?: string
+  tags: string[]
+}
 import { formatDistanceToNow } from 'date-fns'
 import { zhCN } from 'date-fns/locale'
 import { ExternalLink, Clock, Sparkles, Eye } from 'lucide-react'
 import Image from 'next/image'
 
 interface GlassmorphismCardProps {
-  content: ContentCard
+  content: ContentCard | CardContent
   index: number
 }
 

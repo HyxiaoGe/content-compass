@@ -84,20 +84,8 @@ export interface CrawlTask {
 }
 
 // =================
-// 4. 用户管理类型
+// 4. 系统管理类型（简化版）
 // =================
-
-export interface User {
-  id: string;
-  email: string;
-  role: 'admin' | 'editor' | 'viewer';
-  full_name?: string;
-  avatar_url?: string;
-  is_active: boolean;
-  last_login_at?: string;
-  created_at: string;
-  updated_at: string;
-}
 
 // =================
 // 5. 系统日志类型
@@ -109,7 +97,6 @@ export interface SystemLog {
   category?: string;
   message: string;
   details?: Record<string, any>;
-  user_id?: string;
   product_id?: string;
   created_at: string;
 }
@@ -123,7 +110,6 @@ export interface SystemSetting {
   value: any;
   description?: string;
   category: string;
-  is_public: boolean;
   updated_at: string;
 }
 
@@ -147,7 +133,7 @@ export interface LatestUpdate {
   original_url?: string;
 }
 
-export interface AdminDashboard {
+export interface SystemStats {
   active_products: number;
   published_updates: number;
   draft_updates: number;
@@ -248,7 +234,6 @@ export enum TableName {
   AI_PRODUCTS = 'ai_products',
   PRODUCT_UPDATES = 'product_updates', 
   CRAWL_TASKS = 'crawl_tasks',
-  USERS = 'users',
   SYSTEM_LOGS = 'system_logs',
   SYSTEM_SETTINGS = 'system_settings'
 }
@@ -315,11 +300,6 @@ export const CRAWL_STATUS = [
   'error'
 ] as const;
 
-export const USER_ROLES = [
-  'admin',
-  'editor',
-  'viewer'
-] as const;
 
 export const LOG_LEVELS = [
   'debug',
@@ -356,7 +336,51 @@ export const DEFAULT_UPDATE: Partial<ProductUpdate> = {
 };
 
 // =================
-// 13. 类型守卫
+// 13. Supabase Database 类型
+// =================
+
+export interface Database {
+  public: {
+    Tables: {
+      ai_products: {
+        Row: AIProduct;
+        Insert: Omit<AIProduct, 'id' | 'created_at' | 'updated_at'>;
+        Update: Partial<Omit<AIProduct, 'id' | 'created_at' | 'updated_at'>>;
+      };
+      product_updates: {
+        Row: ProductUpdate;
+        Insert: Omit<ProductUpdate, 'id' | 'created_at' | 'updated_at'>;
+        Update: Partial<Omit<ProductUpdate, 'id' | 'created_at' | 'updated_at'>>;
+      };
+      crawl_tasks: {
+        Row: CrawlTask;
+        Insert: Omit<CrawlTask, 'id' | 'created_at' | 'updated_at'>;
+        Update: Partial<Omit<CrawlTask, 'id' | 'created_at' | 'updated_at'>>;
+      };
+      system_logs: {
+        Row: SystemLog;
+        Insert: Omit<SystemLog, 'id' | 'created_at'>;
+        Update: Partial<Omit<SystemLog, 'id' | 'created_at'>>;
+      };
+      system_settings: {
+        Row: SystemSetting;
+        Insert: Omit<SystemSetting, 'updated_at'>;
+        Update: Partial<Omit<SystemSetting, 'updated_at'>>;
+      };
+    };
+    Views: {
+      latest_updates: {
+        Row: LatestUpdate;
+      };
+      system_stats: {
+        Row: SystemStats;
+      };
+    };
+  };
+}
+
+// =================
+// 14. 类型守卫
 // =================
 
 export function isValidImportanceLevel(level: string): level is 'high' | 'medium' | 'low' {
@@ -367,6 +391,3 @@ export function isValidUpdateStatus(status: string): status is 'draft' | 'publis
   return UPDATE_STATUS.includes(status as any);
 }
 
-export function isValidUserRole(role: string): role is 'admin' | 'editor' | 'viewer' {
-  return USER_ROLES.includes(role as any);
-}
