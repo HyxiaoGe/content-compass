@@ -34,13 +34,21 @@ export function AnimatedBackground() {
     const initParticles = () => {
       particlesRef.current = []
       for (let i = 0; i < 50; i++) {
+        // 使用固定的伪随机值避免hydration mismatch
+        const pseudoRandomX = ((i * 17 + 23) % 100) / 100 * canvas.width
+        const pseudoRandomY = ((i * 13 + 37) % 100) / 100 * canvas.height
+        const pseudoRandomVx = (((i * 11 + 7) % 100) / 100 - 0.5) * 0.5
+        const pseudoRandomVy = (((i * 19 + 41) % 100) / 100 - 0.5) * 0.5
+        const pseudoRandomSize = ((i * 7 + 3) % 100) / 100 * 3 + 1
+        const pseudoRandomColor = ((i * 23 + 17) % 100) > 50 ? '#3B82F6' : '#8B5CF6'
+        
         particlesRef.current.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          vx: (Math.random() - 0.5) * 0.5,
-          vy: (Math.random() - 0.5) * 0.5,
-          size: Math.random() * 3 + 1,
-          color: Math.random() > 0.5 ? '#3B82F6' : '#8B5CF6'
+          x: pseudoRandomX,
+          y: pseudoRandomY,
+          vx: pseudoRandomVx,
+          vy: pseudoRandomVy,
+          size: pseudoRandomSize,
+          color: pseudoRandomColor
         })
       }
     }
