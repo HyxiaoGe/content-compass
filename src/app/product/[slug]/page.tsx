@@ -27,19 +27,19 @@ const mockDetailData: Record<string, ContentCard[]> = {
         category: 'AI Code Editor',
         slug: 'cursor'
       },
-      title: 'Cursor 1.0 正式发布 - 全新里程碑版本',
-      summary: 'Cursor 1.0 正式发布，这是一个重要的里程碑版本。包含全新的 BugBot 代码审查功能、Memory 系统正式版、一键式 MCP 设置、Jupyter 支持，以及 Background Agent 的全面可用性。',
+      title: 'Cursor 1.2 - Agent智能任务规划与Slack集成',
+      summary: 'Cursor 1.2版本于7月3日发布，带来了重大的Agent改进，包括结构化待办事项列表、依赖关系跟踪、消息队列功能，以及完整的Slack集成。Memory功能已正式发布，同时新增PR索引和摘要功能。',
       keyPoints: [
-        'BugBot 代码审查功能正式发布',
-        'Memory 系统达到正式版本',
-        '一键式 MCP 设置简化工作流',
-        'Jupyter notebook 完整支持',
-        'Background Agent 全面可用'
+        'Agent结构化任务规划和依赖跟踪',
+        '消息队列允许任务重新排序',
+        'Memory功能正式发布(GA)',
+        'PR索引和摘要功能',
+        '完整的Slack集成支持'
       ],
       importance: 'high',
-      publishedAt: '2024-12-15T10:00:00Z',
+      publishedAt: '2025-07-03T14:00:00Z',
       originalUrl: 'https://cursor.com/changelog',
-      tags: ['major-release', 'bugbot', 'memory', 'jupyter']
+      tags: ['agent', 'slack', 'memory', 'pr-indexing', 'planning']
     },
     {
       id: '1-prev',
@@ -117,18 +117,41 @@ const mockDetailData: Record<string, ContentCard[]> = {
         category: 'AI Assistant',
         slug: 'claude'
       },
-      title: 'Claude 3.5 Haiku 模型正式发布',
-      summary: 'Anthropic 发布了 Claude 3.5 Haiku，这是一个专为快速响应优化的轻量级模型。新模型在保持高质量输出的同时，显著提升了处理速度，特别适合需要实时交互的应用场景。',
+      title: 'Claude 4正式发布 - Opus 4与Sonnet 4',
+      summary: 'Anthropic于7月7日发布Claude 4系列，包括Claude Opus 4和Claude Sonnet 4。Opus 4成为世界最佳编程模型，在SWE-bench获得72.5%的成绩。新增扩展思考、工具使用、改进内存等功能。',
       keyPoints: [
-        '响应速度提升3倍',
-        '保持Claude 3的高质量输出',
-        '优化的成本效益比',
-        '支持多语言和多模态输入'
+        'Claude Opus 4领先SWE-bench (72.5%)',
+        '可连续工作数小时处理长期任务',
+        '扩展思考期间支持工具使用',
+        '显著改进的内存能力',
+        'Claude Code正式发布'
       ],
       importance: 'high',
-      publishedAt: '2024-01-14T15:30:00Z',
-      originalUrl: 'https://docs.anthropic.com/claude/docs',
-      tags: ['model-release', 'performance', 'api']
+      publishedAt: '2025-07-07T16:30:00Z',
+      originalUrl: 'https://www.anthropic.com/news/claude-4',
+      tags: ['claude4', 'opus4', 'sonnet4', 'coding', 'reasoning']
+    },
+    {
+      id: '2-prev',
+      product: {
+        name: 'Claude',
+        logo: 'https://www.anthropic.com/favicon.ico',
+        category: 'AI Assistant',
+        slug: 'claude'
+      },
+      title: 'Claude Research与Google Workspace集成',
+      summary: 'Anthropic推出Research功能，允许Claude跨内部工作上下文和网络进行搜索。同时发布Google Workspace集成，连接Gmail、日历和Google文档，为Claude提供更深入的工作上下文洞察。',
+      keyPoints: [
+        'Research功能进行多轮搜索',
+        'Gmail和日历集成',
+        'Google文档深度集成',
+        '内部工作上下文搜索',
+        '构建式搜索能力'
+      ],
+      importance: 'high',
+      publishedAt: '2025-07-07T16:30:00Z',
+      originalUrl: 'https://www.anthropic.com/news/research',
+      tags: ['research', 'google-workspace', 'integration', 'search']
     }
   ],
   'github-copilot': [
