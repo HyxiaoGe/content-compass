@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { ContentCard } from '@/types/database-refactor'
 import { formatDistanceToNow } from 'date-fns'
 import { zhCN } from 'date-fns/locale'
-import { ExternalLink, Clock, Sparkles, Zap, Brain, Cpu, Eye } from 'lucide-react'
+import { ExternalLink, Clock, Sparkles, Eye } from 'lucide-react'
 import Image from 'next/image'
 
 interface GlassmorphismCardProps {
@@ -55,34 +55,6 @@ export function GlassmorphismCard({ content, index }: GlassmorphismCardProps) {
     router.push(`/product/${content.product.slug}`)
   }
   
-  const getImportanceBadge = (importance: string) => {
-    switch (importance) {
-      case 'high':
-        return (
-          <Badge className="relative overflow-hidden bg-gradient-to-r from-red-500/20 to-pink-500/20 border border-red-500/30 text-red-300 backdrop-blur-sm">
-            <div className="absolute inset-0 bg-gradient-to-r from-red-500/10 to-pink-500/10 animate-pulse" />
-            <Zap className="w-3 h-3 mr-1 relative z-10" />
-            <span className="relative z-10">高重要</span>
-          </Badge>
-        )
-      case 'medium':
-        return (
-          <Badge className="relative overflow-hidden bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border border-blue-500/30 text-blue-300 backdrop-blur-sm">
-            <Brain className="w-3 h-3 mr-1" />
-            中重要
-          </Badge>
-        )
-      case 'low':
-        return (
-          <Badge className="relative overflow-hidden bg-gradient-to-r from-gray-500/20 to-gray-600/20 border border-gray-500/30 text-gray-300 backdrop-blur-sm">
-            <Cpu className="w-3 h-3 mr-1" />
-            低重要
-          </Badge>
-        )
-      default:
-        return <Badge variant="outline" className="text-xs">未知</Badge>
-    }
-  }
 
   const formatPublishedDate = (dateString: string) => {
     try {
@@ -262,7 +234,6 @@ export function GlassmorphismCard({ content, index }: GlassmorphismCardProps) {
                 </div>
                 
                 <div className="flex items-center space-x-3">
-                  {getImportanceBadge(content.importance)}
                   <div className="flex items-center text-xs text-gray-400 bg-black/20 backdrop-blur-sm rounded-full px-3 py-1">
                     <Clock className="w-3 h-3 mr-1" />
                     {formatPublishedDate(content.publishedAt)}

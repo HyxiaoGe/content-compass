@@ -4,13 +4,12 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Button } from '@/components/ui/button'
 import { FluidBackground } from '@/components/effects/fluid-background'
 import { GlassmorphismCard } from '@/components/effects/glassmorphism-card'
-import { HolographicHeader, HolographicStatusBar } from '@/components/effects/holographic-ui'
+import { HolographicHeader } from '@/components/effects/holographic-ui'
 import { CursorEffect } from '@/components/front/cursor-effect'
 import { ContentCard } from '@/types/database-refactor'
-import { TrendingUp, Sparkles, Settings } from 'lucide-react'
+import { TrendingUp } from 'lucide-react'
 
 // 模拟数据 - 实际应用中从API获取
 const mockContent: ContentCard[] = [
@@ -233,12 +232,9 @@ export default function HomePage() {
       {/* 高级鼠标效果 */}
       <CursorEffect />
       
-      {/* 全息状态栏 */}
-      <HolographicStatusBar />
-      
       {/* 极简导航栏 */}
       <nav className="relative z-40 p-6">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-center">
           <motion.div 
             className="flex items-center space-x-4"
             initial={{ opacity: 0, x: -30 }}
@@ -247,22 +243,6 @@ export default function HomePage() {
           >
             <div className="w-3 h-3 bg-cyan-400 rounded-full animate-pulse" />
             <span className="text-sm font-medium text-gray-300 tracking-wider">CONTENT COMPASS</span>
-          </motion.div>
-
-          <motion.div 
-            className="flex items-center space-x-4"
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="text-gray-300 hover:text-white hover:bg-white/10 border border-white/20 backdrop-blur-sm"
-            >
-              <Settings className="w-4 h-4 mr-2" />
-              设置
-            </Button>
           </motion.div>
         </div>
       </nav>
