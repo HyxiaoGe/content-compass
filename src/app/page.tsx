@@ -139,7 +139,7 @@ const mockContent: ContentCard[] = [
     id: '6',
     product: {
       name: 'Alibaba Qwen',
-      logo: 'https://qianwen.aliyun.com/favicon.ico',
+      logo: 'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/alibaba-icon.png',
       category: 'AI Language Model',
       slug: 'qwen'
     },
@@ -164,7 +164,7 @@ const mockContent: ContentCard[] = [
     id: '7',
     product: {
       name: 'Google Gemini',
-      logo: 'https://www.gstatic.com/devrel-devsite/prod/v9c8f5f3b0d4e5a8f7e6b5c2d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f/ai/images/gemini/favicon.ico',
+      logo: 'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/google-gemini-icon.png',
       category: 'AI Assistant',
       slug: 'gemini'
     },
