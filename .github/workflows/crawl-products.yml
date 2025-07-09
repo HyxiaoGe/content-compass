@@ -74,7 +74,7 @@ jobs:
           fi
           
           # 调用Netlify Function
-          FUNCTION_URL="https://${{ secrets.NETLIFY_SITE_ID }}.netlify.app/.netlify/functions/crawl-products${PARAMS}"
+          FUNCTION_URL="https://content-compass.seanfield.org/.netlify/functions/crawl-products${PARAMS}"
           echo "📡 调用URL: $FUNCTION_URL"
           
           # 执行请求并保存结果
@@ -162,7 +162,7 @@ jobs:
         run: |
           echo "🔍 检查ContentCompass网站状态..."
           
-          SITE_URL="https://content-compass.netlify.app"
+          SITE_URL="https://content-compass.seanfield.org"
           STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$SITE_URL")
           
           if [ "$STATUS_CODE" -eq 200 ]; then
