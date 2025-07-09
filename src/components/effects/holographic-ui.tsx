@@ -242,7 +242,7 @@ export function HolographicHeader() {
 export function HolographicStatusBar() {
   return (
     <motion.div
-      className="fixed top-20 right-6 z-30"
+      className="fixed top-24 right-6 z-30"
       initial={{ opacity: 0, x: 100 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 2 }}

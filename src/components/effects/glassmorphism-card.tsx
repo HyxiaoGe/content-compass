@@ -27,8 +27,8 @@ export function GlassmorphismCard({ content, index }: GlassmorphismCardProps) {
   const mouseY = useMotionValue(0)
   
   // 改为平移效果而非倾斜
-  const translateX = useTransform(mouseX, [-0.5, 0.5], [-10, 10])
-  const translateY = useTransform(mouseY, [-0.5, 0.5], [-10, 10])
+  const translateX = useTransform(mouseX, [-0.5, 0.5], [-5, 5])
+  const translateY = useTransform(mouseY, [-0.5, 0.5], [-5, 5])
   
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -162,7 +162,7 @@ export function GlassmorphismCard({ content, index }: GlassmorphismCardProps) {
         damping: 20,
         delay: index * 0.3
       }}
-      className={`timeline-card w-full mb-16`}
+      className={`timeline-card w-full max-w-none mb-12`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
@@ -173,14 +173,14 @@ export function GlassmorphismCard({ content, index }: GlassmorphismCardProps) {
           x: isHovered ? translateX : 0,
           y: isHovered ? translateY : 0,
         }}
-        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        transition={{ type: "spring", stiffness: 400, damping: 40 }}
       >
         {/* 悬浮动画容器 */}
         <motion.div
           className="relative group"
           animate={{
-            y: isHovered ? -15 : 0,
-            scale: isHovered ? 1.02 : 1,
+            y: isHovered ? -5 : 0,
+            scale: isHovered ? 1.01 : 1,
           }}
           transition={{ 
             type: "spring", 

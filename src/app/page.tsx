@@ -205,7 +205,7 @@ export default function HomePage() {
         </motion.div>
 
         {/* 毛玻璃卡片布局 */}
-        <div className="relative w-full px-6">
+        <div className="relative w-full px-4 md:px-6 lg:px-8">
           {loading ? (
             <div className="flex justify-center items-center h-64">
               <motion.div
@@ -219,7 +219,7 @@ export default function HomePage() {
               </motion.div>
             </div>
           ) : (
-            <div className="space-y-12">
+            <div className="w-full max-w-full space-y-8">
               {content.map((item, index) => (
                 <GlassmorphismCard 
                   key={item.id} 

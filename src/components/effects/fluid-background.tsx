@@ -8,7 +8,7 @@ import * as THREE from 'three'
 // 流体粒子组件
 function FluidParticles() {
   const pointsRef = useRef<THREE.Points>(null)
-  const particleCount = 2000
+  const particleCount = 1000
   
   // 创建粒子位置
   const positions = new Float32Array(particleCount * 3)
@@ -184,7 +184,7 @@ export function FluidBackground() {
       </Canvas>
       
       {/* 渐变遮罩 */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-900/20 to-gray-900/60 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-900/30 to-gray-900/80 pointer-events-none" />
     </div>
   )
 }
