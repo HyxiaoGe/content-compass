@@ -81,7 +81,7 @@ export function HolographicHeader() {
   }, [])
 
   return (
-    <div className="relative h-96 overflow-hidden">
+    <div className="relative overflow-hidden mb-20">
       {/* 全息网格背景 */}
       <canvas
         ref={canvasRef}
@@ -92,7 +92,7 @@ export function HolographicHeader() {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-gray-900/20 to-gray-900/80" />
       
       {/* 主标题内容 */}
-      <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-4">
+      <div className="relative z-10 flex flex-col items-center justify-center text-center px-4 py-20">
         <motion.div
           className="mb-8"
           initial={{ opacity: 0, scale: 0.5 }}

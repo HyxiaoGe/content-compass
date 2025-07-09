@@ -22,13 +22,13 @@ export function GlassmorphismCard({ content, index }: GlassmorphismCardProps) {
   const isInView = useInView(cardRef, { once: true, margin: "-150px" })
   const [isHovered, setIsHovered] = useState(false)
   
-  // 3D鼠标跟踪
+  // 平滑跟随效果（非倾斜）
   const mouseX = useMotionValue(0)
   const mouseY = useMotionValue(0)
   
-  const rotateX = useTransform(mouseY, [-0.5, 0.5], [8, -8])
-  const rotateY = useTransform(mouseX, [-0.5, 0.5], [isLeft ? -8 : 8, isLeft ? 8 : -8])
-  const scale = useTransform(mouseX, [-0.5, 0.5], [0.98, 1.02])
+  // 改为平移效果而非倾斜
+  const translateX = useTransform(mouseX, [-0.5, 0.5], [-10, 10])
+  const translateY = useTransform(mouseY, [-0.5, 0.5], [-10, 10])
   
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -83,58 +83,60 @@ export function GlassmorphismCard({ content, index }: GlassmorphismCardProps) {
   }
 
   // 数据可视化组件
-  const DataVisualization = () => (
-    <div className="absolute top-0 right-0 w-24 h-24 opacity-20 pointer-events-none">
-      <svg viewBox="0 0 100 100" className="w-full h-full">
-        {/* 数据脉冲 */}
-        <circle 
-          cx="50" 
-          cy="50" 
-          r="20"
-          fill="none"
-          stroke="url(#pulse-gradient)"
-          strokeWidth="2"
-          className="animate-ping"
-        />
-        <circle 
-          cx="50" 
-          cy="50" 
-          r="30"
-          fill="none"
-          stroke="url(#pulse-gradient)"
-          strokeWidth="1"
-          className="animate-ping"
-          style={{ animationDelay: '0.5s' }}
-        />
-        
-        {/* 渐变定义 */}
-        <defs>
-          <linearGradient id="pulse-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#00ffff" />
-            <stop offset="100%" stopColor="#ff00ff" />
-          </linearGradient>
-        </defs>
-        
-        {/* 数据点 */}
-        {Array.from({ length: 6 }).map((_, i) => {
-          const angle = (i / 6) * Math.PI * 2
-          const x = 50 + Math.cos(angle) * 15
-          const y = 50 + Math.sin(angle) * 15
-          return (
-            <circle
-              key={i}
-              cx={x}
-              cy={y}
-              r="2"
-              fill="#00ffff"
-              className="animate-pulse"
-              style={{ animationDelay: `${i * 0.2}s` }}
-            />
-          )
-        })}
-      </svg>
-    </div>
-  )
+  const DataVisualization = () => {
+    return (
+      <div className="absolute top-0 right-0 w-24 h-24 opacity-20 pointer-events-none">
+        <svg viewBox="0 0 100 100" className="w-full h-full">
+          {/* 数据脉冲 */}
+          <circle 
+            cx="50" 
+            cy="50" 
+            r="20"
+            fill="none"
+            stroke="url(#pulse-gradient)"
+            strokeWidth="2"
+            className="animate-ping"
+          />
+          <circle 
+            cx="50" 
+            cy="50" 
+            r="30"
+            fill="none"
+            stroke="url(#pulse-gradient)"
+            strokeWidth="1"
+            className="animate-ping"
+            style={{ animationDelay: '0.5s' }}
+          />
+          
+          {/* 渐变定义 */}
+          <defs>
+            <linearGradient id="pulse-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#00ffff" />
+              <stop offset="100%" stopColor="#ff00ff" />
+            </linearGradient>
+          </defs>
+          
+          {/* 数据点 */}
+          {Array.from({ length: 6 }).map((_, i) => {
+            const angle = (i / 6) * Math.PI * 2
+            const x = 50 + Math.cos(angle) * 15
+            const y = 50 + Math.sin(angle) * 15
+            return (
+              <circle
+                key={i}
+                cx={x}
+                cy={y}
+                r="2"
+                fill="#00ffff"
+                className="animate-pulse"
+                style={{ animationDelay: `${i * 0.2}s` }}
+              />
+            )
+          })}
+        </svg>
+      </div>
+    )
+  }
 
   return (
     <motion.div
@@ -160,43 +162,55 @@ export function GlassmorphismCard({ content, index }: GlassmorphismCardProps) {
         damping: 20,
         delay: index * 0.3
       }}
-      className={`timeline-card w-full flex ${isLeft ? 'justify-start' : 'justify-end'} mb-20`}
+      className={`timeline-card w-full mb-16`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
     >
       <motion.div 
-        className={`
-          relative
-          w-[90%] 
-          ${isLeft ? 'ml-0 mr-auto' : 'ml-auto mr-0'}
-          ${isLeft ? 'pr-[10%]' : 'pl-[10%]'}
-        `}
+        className="relative w-full"
         style={{
-          rotateX,
-          rotateY,
-          scale,
-          transformPerspective: 1000,
-          transformStyle: "preserve-3d"
+          x: isHovered ? translateX : 0,
+          y: isHovered ? translateY : 0,
         }}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
       >
-        {/* 发光边框 */}
-        <div className={`
-          absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700
-          bg-gradient-to-r ${isLeft ? 'from-cyan-500/20 to-blue-500/20' : 'from-purple-500/20 to-pink-500/20'}
-          blur-xl scale-105 -z-10
-        `} />
-        
-        {/* 主卡片 */}
-        <Card className={`
-          relative overflow-hidden
-          bg-white/5 backdrop-blur-xl
-          border border-white/20
-          shadow-2xl shadow-black/50
-          transition-all duration-700
-          group
-          ${isHovered ? 'bg-white/10 border-white/30' : ''}
-        `}>
+        {/* 悬浮动画容器 */}
+        <motion.div
+          className="relative group"
+          animate={{
+            y: isHovered ? -15 : 0,
+            scale: isHovered ? 1.02 : 1,
+          }}
+          transition={{ 
+            type: "spring", 
+            stiffness: 300, 
+            damping: 20,
+            duration: 0.4 
+          }}
+        >
+          {/* 悬浮阴影 */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-cyan-500/30 via-blue-500/30 to-purple-500/30 rounded-3xl blur-3xl"
+            animate={{
+              opacity: isHovered ? 0.8 : 0,
+              scale: isHovered ? 1.1 : 0.8,
+              y: isHovered ? 20 : 0,
+            }}
+            transition={{ duration: 0.4 }}
+            style={{ zIndex: -1 }}
+          />
+          
+          {/* 主卡片 */}
+          <Card className={`
+            relative overflow-hidden
+            bg-gradient-to-br from-gray-900/90 via-gray-900/80 to-black/90
+            backdrop-blur-2xl
+            border border-white/10
+            shadow-2xl
+            transition-all duration-700
+            ${isHovered ? 'border-cyan-500/30 shadow-cyan-500/20' : 'shadow-black/50'}
+          `}>
           {/* 毛玻璃反射效果 */}
           <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           
@@ -335,6 +349,7 @@ export function GlassmorphismCard({ content, index }: GlassmorphismCardProps) {
             </div>
           </CardContent>
         </Card>
+        </motion.div>
       </motion.div>
     </motion.div>
   )

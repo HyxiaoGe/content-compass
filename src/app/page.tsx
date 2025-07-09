@@ -186,7 +186,7 @@ export default function HomePage() {
       <HolographicHeader />
 
       {/* 主要内容区域 */}
-      <main className="relative z-10 px-6 py-12">
+      <main className="relative z-10 py-12">
         {/* 内容标题 */}
         <motion.div 
           className="text-center mb-16"
@@ -205,7 +205,7 @@ export default function HomePage() {
         </motion.div>
 
         {/* 毛玻璃卡片布局 */}
-        <div className="relative max-w-7xl mx-auto">
+        <div className="relative w-full px-6">
           {loading ? (
             <div className="flex justify-center items-center h-64">
               <motion.div
