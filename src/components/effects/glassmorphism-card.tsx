@@ -1,13 +1,14 @@
 'use client'
 
 import { useRef, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { motion, useInView, useMotionValue, useTransform } from 'framer-motion'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { ContentCard } from '@/types/database-refactor'
 import { formatDistanceToNow } from 'date-fns'
 import { zhCN } from 'date-fns/locale'
-import { ExternalLink, Clock, Sparkles, Zap, Brain, Cpu } from 'lucide-react'
+import { ExternalLink, Clock, Sparkles, Zap, Brain, Cpu, Eye } from 'lucide-react'
 import Image from 'next/image'
 
 interface GlassmorphismCardProps {
@@ -16,6 +17,7 @@ interface GlassmorphismCardProps {
 }
 
 export function GlassmorphismCard({ content, index }: GlassmorphismCardProps) {
+  const router = useRouter()
   const isEven = index % 2 === 0
   const isLeft = !isEven
   const cardRef = useRef(null)
@@ -42,6 +44,10 @@ export function GlassmorphismCard({ content, index }: GlassmorphismCardProps) {
     mouseX.set(0)
     mouseY.set(0)
     setIsHovered(false)
+  }
+
+  const handleCardClick = () => {
+    router.push(`/product/${content.product.slug}`)
   }
   
   const getImportanceBadge = (importance: string) => {
@@ -202,15 +208,18 @@ export function GlassmorphismCard({ content, index }: GlassmorphismCardProps) {
           />
           
           {/* 主卡片 */}
-          <Card className={`
-            relative overflow-hidden
-            bg-gradient-to-br from-gray-900/90 via-gray-900/80 to-black/90
-            backdrop-blur-2xl
-            border border-white/10
-            shadow-2xl
-            transition-all duration-700
-            ${isHovered ? 'border-cyan-500/30 shadow-cyan-500/20' : 'shadow-black/50'}
-          `}>
+          <Card 
+            className={`
+              relative overflow-hidden cursor-pointer
+              bg-gradient-to-br from-gray-900/90 via-gray-900/80 to-black/90
+              backdrop-blur-2xl
+              border border-white/10
+              shadow-2xl
+              transition-all duration-700
+              ${isHovered ? 'border-cyan-500/30 shadow-cyan-500/20' : 'shadow-black/50'}
+            `}
+            onClick={handleCardClick}
+          >
           {/* 毛玻璃反射效果 */}
           <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           
@@ -336,15 +345,22 @@ export function GlassmorphismCard({ content, index }: GlassmorphismCardProps) {
                 <div className="text-sm text-gray-400">
                   更新于 {formatPublishedDate(content.publishedAt)}
                 </div>
-                <a
-                  href={content.originalUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group inline-flex items-center px-6 py-3 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 text-cyan-300 text-sm font-medium rounded-xl backdrop-blur-sm transition-all duration-300 hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-400/50 hover:text-white hover:scale-105"
-                >
-                  查看原文
-                  <ExternalLink className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
-                </a>
+                <div className="flex items-center space-x-3">
+                  <div className="group inline-flex items-center px-4 py-2 bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 text-purple-300 text-sm font-medium rounded-xl backdrop-blur-sm transition-all duration-300 hover:from-purple-500/30 hover:to-pink-500/30 hover:border-purple-400/50 hover:text-white hover:scale-105">
+                    <Eye className="w-4 h-4 mr-2" />
+                    查看详情
+                  </div>
+                  <a
+                    href={content.originalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex items-center px-4 py-2 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 text-cyan-300 text-sm font-medium rounded-xl backdrop-blur-sm transition-all duration-300 hover:from-cyan-500/30 hover:to-blue-500/30 hover:border-cyan-400/50 hover:text-white hover:scale-105"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    查看原文
+                    <ExternalLink className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
+                  </a>
+                </div>
               </motion.div>
             </div>
           </CardContent>
