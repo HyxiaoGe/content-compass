@@ -213,25 +213,33 @@ export function HolographicHeader() {
 
         {/* 装饰性粒子 */}
         <div className="absolute inset-0 pointer-events-none">
-          {Array.from({ length: 20 }).map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-1 h-1 bg-cyan-400/60 rounded-full"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-              animate={{
-                opacity: [0, 1, 0],
-                scale: [0, 1, 0],
-              }}
-              transition={{
-                duration: Math.random() * 3 + 2,
-                repeat: Infinity,
-                delay: Math.random() * 2,
-              }}
-            />
-          ))}
+          {Array.from({ length: 20 }).map((_, i) => {
+            // 使用索引生成固定的伪随机值，避免hydration mismatch
+            const pseudoRandomX = ((i * 17 + 23) % 100)
+            const pseudoRandomY = ((i * 13 + 37) % 100)
+            const pseudoRandomDuration = 2 + ((i * 7) % 3)
+            const pseudoRandomDelay = (i * 0.1) % 2
+            
+            return (
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 bg-cyan-400/60 rounded-full"
+                style={{
+                  left: `${pseudoRandomX}%`,
+                  top: `${pseudoRandomY}%`,
+                }}
+                animate={{
+                  opacity: [0, 1, 0],
+                  scale: [0, 1, 0],
+                }}
+                transition={{
+                  duration: pseudoRandomDuration,
+                  repeat: Infinity,
+                  delay: pseudoRandomDelay,
+                }}
+              />
+            )
+          })}
         </div>
       </div>
     </div>

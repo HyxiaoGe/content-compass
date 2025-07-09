@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion, useInView, useMotionValue, useTransform } from 'framer-motion'
 import { Card, CardContent } from '@/components/ui/card'
@@ -23,6 +23,11 @@ export function GlassmorphismCard({ content, index }: GlassmorphismCardProps) {
   const cardRef = useRef(null)
   const isInView = useInView(cardRef, { once: true, margin: "-150px" })
   const [isHovered, setIsHovered] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  
+  useEffect(() => {
+    setMounted(true)
+  }, [])
   
   // 平滑跟随效果（非倾斜）
   const mouseX = useMotionValue(0)
@@ -82,7 +87,7 @@ export function GlassmorphismCard({ content, index }: GlassmorphismCardProps) {
   const formatPublishedDate = (dateString: string) => {
     try {
       const date = new Date(dateString)
-      return formatDistanceToNow(date, { addSuffix: true, locale: zhCN })
+      return mounted ? formatDistanceToNow(date, { addSuffix: true, locale: zhCN }) : '加载中...'
     } catch {
       return '时间未知'
     }
