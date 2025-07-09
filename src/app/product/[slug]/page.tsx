@@ -24,63 +24,88 @@ const mockDetailData: Record<string, ContentCard[]> = {
       product: {
         name: 'Cursor',
         logo: 'https://cursor.sh/favicon.ico',
-        category: 'Code Editor',
+        category: 'AI Code Editor',
         slug: 'cursor'
       },
-      title: 'Cursor 0.42 发布 - 全新AI编程体验',
-      summary: 'Cursor 最新版本带来了革命性的AI编程体验，包括增强的代码补全、智能重构建议和实时代码审查功能。新版本支持更多编程语言，提升了AI模型的响应速度，让开发者能够更高效地编写高质量代码。',
+      title: 'Cursor 1.0 正式发布 - 全新里程碑版本',
+      summary: 'Cursor 1.0 正式发布，这是一个重要的里程碑版本。包含全新的 BugBot 代码审查功能、Memory 系统正式版、一键式 MCP 设置、Jupyter 支持，以及 Background Agent 的全面可用性。',
       keyPoints: [
-        '新增智能代码重构功能',
-        '支持30+编程语言的AI补全',
-        '实时代码质量检查',
-        '性能提升40%，响应更快速'
+        'BugBot 代码审查功能正式发布',
+        'Memory 系统达到正式版本',
+        '一键式 MCP 设置简化工作流',
+        'Jupyter notebook 完整支持',
+        'Background Agent 全面可用'
       ],
       importance: 'high',
-      publishedAt: '2024-01-15T10:00:00Z',
-      originalUrl: 'https://cursor.sh/changelog',
-      tags: ['feature', 'ai', 'performance']
+      publishedAt: '2024-12-15T10:00:00Z',
+      originalUrl: 'https://cursor.com/changelog',
+      tags: ['major-release', 'bugbot', 'memory', 'jupyter']
     },
     {
       id: '1-prev',
       product: {
         name: 'Cursor',
         logo: 'https://cursor.sh/favicon.ico',
-        category: 'Code Editor',
+        category: 'AI Code Editor',
         slug: 'cursor'
       },
-      title: 'Cursor 0.41 - 多语言支持增强',
-      summary: '本次更新重点加强了多语言支持，新增了Python、JavaScript、TypeScript、Go等主流编程语言的深度AI集成，同时优化了代码补全的准确性和速度。',
+      title: 'Cursor 0.40.3 - Agent 智能规划与多文件支持',
+      summary: 'Agent 现在可以通过结构化的待办事项列表进行提前规划，使长期任务更易理解和跟踪。新增多文件 Tab 模型，支持跨文件的代码建议和语法高亮。',
       keyPoints: [
-        '新增Python深度集成',
-        '优化JavaScript/TypeScript支持',
-        '增强Go语言AI补全',
-        '提升代码补全准确性25%'
+        'Agent 结构化待办事项列表',
+        '可为 Agent 排队后续消息',
+        '多文件 Tab 模型支持',
+        '跨文件代码建议功能',
+        '代码建议语法高亮'
       ],
-      importance: 'medium',
-      publishedAt: '2024-01-10T14:30:00Z',
-      originalUrl: 'https://cursor.sh/changelog',
-      tags: ['languages', 'enhancement', 'ai']
+      importance: 'high',
+      publishedAt: '2024-11-28T14:30:00Z',
+      originalUrl: 'https://cursor.com/changelog',
+      tags: ['agent', 'multi-file', 'planning', 'tab-model']
     },
     {
       id: '1-prev2',
       product: {
         name: 'Cursor',
         logo: 'https://cursor.sh/favicon.ico',
-        category: 'Code Editor',
+        category: 'AI Code Editor',
         slug: 'cursor'
       },
-      title: 'Cursor 0.40 - 团队协作功能',
-      summary: '引入了全新的团队协作功能，包括实时代码共享、团队AI助手、项目模板共享等功能，让团队开发更加高效。',
+      title: 'Cursor 0.39.x - GitHub PR 集成与统一定价',
+      summary: 'Cursor 现在可以索引和总结 GitHub PR，就像处理文件一样。引入基于请求的统一定价模式，为所有顶级模型提供 Max Mode，并支持并行任务执行。',
       keyPoints: [
-        '实时代码共享功能',
-        '团队AI助手集成',
-        '项目模板共享',
-        '团队设置同步'
+        'GitHub PR 索引和总结功能',
+        '统一的基于请求的定价模式',
+        '所有顶级模型的 Max Mode',
+        'Background Agent 并行执行',
+        'Slack 集成和远程运行'
       ],
       importance: 'high',
-      publishedAt: '2024-01-05T09:00:00Z',
-      originalUrl: 'https://cursor.sh/changelog',
-      tags: ['collaboration', 'team', 'sharing']
+      publishedAt: '2024-10-20T09:00:00Z',
+      originalUrl: 'https://cursor.com/changelog',
+      tags: ['github', 'pricing', 'max-mode', 'slack']
+    },
+    {
+      id: '1-prev3',
+      product: {
+        name: 'Cursor',
+        logo: 'https://cursor.sh/favicon.ico',
+        category: 'AI Code Editor',
+        slug: 'cursor'
+      },
+      title: 'Cursor 0.38.x - Memory 系统改进',
+      summary: 'Memory 系统质量大幅提升，改进了生成质量并增加了用户审批功能。Agent 现在可以在安全环境中远程运行，并直接在 Slack 中发送更新。',
+      keyPoints: [
+        'Memory 生成质量提升',
+        '用户审批功能增强',
+        'Agent 远程安全运行',
+        'Slack 直接更新通知',
+        '改进的用户体验'
+      ],
+      importance: 'medium',
+      publishedAt: '2024-09-15T16:45:00Z',
+      originalUrl: 'https://cursor.com/changelog',
+      tags: ['memory', 'agent', 'slack', 'security']
     }
   ],
   'claude': [

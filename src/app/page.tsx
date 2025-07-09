@@ -10,7 +10,7 @@ import { GlassmorphismCard } from '@/components/effects/glassmorphism-card'
 import { HolographicHeader, HolographicStatusBar } from '@/components/effects/holographic-ui'
 import { CursorEffect } from '@/components/front/cursor-effect'
 import { ContentCard } from '@/types/database-refactor'
-import { TrendingUp, Sparkles, Settings, User } from 'lucide-react'
+import { TrendingUp, Sparkles, Settings } from 'lucide-react'
 
 // 模拟数据 - 实际应用中从API获取
 const mockContent: ContentCard[] = [
@@ -19,21 +19,22 @@ const mockContent: ContentCard[] = [
     product: {
       name: 'Cursor',
       logo: 'https://cursor.sh/favicon.ico',
-      category: 'Code Editor',
+      category: 'AI Code Editor',
       slug: 'cursor'
     },
-    title: 'Cursor 0.42 发布 - 全新AI编程体验',
-    summary: 'Cursor 最新版本带来了革命性的AI编程体验，包括增强的代码补全、智能重构建议和实时代码审查功能。新版本支持更多编程语言，提升了AI模型的响应速度，让开发者能够更高效地编写高质量代码。',
+    title: 'Cursor 1.0 正式发布 - 全新里程碑版本',
+    summary: 'Cursor 1.0 正式发布，这是一个重要的里程碑版本。包含全新的 BugBot 代码审查功能、Memory 系统正式版、一键式 MCP 设置、Jupyter 支持，以及 Background Agent 的全面可用性。',
     keyPoints: [
-      '新增智能代码重构功能',
-      '支持30+编程语言的AI补全',
-      '实时代码质量检查',
-      '性能提升40%，响应更快速'
+      'BugBot 代码审查功能正式发布',
+      'Memory 系统达到正式版本',
+      '一键式 MCP 设置简化工作流',
+      'Jupyter notebook 完整支持',
+      'Background Agent 全面可用'
     ],
     importance: 'high',
-    publishedAt: '2024-01-15T10:00:00Z',
-    originalUrl: 'https://cursor.sh/changelog',
-    tags: ['feature', 'ai', 'performance']
+    publishedAt: '2024-12-15T10:00:00Z',
+    originalUrl: 'https://cursor.com/changelog',
+    tags: ['major-release', 'bugbot', 'memory', 'jupyter']
   },
   {
     id: '2',
@@ -171,12 +172,6 @@ export default function HomePage() {
             >
               <Settings className="w-4 h-4 mr-2" />
               设置
-            </Button>
-            <Button 
-              className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 border-0 shadow-lg shadow-cyan-500/25"
-            >
-              <User className="w-4 h-4 mr-2" />
-              登录
             </Button>
           </motion.div>
         </div>
