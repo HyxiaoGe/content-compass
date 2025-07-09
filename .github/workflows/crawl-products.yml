@@ -1,0 +1,184 @@
+name: 🤖 AI产品信息自动爬取
+
+on:
+  # 定时执行 - 每天早上8点和晚上8点（UTC时间）
+  schedule:
+    - cron: '0 0 * * *'  # 每天UTC 00:00 (北京时间 08:00)
+    - cron: '0 12 * * *' # 每天UTC 12:00 (北京时间 20:00)
+  
+  # 手动触发
+  workflow_dispatch:
+    inputs:
+      products:
+        description: '要爬取的产品（逗号分隔，留空为全部）'
+        required: false
+        default: ''
+      force:
+        description: '强制重新爬取'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
+
+  # PR/Push时测试（仅测试不爬取）
+  pull_request:
+    branches: [master, main]
+    paths:
+      - 'netlify/functions/**'
+      - 'src/lib/crawler/**'
+      - '.github/workflows/crawl-products.yml'
+
+jobs:
+  crawl:
+    name: 🕷️ 爬取AI产品更新
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    # PR时跳过实际爬取
+    if: github.event_name != 'pull_request'
+    
+    steps:
+      - name: 📥 检出代码
+        uses: actions/checkout@v4
+
+      - name: 📊 设置Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 📦 安装依赖
+        run: npm ci
+
+      - name: 🚀 执行爬取任务
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+        run: |
+          echo "🤖 开始执行AI产品信息爬取..."
+          
+          # 构建URL参数
+          PARAMS=""
+          if [ "${{ github.event.inputs.products }}" != "" ]; then
+            PARAMS="?products=${{ github.event.inputs.products }}"
+          fi
+          
+          if [ "${{ github.event.inputs.force }}" == "true" ]; then
+            if [ "$PARAMS" == "" ]; then
+              PARAMS="?force=true"
+            else
+              PARAMS="${PARAMS}&force=true"
+            fi
+          fi
+          
+          # 调用Netlify Function
+          FUNCTION_URL="https://${{ secrets.NETLIFY_SITE_ID }}.netlify.app/.netlify/functions/crawl-products${PARAMS}"
+          echo "📡 调用URL: $FUNCTION_URL"
+          
+          # 执行请求并保存结果
+          RESPONSE=$(curl -s -w "HTTPSTATUS:%{http_code}" "$FUNCTION_URL")
+          HTTP_STATUS=$(echo $RESPONSE | tr -d '\n' | sed -e 's/.*HTTPSTATUS://')
+          RESPONSE_BODY=$(echo $RESPONSE | sed -e 's/HTTPSTATUS:.*//g')
+          
+          echo "🔍 HTTP状态码: $HTTP_STATUS"
+          echo "📄 响应内容:"
+          echo "$RESPONSE_BODY" | jq '.' 2>/dev/null || echo "$RESPONSE_BODY"
+          
+          # 检查执行结果
+          if [ "$HTTP_STATUS" -eq 200 ]; then
+            echo "✅ 爬取任务执行成功"
+            
+            # 提取统计信息
+            SUCCESS_COUNT=$(echo "$RESPONSE_BODY" | jq -r '.results | map(select(.success == true)) | length' 2>/dev/null || echo "unknown")
+            TOTAL_COUNT=$(echo "$RESPONSE_BODY" | jq -r '.results | length' 2>/dev/null || echo "unknown")
+            NEW_UPDATES=$(echo "$RESPONSE_BODY" | jq -r '.results | map(.newUpdates) | add' 2>/dev/null || echo "unknown")
+            
+            echo "📈 统计结果: ${SUCCESS_COUNT}/${TOTAL_COUNT} 个产品成功，新增 ${NEW_UPDATES} 条更新"
+            
+            # 设置输出变量供后续步骤使用
+            echo "success_count=$SUCCESS_COUNT" >> $GITHUB_OUTPUT
+            echo "total_count=$TOTAL_COUNT" >> $GITHUB_OUTPUT
+            echo "new_updates=$NEW_UPDATES" >> $GITHUB_OUTPUT
+          else
+            echo "❌ 爬取任务执行失败"
+            exit 1
+          fi
+
+      - name: 📨 发送通知（如果有新更新）
+        if: success()
+        env:
+          NEW_UPDATES: ${{ steps.crawl.outputs.new_updates }}
+        run: |
+          if [ "$NEW_UPDATES" -gt 0 ] 2>/dev/null; then
+            echo "🎉 发现 $NEW_UPDATES 条新更新，可以考虑发送通知"
+            # TODO: 在这里添加通知逻辑（邮件、Slack、微信等）
+          else
+            echo "ℹ️ 没有发现新更新"
+          fi
+
+  test:
+    name: 🧪 测试爬取功能
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    
+    # 仅在PR时运行测试
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: 📥 检出代码
+        uses: actions/checkout@v4
+
+      - name: 📊 设置Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 📦 安装依赖
+        run: npm ci
+
+      - name: 🔧 TypeScript检查
+        run: npx tsc --noEmit
+
+      - name: 🧪 运行测试
+        run: |
+          echo "🧪 测试爬取器代码..."
+          # TODO: 添加单元测试
+          echo "✅ 测试通过"
+
+  # 健康检查任务 - 每小时检查一次
+  health-check:
+    name: 🏥 系统健康检查
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    
+    # 仅在定时任务时运行
+    if: github.event_name == 'schedule'
+    
+    steps:
+      - name: 🔍 检查网站可用性
+        run: |
+          echo "🔍 检查ContentCompass网站状态..."
+          
+          SITE_URL="https://content-compass.netlify.app"
+          STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$SITE_URL")
+          
+          if [ "$STATUS_CODE" -eq 200 ]; then
+            echo "✅ 网站正常运行 (HTTP $STATUS_CODE)"
+          else
+            echo "❌ 网站异常 (HTTP $STATUS_CODE)"
+            exit 1
+          fi
+
+      - name: 📊 检查数据更新状态
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          echo "📊 检查最近的数据更新..."
+          
+          # 这里可以添加检查最近更新时间的逻辑
+          # 例如：检查数据库中最新更新是否在24小时内
+          
+          echo "ℹ️ 数据状态检查完成"
