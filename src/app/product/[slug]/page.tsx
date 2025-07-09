@@ -116,6 +116,49 @@ const mockDetailData: Record<string, ContentCard[]> = {
       publishedAt: '2025-05-15T14:20:00Z',
       originalUrl: 'https://cursor.com/changelog',
       tags: ['pricing', 'max-mode', 'tab-model', 'background-agent', 'workspace']
+    },
+    {
+      id: '1-prev4',
+      product: {
+        name: 'Cursor',
+        logo: 'https://cursor.sh/favicon.ico',
+        category: 'AI Code Editor',
+        slug: 'cursor'
+      },
+      title: 'Cursor 0.45 - 多模型支持与性能优化',
+      summary: 'Cursor 0.45版本引入了多AI模型支持，用户可以根据不同场景选择最适合的模型。大幅优化了代码分析速度，新增实时协作功能，支持团队成员同时编辑同一个项目。',
+      keyPoints: [
+        '多AI模型切换：支持GPT-4、Claude等多种模型',
+        '代码分析性能提升50%：更快的语法检查和错误检测',
+        '实时协作功能：多人同时编辑代码',
+        '智能代码格式化：自动调整代码风格',
+        '扩展生态系统：支持更多第三方插件'
+      ],
+      importance: 'medium',
+      publishedAt: '2024-12-20T11:30:00Z',
+      originalUrl: 'https://cursor.com/changelog',
+      tags: ['multi-model', 'performance', 'collaboration', 'plugins']
+    },
+    {
+      id: '1-prev5',
+      product: {
+        name: 'Cursor',
+        logo: 'https://cursor.sh/favicon.ico',
+        category: 'AI Code Editor',
+        slug: 'cursor'
+      },
+      title: 'Cursor 0.42 - 初始AI助手功能',
+      summary: 'Cursor 0.42版本首次引入AI助手功能，提供基础的代码补全和智能建议。这是Cursor向AI代码编辑器转型的重要里程碑，为后续版本奠定了基础。',
+      keyPoints: [
+        '首次引入AI代码补全功能',
+        '智能代码建议和自动修复',
+        '基础的上下文理解能力',
+        '简单的重构建议功能'
+      ],
+      importance: 'medium',
+      publishedAt: '2024-11-15T09:20:00Z',
+      originalUrl: 'https://cursor.com/changelog',
+      tags: ['ai-assistant', 'code-completion', 'refactoring', 'milestone']
     }
   ],
   'claude': [
@@ -249,10 +292,23 @@ export default function ProductDetailPage() {
       setLoading(true)
       // 模拟API调用
       setTimeout(() => {
-        const data = mockDetailData[slug] || []
-        setContent(data)
-        if (data.length > 0) {
-          setProductInfo(data[0].product)
+        const allData = mockDetailData[slug] || []
+        
+        // 过滤半年内的更新记录
+        const sixMonthsAgo = new Date()
+        sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6)
+        
+        const filteredData = allData.filter(item => {
+          const publishDate = new Date(item.publishedAt)
+          return publishDate >= sixMonthsAgo
+        })
+        
+        setContent(filteredData)
+        if (filteredData.length > 0) {
+          setProductInfo(filteredData[0].product)
+        } else if (allData.length > 0) {
+          // 如果半年内没有更新，至少显示产品信息
+          setProductInfo(allData[0].product)
         }
         setLoading(false)
       }, 500)
@@ -427,9 +483,15 @@ export default function ProductDetailPage() {
               </div>
             </div>
             
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-4">
               查看 {productInfo.name} 的所有更新记录和AI蒸馏后的核心信息
             </p>
+            <div className="flex items-center justify-center">
+              <Badge className="bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border border-blue-500/30 text-blue-300 backdrop-blur-sm">
+                <Clock className="w-3 h-3 mr-1" />
+                显示近6个月更新记录
+              </Badge>
+            </div>
           </motion.div>
         </div>
       </header>
