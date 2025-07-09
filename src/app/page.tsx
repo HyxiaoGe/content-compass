@@ -234,7 +234,7 @@ export default function HomePage() {
       
       {/* 极简导航栏 */}
       <nav className="relative z-40 p-6">
-        <div className="flex items-center justify-center">
+        <div className="flex items-center justify-start">
           <motion.div 
             className="flex items-center space-x-4"
             initial={{ opacity: 0, x: -30 }}

@@ -8,10 +8,9 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { FluidBackground } from '@/components/effects/fluid-background'
-import { HolographicStatusBar } from '@/components/effects/holographic-ui'
 import { CursorEffect } from '@/components/front/cursor-effect'
 import { ContentCard } from '@/types/database-refactor'
-import { ArrowLeft, ExternalLink, Clock, Calendar, TrendingUp, Sparkles, Zap, Brain, Cpu, Globe, Settings } from 'lucide-react'
+import { ArrowLeft, ExternalLink, Clock, Calendar, TrendingUp, Sparkles, Zap, Brain, Cpu, Globe } from 'lucide-react'
 import { formatDistanceToNow } from 'date-fns'
 import { zhCN } from 'date-fns/locale'
 import Image from 'next/image'
@@ -1064,12 +1063,10 @@ export default function ProductDetailPage() {
       {/* 高级鼠标效果 */}
       <CursorEffect />
       
-      {/* 全息状态栏 */}
-      <HolographicStatusBar />
       
       {/* 导航栏 */}
       <nav className="relative z-40 p-6">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-start">
           <motion.div 
             className="flex items-center space-x-4"
             initial={{ opacity: 0, x: -30 }}
@@ -1086,22 +1083,6 @@ export default function ProductDetailPage() {
             </Button>
             <div className="w-3 h-3 bg-cyan-400 rounded-full animate-pulse" />
             <span className="text-sm font-medium text-gray-300 tracking-wider">CONTENT COMPASS</span>
-          </motion.div>
-
-          <motion.div 
-            className="flex items-center space-x-4"
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="text-gray-300 hover:text-white hover:bg-white/10 border border-white/20 backdrop-blur-sm"
-            >
-              <Settings className="w-4 h-4 mr-2" />
-              设置
-            </Button>
           </motion.div>
         </div>
       </nav>
