@@ -27,14 +27,17 @@ const mockDetailData: Record<string, ContentCard[]> = {
         category: 'AI Code Editor',
         slug: 'cursor'
       },
-      title: 'Cursor 1.2 - Agent智能任务规划与Slack集成',
-      summary: 'Cursor 1.2版本于7月3日发布，带来了重大的Agent改进，包括结构化待办事项列表、依赖关系跟踪、消息队列功能，以及完整的Slack集成。Memory功能已正式发布，同时新增PR索引和摘要功能。',
+      title: 'Cursor 1.2 - 企业级AI编程助手全面升级',
+      summary: 'Cursor 1.2版本带来了突破性的Agent智能规划系统，可以为复杂任务创建结构化待办清单并跟踪依赖关系。新增企业级Slack集成，支持直接从Slack启动Background Agent。Tab补全速度提升100ms，新增PR语义搜索，Memory系统正式商用，显著提升长期项目的上下文理解能力。',
       keyPoints: [
-        'Agent结构化任务规划和依赖跟踪',
-        '消息队列允许任务重新排序',
-        'Memory功能正式发布(GA)',
-        'PR索引和摘要功能',
-        '完整的Slack集成支持'
+        'Agent创建结构化待办清单，自动分解复杂任务并跟踪依赖关系',
+        '队列消息系统：可预先排队多个Agent任务，支持任务重新排序',
+        'Memory系统正式发布：改进生成质量，增加用户审批机制',
+        'PR语义搜索：支持PR、issue、commit的深度搜索和索引',
+        'Slack企业集成：直接从Slack启动Agent，理解线程上下文',
+        'Tab补全性能优化：响应时间减少100ms，大幅提升编码流畅度',
+        'Agent合并冲突解决：自动处理Git合并冲突',
+        'Background Agent改进：支持长时间运行的后台任务'
       ],
       importance: 'high',
       publishedAt: '2025-07-03T14:00:00Z',
@@ -49,19 +52,20 @@ const mockDetailData: Record<string, ContentCard[]> = {
         category: 'AI Code Editor',
         slug: 'cursor'
       },
-      title: 'Cursor 0.40.3 - Agent 智能规划与多文件支持',
-      summary: 'Agent 现在可以通过结构化的待办事项列表进行提前规划，使长期任务更易理解和跟踪。新增多文件 Tab 模型，支持跨文件的代码建议和语法高亮。',
+      title: 'Cursor 1.1 - Slack深度集成与上下文理解',
+      summary: 'Cursor 1.1专注于企业协作场景，引入了完整的Slack集成功能。可以直接从Slack启动Background Agent，Agent能够理解Slack线程上下文，实现真正的团队协作编程。同时改进了搜索和集成功能，为团队开发提供更好的支持。',
       keyPoints: [
-        'Agent 结构化待办事项列表',
-        '可为 Agent 排队后续消息',
-        '多文件 Tab 模型支持',
-        '跨文件代码建议功能',
-        '代码建议语法高亮'
+        'Slack深度集成：直接从Slack频道启动Background Agent',
+        'Slack线程上下文理解：Agent可以读取和理解Slack对话内容',
+        '团队协作增强：支持多人协作的代码编写和审查',
+        '改进的搜索功能：更精确的代码库搜索和定位',
+        '集成功能优化：与第三方工具的连接更加稳定',
+        '企业级安全：支持企业级权限控制和数据保护'
       ],
       importance: 'high',
-      publishedAt: '2024-11-28T14:30:00Z',
+      publishedAt: '2025-06-12T16:00:00Z',
       originalUrl: 'https://cursor.com/changelog',
-      tags: ['agent', 'multi-file', 'planning', 'tab-model']
+      tags: ['slack', 'collaboration', 'enterprise', 'background-agent']
     },
     {
       id: '1-prev2',
@@ -71,19 +75,22 @@ const mockDetailData: Record<string, ContentCard[]> = {
         category: 'AI Code Editor',
         slug: 'cursor'
       },
-      title: 'Cursor 0.39.x - GitHub PR 集成与统一定价',
-      summary: 'Cursor 现在可以索引和总结 GitHub PR，就像处理文件一样。引入基于请求的统一定价模式，为所有顶级模型提供 Max Mode，并支持并行任务执行。',
+      title: 'Cursor 1.0 - 里程碑版本正式发布',
+      summary: 'Cursor 1.0正式发布，标志着AI代码编辑器进入成熟阶段。引入革命性的BugBot自动代码审查系统，Background Agent全面开放，支持Jupyter Notebook，Memory功能进入Beta测试。一键式MCP服务器安装，支持Mermaid图表和Markdown表格的丰富聊天响应。',
       keyPoints: [
-        'GitHub PR 索引和总结功能',
-        '统一的基于请求的定价模式',
-        '所有顶级模型的 Max Mode',
-        'Background Agent 并行执行',
-        'Slack 集成和远程运行'
+        'BugBot自动PR代码审查：智能检测潜在bug和代码质量问题',
+        'Background Agent全面开放：所有用户可使用后台AI助手',
+        'Jupyter Notebook完整支持：无缝集成数据科学工作流',
+        'Memory Beta功能：AI助手开始具备长期记忆能力',
+        '一键MCP服务器安装：简化开发环境配置',
+        '丰富聊天响应：支持Mermaid流程图和Markdown表格显示',
+        '全新设置和控制面板：提供更直观的配置界面',
+        '企业级稳定性：针对大型项目优化性能'
       ],
       importance: 'high',
-      publishedAt: '2024-10-20T09:00:00Z',
+      publishedAt: '2025-06-04T10:00:00Z',
       originalUrl: 'https://cursor.com/changelog',
-      tags: ['github', 'pricing', 'max-mode', 'slack']
+      tags: ['milestone', 'bugbot', 'background-agent', 'jupyter', 'memory']
     },
     {
       id: '1-prev3',
@@ -93,19 +100,22 @@ const mockDetailData: Record<string, ContentCard[]> = {
         category: 'AI Code Editor',
         slug: 'cursor'
       },
-      title: 'Cursor 0.38.x - Memory 系统改进',
-      summary: 'Memory 系统质量大幅提升，改进了生成质量并增加了用户审批功能。Agent 现在可以在安全环境中远程运行，并直接在 Slack 中发送更新。',
+      title: 'Cursor 0.50 - 定价模式革新与智能化提升',
+      summary: 'Cursor 0.50版本重新定义了AI代码编辑器的商业模式，推出简化的定价结构和Max Mode功能。全新的Tab模型支持更智能的代码补全，Background Agent进入预览阶段。改进上下文管理，重新设计内联编辑功能，支持多根工作区。',
       keyPoints: [
-        'Memory 生成质量提升',
-        '用户审批功能增强',
-        'Agent 远程安全运行',
-        'Slack 直接更新通知',
-        '改进的用户体验'
+        '简化定价模式：更透明、更灵活的订阅方案',
+        'Max Mode顶级模型：访问最强大的AI编程模型',
+        '全新Tab模型：智能预测下一步代码编写意图',
+        'Background Agent预览：后台AI助手开始测试',
+        '改进的上下文管理：更好地理解项目结构和依赖',
+        '重新设计的内联编辑：更流畅的代码修改体验',
+        '多根工作区支持：同时处理多个项目根目录',
+        '性能优化：整体响应速度和稳定性提升'
       ],
-      importance: 'medium',
-      publishedAt: '2024-09-15T16:45:00Z',
+      importance: 'high',
+      publishedAt: '2025-05-15T14:20:00Z',
       originalUrl: 'https://cursor.com/changelog',
-      tags: ['memory', 'agent', 'slack', 'security']
+      tags: ['pricing', 'max-mode', 'tab-model', 'background-agent', 'workspace']
     }
   ],
   'claude': [

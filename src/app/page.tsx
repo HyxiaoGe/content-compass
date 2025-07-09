@@ -22,14 +22,17 @@ const mockContent: ContentCard[] = [
       category: 'AI Code Editor',
       slug: 'cursor'
     },
-    title: 'Cursor 1.2 - Agent智能任务规划与Slack集成',
-    summary: 'Cursor 1.2版本于7月3日发布，带来了重大的Agent改进，包括结构化待办事项列表、依赖关系跟踪、消息队列功能，以及完整的Slack集成。Memory功能已正式发布，同时新增PR索引和摘要功能。',
+    title: 'Cursor 1.2 - 企业级AI编程助手全面升级',
+    summary: 'Cursor 1.2版本带来了突破性的Agent智能规划系统，可以为复杂任务创建结构化待办清单并跟踪依赖关系。新增企业级Slack集成，支持直接从Slack启动Background Agent。Tab补全速度提升100ms，新增PR语义搜索，Memory系统正式商用，显著提升长期项目的上下文理解能力。',
     keyPoints: [
-      'Agent结构化任务规划和依赖跟踪',
-      '消息队列允许任务重新排序',
-      'Memory功能正式发布(GA)',
-      'PR索引和摘要功能',
-      '完整的Slack集成支持'
+      'Agent创建结构化待办清单，自动分解复杂任务并跟踪依赖关系',
+      '队列消息系统：可预先排队多个Agent任务，支持任务重新排序',
+      'Memory系统正式发布：改进生成质量，增加用户审批机制',
+      'PR语义搜索：支持PR、issue、commit的深度搜索和索引',
+      'Slack企业集成：直接从Slack启动Agent，理解线程上下文',
+      'Tab补全性能优化：响应时间减少100ms，大幅提升编码流畅度',
+      'Agent合并冲突解决：自动处理Git合并冲突',
+      'Background Agent改进：支持长时间运行的后台任务'
     ],
     importance: 'high',
     publishedAt: '2025-07-03T14:00:00Z',
