@@ -1,0 +1,40 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "18"
+  NPM_VERSION = "9"
+
+# 处理Next.js路由
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  conditions = {Role = ["admin"]}
+
+# API路由代理
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# 产品详情页重定向
+[[redirects]]
+  from = "/product/:slug"
+  to = "/product/:slug"
+  status = 200
+
+# 404页面
+[[redirects]]
+  from = "/*"
+  to = "/404.html"
+  status = 404
+
+[functions]
+  directory = "netlify/functions"
+
+# 环境变量说明（需要在Netlify控制台中设置）
+# NEXT_PUBLIC_SUPABASE_URL = "你的Supabase项目URL"
+# NEXT_PUBLIC_SUPABASE_ANON_KEY = "你的Supabase匿名密钥"
+# SUPABASE_SERVICE_ROLE_KEY = "你的Supabase服务角色密钥"（可选）
