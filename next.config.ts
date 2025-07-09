@@ -23,7 +23,7 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'openai.com',
+        hostname: 'uxwing.com',
         port: '',
         pathname: '/**',
       },

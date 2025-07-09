@@ -81,7 +81,7 @@ const mockContent: ContentCard[] = [
     id: '4',
     product: {
       name: 'OpenAI',
-      logo: 'https://openai.com/favicon.ico',
+      logo: 'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/openai-icon.png',
       category: 'AI Platform',
       slug: 'openai'
     },
