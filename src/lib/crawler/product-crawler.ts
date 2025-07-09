@@ -1,6 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from '@/types/database-v2';
 import { ContentAnalyzer } from '../ai/content-analyzer';
+import { WebScraper } from './web-scraper';
 
 /**
  * 产品更新爬取器
@@ -51,6 +52,7 @@ interface ProcessedUpdate {
 export class ProductCrawler {
   private supabase;
   private contentAnalyzer: ContentAnalyzer;
+  private webScraper: WebScraper;
 
   constructor() {
     // 初始化Supabase客户端
@@ -61,6 +63,9 @@ export class ProductCrawler {
     
     // 初始化AI内容分析器
     this.contentAnalyzer = new ContentAnalyzer();
+    
+    // 初始化网页爬取器
+    this.webScraper = new WebScraper();
   }
 
   /**
@@ -217,23 +222,230 @@ export class ProductCrawler {
   }
 
   /**
-   * 获取更新信息（暂时返回模拟数据）
+   * 获取更新信息
    */
   private async fetchUpdates(config: CrawlConfig): Promise<RawUpdate[]> {
-    // TODO: 实现真实的网页爬取逻辑
-    // 这里先返回模拟数据用于测试
-    
-    const mockUpdates: RawUpdate[] = [
-      {
-        title: `${config.name} 最新功能更新`,
-        content: `${config.name} 发布了重要更新，包含多项新功能和性能改进...`,
-        url: config.changelogUrl || config.blogUrl || config.homepage,
-        publishDate: new Date(),
-        source: 'changelog'
-      }
-    ];
+    const updates: RawUpdate[] = [];
 
-    return mockUpdates;
+    try {
+      // 1. 尝试爬取Changelog页面
+      if (config.changelogUrl) {
+        const changelogUpdates = await this.scrapeChangelog(config);
+        updates.push(...changelogUpdates);
+      }
+
+      // 2. 尝试爬取博客页面
+      if (config.blogUrl && updates.length < 5) {
+        const blogUpdates = await this.scrapeBlog(config);
+        updates.push(...blogUpdates);
+      }
+
+      // 3. 尝试爬取RSS feed
+      if (config.rssUrl && updates.length < 5) {
+        const rssUpdates = await this.scrapeRSS(config);
+        updates.push(...rssUpdates);
+      }
+
+      console.log(`📄 ${config.name} 爬取完成，共发现 ${updates.length} 条更新`);
+      
+      return updates;
+
+    } catch (error) {
+      console.error(`❌ 爬取 ${config.name} 失败:`, error);
+      
+      // 如果爬取失败，返回空数组而不是抛出错误
+      return [];
+    }
+  }
+
+  /**
+   * 爬取Changelog页面
+   */
+  private async scrapeChangelog(config: CrawlConfig): Promise<RawUpdate[]> {
+    if (!config.changelogUrl) return [];
+
+    try {
+      console.log(`📋 爬取 ${config.name} changelog: ${config.changelogUrl}`);
+      
+      const content = await this.webScraper.scrape(config.changelogUrl, {
+        userAgent: config.userAgent,
+        timeout: 30000,
+        javascript: config.changelogUrl.includes('github.com') // GitHub需要JS渲染
+      });
+
+      const extractedData = this.webScraper.extractData(content.html, {
+        titles: config.selectors.title || 'h1, h2, h3, .title, .changelog-title',
+        contents: config.selectors.content || 'p, .content, .description, .changelog-content',
+        dates: config.selectors.date || 'time, .date, .publish-date, .changelog-date',
+        versions: config.selectors.version || '.version, .tag, .version-tag'
+      });
+
+      return this.parseExtractedData(extractedData, config.changelogUrl, 'changelog');
+
+    } catch (error) {
+      console.error(`❌ 爬取 ${config.name} changelog 失败:`, error);
+      return [];
+    }
+  }
+
+  /**
+   * 爬取博客页面
+   */
+  private async scrapeBlog(config: CrawlConfig): Promise<RawUpdate[]> {
+    if (!config.blogUrl) return [];
+
+    try {
+      console.log(`📰 爬取 ${config.name} blog: ${config.blogUrl}`);
+      
+      const content = await this.webScraper.scrape(config.blogUrl, {
+        userAgent: config.userAgent,
+        timeout: 30000,
+        javascript: false
+      });
+
+      const extractedData = this.webScraper.extractData(content.html, {
+        titles: config.selectors.title || 'h1, h2, h3, .title, .post-title, .article-title',
+        contents: config.selectors.content || 'p, .excerpt, .summary, .post-excerpt',
+        dates: config.selectors.date || 'time, .date, .publish-date, .post-date',
+        links: 'a[href]'
+      });
+
+      return this.parseExtractedData(extractedData, config.blogUrl, 'blog');
+
+    } catch (error) {
+      console.error(`❌ 爬取 ${config.name} blog 失败:`, error);
+      return [];
+    }
+  }
+
+  /**
+   * 爬取RSS feed
+   */
+  private async scrapeRSS(config: CrawlConfig): Promise<RawUpdate[]> {
+    if (!config.rssUrl) return [];
+
+    try {
+      console.log(`📡 爬取 ${config.name} RSS: ${config.rssUrl}`);
+      
+      const content = await this.webScraper.scrape(config.rssUrl, {
+        userAgent: config.userAgent,
+        timeout: 30000,
+        javascript: false
+      });
+
+      // 解析RSS XML
+      const extractedData = this.webScraper.extractData(content.html, {
+        titles: 'item title, entry title',
+        contents: 'item description, entry summary, entry content',
+        dates: 'item pubDate, entry published, item published',
+        links: 'item link, entry link'
+      });
+
+      return this.parseExtractedData(extractedData, config.rssUrl, 'rss');
+
+    } catch (error) {
+      console.error(`❌ 爬取 ${config.name} RSS 失败:`, error);
+      return [];
+    }
+  }
+
+  /**
+   * 解析提取的数据
+   */
+  private parseExtractedData(
+    data: Record<string, string[]>, 
+    baseUrl: string, 
+    source: 'changelog' | 'blog' | 'rss'
+  ): RawUpdate[] {
+    const updates: RawUpdate[] = [];
+    const maxItems = Math.min(data.titles?.length || 0, 10); // 最多处理10个项目
+
+    for (let i = 0; i < maxItems; i++) {
+      const title = data.titles?.[i];
+      const content = data.contents?.[i];
+      
+      if (!title || !content) continue;
+
+      // 解析发布日期
+      let publishDate: Date | undefined;
+      const dateStr = data.dates?.[i];
+      if (dateStr) {
+        publishDate = this.parseDate(dateStr);
+      }
+
+      // 解析链接
+      let url = baseUrl;
+      const linkStr = data.links?.[i];
+      if (linkStr) {
+        url = this.webScraper.resolveUrl(baseUrl, linkStr);
+      }
+
+      // 提取版本号
+      let version: string | undefined;
+      const versionStr = data.versions?.[i];
+      if (versionStr) {
+        version = this.extractVersion(versionStr);
+      }
+
+      updates.push({
+        title: this.webScraper.cleanText(title),
+        content: this.webScraper.cleanText(content),
+        url,
+        publishDate,
+        version,
+        source
+      });
+    }
+
+    return updates;
+  }
+
+  /**
+   * 解析日期字符串
+   */
+  private parseDate(dateStr: string): Date | undefined {
+    try {
+      // 尝试直接解析
+      let date = new Date(dateStr);
+      if (!isNaN(date.getTime())) {
+        return date;
+      }
+
+      // 尝试解析相对时间
+      const relativeMatch = dateStr.match(/(\d+)\s*(days?|weeks?|months?|years?)\s*ago/i);
+      if (relativeMatch) {
+        const [, num, unit] = relativeMatch;
+        const now = new Date();
+        const amount = parseInt(num);
+        
+        switch (unit.toLowerCase()) {
+          case 'day':
+          case 'days':
+            return new Date(now.getTime() - amount * 24 * 60 * 60 * 1000);
+          case 'week':
+          case 'weeks':
+            return new Date(now.getTime() - amount * 7 * 24 * 60 * 60 * 1000);
+          case 'month':
+          case 'months':
+            return new Date(now.getTime() - amount * 30 * 24 * 60 * 60 * 1000);
+          case 'year':
+          case 'years':
+            return new Date(now.getTime() - amount * 365 * 24 * 60 * 60 * 1000);
+        }
+      }
+
+      return undefined;
+    } catch {
+      return undefined;
+    }
+  }
+
+  /**
+   * 提取版本号
+   */
+  private extractVersion(versionStr: string): string | undefined {
+    const versionMatch = versionStr.match(/v?(\d+\.\d+(?:\.\d+)?(?:-\w+)?)/i);
+    return versionMatch ? versionMatch[1] : undefined;
   }
 
   /**
