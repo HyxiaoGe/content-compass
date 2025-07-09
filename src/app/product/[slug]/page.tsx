@@ -294,18 +294,68 @@ const mockDetailData: Record<string, ContentCard[]> = {
         category: 'AI Platform',
         slug: 'openai'
       },
-      title: 'GPT-4 Turbo 128K上下文窗口升级',
-      summary: 'OpenAI推出了GPT-4 Turbo的重大更新，将上下文窗口扩展到128K tokens，相当于300页文本。新版本不仅处理能力更强，还优化了响应速度和成本效益，让开发者能够构建更复杂的AI应用。',
+      title: 'OpenAI 2025核心产品全面升级 - GPT-4o、o3/o4推理模型与Canvas协作',
+      summary: 'OpenAI在2025年推出了全面的产品升级，GPT-4o正式取代GPT-4成为标准模型，在写作、编程、STEM等领域表现卓越。全新o3-pro和o4-mini推理模型提供更强的复杂推理能力。Advanced Voice升级带来更自然的语音交互，Library功能统一管理生成内容，Projects和Scheduled Tasks提升工作效率。',
       keyPoints: [
-        '上下文窗口扩展至128K tokens',
-        '处理速度提升2.5倍',
-        '成本降低30%',
-        '支持更复杂的多轮对话'
+        'GPT-4o全面替代GPT-4：原生多模态模型，在写作、编程、STEM等领域全面超越',
+        'o3-pro推理模型：专为复杂科学、编程、商业查询设计，支持长时间思考',
+        'o4-mini高效推理：AIME 2024/2025最佳性能，支持更高使用限制',
+        'Python数据分析：o1和o3-mini支持回归分析、可视化、场景模拟',
+        'Advanced Voice升级：显著提升语调自然度、节奏感和情感表达',
+        'Library图像管理：自动保存ChatGPT生成的所有图像，统一浏览和重用',
+        'Projects功能增强：Plus、Pro、Team用户获得更专注的工作体验',
+        'Scheduled Tasks：支持自动化提示和定期任务执行'
       ],
       importance: 'high',
-      publishedAt: '2024-01-12T14:00:00Z',
-      originalUrl: 'https://openai.com/blog/gpt-4-turbo',
-      tags: ['model-update', 'context-window', 'performance']
+      publishedAt: '2025-07-08T10:00:00Z',
+      originalUrl: 'https://help.openai.com/en/articles/6825453-chatgpt-release-notes',
+      tags: ['gpt-4o', 'o3-pro', 'o4-mini', 'advanced-voice', 'library', 'projects', 'reasoning']
+    },
+    {
+      id: '4-prev',
+      product: {
+        name: 'OpenAI',
+        logo: 'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/openai-icon.png',
+        category: 'AI Platform',
+        slug: 'openai'
+      },
+      title: 'Canvas协作界面与12 Days of OpenAI发布',
+      summary: 'OpenAI推出Canvas协作界面，提供全新的写作和编程体验，支持实时协作和版本控制。"12 Days of OpenAI"活动期间发布多项重磅更新，包括Sora视频生成、SearchGPT搜索功能、以及ChatGPT Pro高级订阅服务。',
+      keyPoints: [
+        'Canvas协作界面：全新写作和编程协作体验',
+        'Sora视频生成：高质量AI视频创作工具',
+        'SearchGPT集成：实时搜索与AI问答结合',
+        'ChatGPT Pro订阅：专业级AI助手服务',
+        'API功能增强：开发者工具和集成能力提升',
+        'Safety改进：内容安全和伦理规范升级'
+      ],
+      importance: 'high',
+      publishedAt: '2024-12-15T14:00:00Z',
+      originalUrl: 'https://help.openai.com/en/articles/10271060-12-days-of-openai-release-updates',
+      tags: ['canvas', 'sora', 'searchgpt', 'chatgpt-pro', 'collaboration']
+    },
+    {
+      id: '4-prev2',
+      product: {
+        name: 'OpenAI',
+        logo: 'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/openai-icon.png',
+        category: 'AI Platform',
+        slug: 'openai'
+      },
+      title: 'GPT-4o多模态突破与o1推理模型发布',
+      summary: 'OpenAI发布GPT-4o多模态模型，实现文本、图像、音频统一处理能力。同时推出o1推理模型，专门针对复杂问题解决和逻辑推理进行优化。这些模型在科学研究、编程、数学等领域展现出显著的性能提升。',
+      keyPoints: [
+        'GPT-4o多模态：文本、图像、音频统一理解和生成',
+        'o1推理模型：专为复杂推理和问题解决设计',
+        'API性能优化：响应速度和成本效益显著提升',
+        'Fine-tuning支持：支持企业级模型定制',
+        'Safety措施：增强内容安全和偏见控制',
+        'Developer工具：改进的开发者体验和调试功能'
+      ],
+      importance: 'high',
+      publishedAt: '2024-09-12T16:00:00Z',
+      originalUrl: 'https://openai.com/index/gpt-4o-and-o1/',
+      tags: ['gpt-4o', 'o1', 'multimodal', 'reasoning', 'api']
     }
   ],
   'stability-ai': [
