@@ -73,8 +73,8 @@ jobs:
             fi
           fi
           
-          # 调用Netlify Function
-          FUNCTION_URL="https://content-compass.seanfield.org/.netlify/functions/crawl-products${PARAMS}"
+          # 调用Netlify Function (使用简单版本避免超时)
+          FUNCTION_URL="https://content-compass.seanfield.org/.netlify/functions/crawl-simple${PARAMS}"
           echo "📡 调用URL: $FUNCTION_URL"
           
           # 执行请求并保存结果

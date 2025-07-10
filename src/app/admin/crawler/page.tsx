@@ -40,7 +40,7 @@ export default function CrawlerAdminPage() {
     setResults(null);
 
     try {
-      let url = '/.netlify/functions/crawl-products';
+      let url = '/.netlify/functions/crawl-simple';
       const params = new URLSearchParams();
       
       if (products && products.length > 0) {
