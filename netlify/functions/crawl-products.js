@@ -187,7 +187,7 @@ exports.handler = async (event, context) => {
       }
       
       // 添加延迟避免过快请求
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise(resolve => setTimeout(resolve, 500));
     }
 
     // 统计结果

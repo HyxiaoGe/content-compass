@@ -32,7 +32,7 @@ class SimpleCrawler {
           'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
           'Cache-Control': 'no-cache'
         },
-        timeout: 30000
+        timeout: 5000
       };
 
       const req = httpModule.request(options, (res) => {
@@ -127,42 +127,48 @@ class SimpleCrawler {
 
     const updates = [];
 
-    for (const url of config.urls) {
-      try {
-        console.log(`📄 尝试爬取: ${url}`);
-        const response = await this.fetchPage(url);
-        
-        if (response.statusCode !== 200) {
-          console.log(`❌ HTTP ${response.statusCode}: ${url}`);
-          continue;
-        }
-
-        const info = this.extractBasicInfo(response.body);
-        
-        // 基于内容生成更新条目
-        const relevantParagraphs = info.paragraphs
-          .filter(p => this.isRelevantUpdate(p, config.name))
-          .slice(0, 3);
-
-        for (const paragraph of relevantParagraphs) {
-          updates.push({
-            title: `${config.name} 产品更新`,
-            content: paragraph,
-            url: url,
-            publishDate: new Date(),
-            source: 'web'
-          });
-        }
-
-        if (updates.length > 0) {
-          console.log(`✅ 从 ${url} 提取了 ${relevantParagraphs.length} 条更新`);
-          break; // 成功获取后跳出循环
-        }
-
-      } catch (error) {
-        console.log(`❌ 爬取失败 ${url}:`, error.message);
-        continue;
+    // 只尝试第一个URL，减少超时风险
+    const url = config.urls[0];
+    
+    try {
+      console.log(`📄 尝试爬取: ${url}`);
+      
+      // 设置更短的超时时间
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => reject(new Error('爬取超时')), 3000);
+      });
+      
+      const response = await Promise.race([
+        this.fetchPage(url),
+        timeoutPromise
+      ]);
+      
+      if (response.statusCode !== 200) {
+        console.log(`❌ HTTP ${response.statusCode}: ${url}`);
+        return updates;
       }
+
+      const info = this.extractBasicInfo(response.body);
+      
+      // 基于内容生成更新条目 - 限制为1条以减少处理时间
+      const relevantParagraphs = info.paragraphs
+        .filter(p => this.isRelevantUpdate(p, config.name))
+        .slice(0, 1);
+
+      for (const paragraph of relevantParagraphs) {
+        updates.push({
+          title: `${config.name} 产品更新`,
+          content: paragraph,
+          url: url,
+          publishDate: new Date(),
+          source: 'web'
+        });
+      }
+
+      console.log(`✅ 从 ${url} 提取了 ${relevantParagraphs.length} 条更新`);
+
+    } catch (error) {
+      console.log(`❌ 爬取失败 ${url}:`, error.message);
     }
 
     return updates;
