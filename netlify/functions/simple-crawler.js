@@ -76,17 +76,40 @@ class SimpleCrawler {
       });
     }
 
-    // 提取段落文本
+    // 提取段落文本 - 改进版本
     const paragraphs = [];
-    const pRegex = /<p[^>]*>([^<]*(?:<[^>]*>[^<]*)*)<\/p>/gi;
-    let pMatch;
-    while ((pMatch = pRegex.exec(html)) !== null) {
-      const text = pMatch[1]
-        .replace(/<[^>]*>/g, '')
-        .replace(/\s+/g, ' ')
-        .trim();
-      if (text && text.length > 20) {
-        paragraphs.push(text);
+    
+    // 1. 尝试提取明显的更新内容
+    const updatePatterns = [
+      /(\d+\.\d+)\s*([A-Za-z]+\s+\d+,\s+\d{4})\s*([^<]+)/gi, // 版本号模式
+      /Agent\s+[^<]{50,}/gi, // Agent相关更新
+      /(?:New|Updated|Fixed|Improved)\s+[^<]{30,}/gi, // 更新关键词
+      /Changelog([^<]{100,})/gi // Changelog内容
+    ];
+    
+    for (const pattern of updatePatterns) {
+      let match;
+      while ((match = pattern.exec(html)) !== null) {
+        const text = match[0]
+          .replace(/<[^>]*>/g, '')
+          .replace(/\s+/g, ' ')
+          .trim();
+        if (text && text.length > 30 && !paragraphs.includes(text)) {
+          paragraphs.push(text.substring(0, 200));
+        }
+      }
+    }
+
+    // 2. 如果没找到，尝试提取文本节点
+    if (paragraphs.length === 0) {
+      const textNodes = html.match(/>([^<]{50,})</g);
+      if (textNodes) {
+        for (const node of textNodes.slice(0, 5)) {
+          const text = node.substring(1, node.length - 1).trim();
+          if (text && !text.includes('{') && !text.includes(';')) {
+            paragraphs.push(text.substring(0, 200));
+          }
+        }
       }
     }
 
@@ -103,19 +126,19 @@ class SimpleCrawler {
   async crawlUpdates(productSlug) {
     const productConfigs = {
       'openai': {
-        urls: ['https://openai.com/blog', 'https://openai.com/index/'],
+        urls: ['https://openai.com/index/'],
         name: 'OpenAI'
       },
       'cursor': {
-        urls: ['https://cursor.sh/changelog', 'https://cursor.sh/'],
+        urls: ['https://cursor.com/en/changelog'],
         name: 'Cursor'
       },
       'claude': {
-        urls: ['https://www.anthropic.com/news', 'https://www.anthropic.com/changelog'],
+        urls: ['https://www.anthropic.com/news'],
         name: 'Claude'
       },
       'github-copilot': {
-        urls: ['https://github.com/github/copilot-docs/releases.atom'],
+        urls: ['https://github.blog/changelog/label/copilot/'],
         name: 'GitHub Copilot'
       }
     };
